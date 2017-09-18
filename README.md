@@ -6,7 +6,7 @@
 
 Have these packages installed and running on your system.
 
-- [Node.js](https://nodejs.org/download/), and npm.
+- [Node.js](https://nodejs.org/download/), and npm(https://www.npmjs.com/).
 - [MongoDB](https://www.mongodb.org/downloads)
 
 ## Installing
@@ -29,3 +29,7 @@ Have these packages installed and running on your system.
 - messenger,telegram,slack bots 
 - desktop app (electron.js) and android app(ionic or react native or cordova)
 - push notifications
+- mail notifications(node mailer)
+
+## Images
+  ![Alt text](/public/images/priceTicker.png?raw=true "notifications screenshot")
