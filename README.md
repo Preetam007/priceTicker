@@ -9,7 +9,7 @@ Have these packages installed and running on your system.
 - [Node.js](https://nodejs.org/download/), and npm.
 - [MongoDB](https://www.mongodb.org/downloads)
 
-##Installing
+## Installing
 
 * Clone this repo `$ git clone https://github.com/Preetam007/priceTicker.git`
 * Enter into the project directory `$ cd priceTicker`
