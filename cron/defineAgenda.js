@@ -28,7 +28,7 @@ exports = module.exports = function(agenda){
         function(callback) {
           request(ethexOptions, function (error, response, body) {
             if (error) {
-              return callback(err);
+              return callback(error);
             }
 
             const price = JSON.parse(body);
@@ -38,7 +38,7 @@ exports = module.exports = function(agenda){
         function(callback) {
           request(zebpayOptions, function (error, response, body) {
             if (error) {
-              return callback(err);
+              return callback(error);
             }
 
             const price = JSON.parse(body);
@@ -56,15 +56,20 @@ exports = module.exports = function(agenda){
       }
 
       notifier.notify({
-        'title': 'ethexIndia & zebPay price ticker',
+        'title': 'ethexIndia price ticker',
         'message': `ethexIndia
         sell - ${results[0].ask} 
-        buy - ${results[0].bid} \n
-        -------- ******** -------
-        zebPay
-        sell - ${results[1].sell}
-        buy - ${results[1].buy}`
+        buy - ${results[0].bid} \n`
       });
+
+      setTimeout(function(){
+        notifier.notify({
+          'title': 'zebPay price ticker',
+          'message': `
+          sell - ${results[1].sell}
+          buy - ${results[1].buy}`
+        });
+      },2000);
 
       done();
     });

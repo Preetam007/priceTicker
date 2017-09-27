@@ -58,7 +58,6 @@ var cluster = require('cluster'),
       }
 
       if (process.env.job) {
-          //console.log('start job server: ' + cluster.worker.id);
         require('./cron/defineAgenda')(agenda);//initialize the agenda here
       }
     }

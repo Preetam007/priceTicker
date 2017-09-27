@@ -4,6 +4,7 @@ const config = require('./config'),
   express = require('express'),
   http = require('http'),
   path = require('path'),
+  bodyParser =  require('body-parser'),
   Agendash = require('agendash'),
   mongoose = require('mongoose');
 
@@ -30,8 +31,32 @@ const app = express();
 		  app.disable('x-powered-by');
 		  app.enable('trust proxy'); 
 		  app.set('port', config.port);
+
+		  app.use(bodyParser.urlencoded({extended: false}));
+      app.use(bodyParser.json());
 		 
-		  app.use('/dash', Agendash(agenda));
+      if (!!process.env.mode && process.env.mode == 'development') {
+      	app.use('/dash', Agendash(agenda));
+      }
+
+      // Server index page
+			app.get("/", function (req, res) {
+			  res.send("Deployed!");
+			});
+
+			// Facebook Webhook
+			// Used for verification
+			app.get("/webhook", function (req, res) {
+			  if (req.query["hub.verify_token"] === "this_is_my_token") {
+			    console.log("Verified webhook");
+			    res.status(200).send(req.query["hub.challenge"]);
+			  } else {
+			    console.error("Verification failed. The tokens do not match.");
+			    res.sendStatus(403);
+			  }
+			});
+
+
 
 		  //listen up
 		  app.server.listen(app.config.port, function(){
