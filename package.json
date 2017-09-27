@@ -1,13 +1,18 @@
 {
   "name": "priceTicker",
   "version": "1.0.0",
-  "description": "",
+  "description": "cryptocurrency ticker",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev" : "refreshTime=20 timePrefix=seconds nodemon server.js",
+    "dev": "refreshTime=20 timePrefix=seconds nodemon server.js",
     "start": "refreshTime=30 timePrefix=minutes node server.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Preetam007/priceTicker.git"
+  },
+  "homepage": "https://github.com/Preetam007/priceTicker/blob/master/README.md",
   "keywords": [],
   "author": "preetam rao <raopreetam007@gmail.com>",
   "license": "ISC",
@@ -18,16 +23,17 @@
     "body-parser": "^1.x.x",
     "crypto": "0.0.3",
     "express": "*",
-    "helmet": "0.9.1",
+    "helmet": "*",
     "method-override": "2.3.9",
     "mongoose": "4.11.7",
-    "mongoose-deep-populate": "^3.0.0",
+    "compression": "1.7.0",
     "morgan": "^1.x.x",
     "multer": "^1.1.0",
     "node-notifier": "5.1.2",
     "nodemailer": "0.7.1",
     "qs": "^6.1.0",
     "request": "^2.69.0",
+    "serve-favicon": "*",
     "serve-static": "^1.9.x",
     "shortid": "^2.2.6",
     "winston": "^2.2.0"
