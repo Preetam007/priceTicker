@@ -28,7 +28,7 @@ var cluster = require('cluster'),
 
       for(var i = 0; i < numWorkers; i++) {
           //cluster.fork();
-        addJobWorker();
+        //addJobWorker();
         addWebWorker();
       }
 
