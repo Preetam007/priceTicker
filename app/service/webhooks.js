@@ -23,9 +23,7 @@ const webhooks = {
           entry.messaging.forEach((event) => {
               if (event.message) {
                 workflow.emit('procressMessage',event);
-              }
-
-              if (event.postback) {
+              } else if (event.postback) {
                 workflow.emit('processPostback',event);
               }
           });
@@ -38,7 +36,8 @@ const webhooks = {
     });
 
 
-    workflow.emit('procressMessage',function(event) {
+    workflow.emit('procressMessage',function procressMessage(event) {
+      console.log('procressMessage');
       let sender ,text ;
           sender = event.sender.id;
 
@@ -85,7 +84,8 @@ const webhooks = {
     });
 
 
-    workflow.emit('getdata',function(data){
+    workflow.emit('getdata',function getdata(data){
+      console.log('getdata');
       let requestOptions ='',url = '';
 
       if (data.key == 'ethereum') {
@@ -104,7 +104,7 @@ const webhooks = {
         } 
       };
 
-      request(requestOptions, function (error, response, body) {
+      request(requestOptions, function requestOptions(error, response, body) {
         if (error) {
           console.log(error);
         }
@@ -120,8 +120,9 @@ const webhooks = {
       });
     });
 
-    workflow.emit('processPostback',function(event) {
-
+    workflow.emit('processPostback',function processPostback(event) {
+      console.log(processPostback);
+      console.log(event);
       const senderId = event.sender.id;
       const payload = event.postback.payload;
 
@@ -148,10 +149,11 @@ const webhooks = {
           workflow.emit('sendMessage',{sender : senderId ,text: message});
         });
       }
-
     });
 
-    workflow.emit('sendMessage',function(data) {
+    workflow.emit('sendMessage',function sendMessage(data) {
+      console.log('sendMessage');
+      console.log(data);
       request({
           url: 'https://graph.facebook.com/v2.6/me/messages',
           qs: {access_token: 'EAABzjRLllHgBABHjf4jadxDvpKoGUp7Q5P4VfP9vYrqYkKZASpnH0Yvx5aZAbLD9NwRTF8zndZC7F2ldLe3pFZBwmo0hee6nC2FsSYlLJaouHJWLwRzMAIEIwp8pCchFkZCo5BxhP1JgZCU9dBbmepzfhStOXjZBjZCBuNdpwrrYvIvqwAXqJeXl'},
