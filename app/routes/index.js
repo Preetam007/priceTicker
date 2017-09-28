@@ -20,6 +20,8 @@ module.exports = function (app) {
     /* Handling all messenges */
     app.post('/webhook', webhooks.messageHandler);
 
+    app.post('/showgreeting/setup',webhooks.payloadHandler);
+
     app.get('/robots.txt', function(req,res) {
         res.sendFile(require('path').join(__dirname, '../robots.txt'));
     });
