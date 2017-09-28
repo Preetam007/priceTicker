@@ -1,3 +1,4 @@
+'use strict';
 const request = require('request');
 
 function procressMessage(event) {

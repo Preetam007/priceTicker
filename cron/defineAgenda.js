@@ -1,3 +1,4 @@
+'use strict';
 const notifier = require('node-notifier');
 const request = require('request');
 const async = require('async');
