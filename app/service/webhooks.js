@@ -55,13 +55,13 @@ const webhooks = {
             //   text = text;
             //   break;
             case "btc":
-              getata({key :bitcoin ,sender :sender } );
+              getdata({key :bitcoin ,sender :sender } );
               break;
             case "bitcoin":
-              getata({key :bitcoin ,sender :sender });
+              getdata({key :bitcoin ,sender :sender });
               break;
             case "ether":  
-              getata({key :ethereum ,sender :sender });
+              getdata({key :ethereum ,sender :sender });
               break;
             case "ethereum":
               getdata({key :ethereum ,sender :sender });
