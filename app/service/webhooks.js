@@ -13,30 +13,24 @@ const webhooks = {
 	},
 	messageHandler : function(req,res) {
     console.log(req.body);
-    
-    let workflow = req.app.utility.workflow(req, res);
-    
-    workflow.on('validate', function validateUpdate() {
-        
-      if (req.body.object === 'page') {
-        req.body.entry.forEach((entry) => {
-          entry.messaging.forEach((event) => {
-              if (event.message) {
-                workflow.emit('procressMessage',event);
-              } else if (event.postback) {
-                workflow.emit('processPostback',event);
-              }
-          });
+         
+    if (req.body.object === 'page') {
+      req.body.entry.forEach((entry) => {
+        entry.messaging.forEach((event) => {
+            if (event.message) {
+              procressMessage(event);
+            } else if (event.postback) {
+              processPostback(event);
+            }
         });
-        // It is important to return a 200 response as fast as possible. Facebook will wait for a 
-        // 200 before sending you the next message. In high volume bots, a delay in returning a 200 can 
-        // cause significant delays in Facebook delivering messages to your webhook.
-        res.status(200).end();
-      } 
-    });
+      });
+      // It is important to return a 200 response as fast as possible. Facebook will wait for a 
+      // 200 before sending you the next message. In high volume bots, a delay in returning a 200 can 
+      // cause significant delays in Facebook delivering messages to your webhook.
+      res.status(200).end();
+    } 
 
-
-    workflow.emit('procressMessage',function procressMessage(event) {
+    function procressMessage(event) {
       console.log('procressMessage');
       let sender ,text ;
           sender = event.sender.id;
@@ -61,30 +55,30 @@ const webhooks = {
             //   text = text;
             //   break;
             case "btc":
-              workflow.emit('getata',{key :bitcoin ,sender :sender } );
+              getata({key :bitcoin ,sender :sender } );
               break;
             case "bitcoin":
-              workflow.emit('getata',{key :bitcoin ,sender :sender });
+              getata({key :bitcoin ,sender :sender });
               break;
             case "ether":  
-              workflow.emit('getata',{key :ethereum ,sender :sender });
+              getata({key :ethereum ,sender :sender });
               break;
             case "ethereum":
-              workflow.emit('getdata',{key :ethereum ,sender :sender });
+              getdata({key :ethereum ,sender :sender });
               break;
             default:
-              workflow.emit('sendMessage',{sender : sender ,text : text});
+              sendMessage({sender : sender ,text : text});
           }
 
         } else if (event.message.attachments) {
           text = "Sorry, I don't understand your request.";
-          workflow.emit('sendMessage',{sender : sender ,text : text});
+          sendMessage({sender : sender ,text : text});
         }
       }
-    });
+    };
 
 
-    workflow.emit('getdata',function getdata(data){
+    function getdata(data){
       console.log('getdata');
       let requestOptions ='',url = '';
 
@@ -116,12 +110,12 @@ const webhooks = {
 
         let pushString = `current ${key} buy rate is ${buy} INR and sell rate is ${sell} INR`;
 
-        workflow.emit('sendMessage',{sender : data.sender  ,text : pushString});
+        sendMessage({sender : data.sender  ,text : pushString});
       });
-    });
+    };
 
-    workflow.emit('processPostback',function processPostback(event) {
-      console.log(processPostback);
+    function processPostback(event) {
+      console.log('processPostback');
       console.log(event);
       const senderId = event.sender.id;
       const payload = event.postback.payload;
@@ -146,12 +140,12 @@ const webhooks = {
             greeting = "Hi " + name + ". ";
           }
           let message = greeting + "My name is BlockChain Evangelist Bot. I can tell you various details regarding blockchain,cryptocurriencies. What topic would you like to know about?";
-          workflow.emit('sendMessage',{sender : senderId ,text: message});
+          sendMessage({sender : senderId ,text: message});
         });
       }
-    });
+    };
 
-    workflow.emit('sendMessage',function sendMessage(data) {
+    function sendMessage(data) {
       console.log('sendMessage');
       console.log(data);
       request({
@@ -169,10 +163,7 @@ const webhooks = {
             console.log('Error: ', response.body.error);
           }
       });
-    });
-
-    workflow.emit('validate');
-
+    };
 	},
   // to enable show greeting(get started button) message , for this we have to handle postback callback and subscribe
   // messaging_postbacks
