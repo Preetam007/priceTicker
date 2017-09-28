@@ -54,7 +54,7 @@ exports = module.exports = function(agenda){
   app.use('/dash', Agendash(agenda));
 
   // routes ======================================================================
-  require('./app/routes.js')(app);
+  require('./app/routes')(app);
   
   //listen up
   app.server.listen(app.config.port, function(){
