@@ -108,7 +108,7 @@ const webhooks = {
         const buy =  data.key == 'ethereum' ? price.bid : price.buy;
         const sell = data.key == 'ethereum' ? price.ask : price.sell;
 
-        let pushString = `current ${key} buy rate is ${buy} INR and sell rate is ${sell} INR`;
+        let pushString = `current ${data.key} buy rate is ${buy} INR and sell rate is ${sell} INR`;
 
         sendMessage({sender : data.sender  ,text : pushString});
       });
