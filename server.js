@@ -1,7 +1,7 @@
 'use strict';
 // require('@risingstack/trace');
 var cluster = require('cluster'),
-    config = require(__dirname +'/config'),
+    config = require(__dirname +'/app/config'),
     mongoose = require('mongoose'),
     Agenda = require('agenda'),
     agenda = new Agenda({maxConcurrency: 20 ,db: {address: config.mongodb.uri, collection: 'agendaJobs'}}),
@@ -54,7 +54,7 @@ var cluster = require('cluster'),
 
       if (process.env.web) {
         //console.log('start http server: ' + cluster.worker.id);
-        require("./app.js")(agenda);//initialize the http server here
+        require("./app/index")(agenda);//initialize the http server here
       }
 
       if (process.env.job) {

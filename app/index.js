@@ -54,7 +54,11 @@ exports = module.exports = function(agenda){
   app.use('/dash', Agendash(agenda));
 
   // routes ======================================================================
-  require('./app/routes')(app);
+  require('./routes')(app);
+
+  //setup utilities
+  app.utility = {};
+  app.utility.workflow = require(__dirname+'/helpers/workflow');
   
   //listen up
   app.server.listen(app.config.port, function(){
