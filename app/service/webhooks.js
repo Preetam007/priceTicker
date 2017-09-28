@@ -55,16 +55,16 @@ const webhooks = {
             //   text = text;
             //   break;
             case "btc":
-              getdata({key :bitcoin ,sender :sender } );
+              getdata({key :'bitcoin' ,sender :sender } );
               break;
             case "bitcoin":
-              getdata({key :bitcoin ,sender :sender });
+              getdata({key :'bitcoin' ,sender :sender });
               break;
             case "ether":  
-              getdata({key :ethereum ,sender :sender });
+              getdata({key :'ethereum' ,sender :sender });
               break;
             case "ethereum":
-              getdata({key :ethereum ,sender :sender });
+              getdata({key :'ethereum' ,sender :sender });
               break;
             default:
               sendMessage({sender : sender ,text : text});
