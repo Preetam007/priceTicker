@@ -144,7 +144,9 @@ const webhooks = {
             return console.log(err);
           }
           //res.send((result.rss.channel)[0].item[0].link.join(""));
-          sendMessage({sender : data.sender  ,text : (result.rss.channel)[0].item[0].link.join("")});
+          console.log(((result.rss.channel)[0]));
+          console.log(((result.rss.channel)[0].item)[0])
+          sendMessage({sender : data.sender  ,text : ((result.rss.channel)[0].item)[0].link.join("")});
         }); 
 
       });
