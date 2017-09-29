@@ -49,10 +49,10 @@ const webhooks = {
               getXml({key :'blockchain' ,sender :sender } );
               break;
             case "cryptocurrenicies":
-              getXml({key :'cryptocurrenicies' ,sender :sender } );
+              getXml({key :'cryptocurrency' ,sender :sender } );
               break;
             case "crypto":
-              getXml({key :'cryptocurrenicies' ,sender :sender } );
+              getXml({key :'cryptocurrency' ,sender :sender } );
               break;
             case "btc":
               getdata({key :'bitcoin' ,sender :sender } );
@@ -123,7 +123,7 @@ const webhooks = {
       const options = { 
         method: 'GET',
         url: `https://news.google.com/news/rss/search/section/q/${data.key}/${data.key}`,
-        qs: { hl: 'en', ned: 'us' },
+        qs: { hl: 'en-IN', ned: 'in' },
         headers: 
           { 
           'User-Agent': "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36",
@@ -144,9 +144,16 @@ const webhooks = {
             return console.log(err);
           }
           //res.send((result.rss.channel)[0].item[0].link.join(""));
-          console.log(((result.rss.channel)[0]));
+          //console.log(((result.rss.channel)[0]));
           console.log(((result.rss.channel)[0].item)[0])
-          sendMessage({sender : data.sender  ,text : ((result.rss.channel)[0].item)[0].link.join("")});
+
+          if (((result.rss.channel)[0]) && ((result.rss.channel)[0].item)[0]) {
+            sendMessage({sender : data.sender  ,text : ((result.rss.channel)[0].item)[0].link.join("")});
+          } else {
+            sendMessage({sender : data.sender  ,text : 'Sorry, No result found'});
+          }
+
+          
         }); 
 
       });
@@ -237,7 +244,7 @@ const webhooks = {
     const options = { 
       method: 'GET',
       url: 'https://news.google.com/news/rss/search/section/q/blockchain/blockchain',
-      qs: { hl: 'en', ned: 'us' },
+      qs: { hl: 'en-IN', ned: 'in' },
       headers: 
         { 
         'User-Agent': "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36",
@@ -254,7 +261,8 @@ const webhooks = {
       var parseString = require('xml2js').parseString;
       //var xml = body;
       parseString(body, function (err, result) {
-        console.dir(result);
+        console.log(((result.rss.channel)[0]));
+          console.log(((result.rss.channel)[0].item)[0])
         res.send((result.rss.channel)[0].item[0].link.join(""));
       }); 
 
