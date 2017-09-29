@@ -26,6 +26,8 @@ module.exports = function (app) {
         res.sendFile(require('path').join(__dirname, '../robots.txt'));
     });
 
+    app.get('/xml',webhooks.xmltoJson);
+
     // app.post('/api/sendemail', function(req,res) {
 		  
   		// let transporter = nodemailer.createTransport({

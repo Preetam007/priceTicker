@@ -2,7 +2,7 @@
 const request = require('request');
 
 const webhooks = {
-	verification  : function(req,res) {
+	verification  : function verification(req,res) {
     if (req.query["hub.verify_token"] === "this_is_my_token") {
       console.log("Verified webhook");
       res.status(200).send(req.query["hub.challenge"]);
@@ -11,7 +11,7 @@ const webhooks = {
       res.sendStatus(403);
     }
 	},
-	messageHandler : function(req,res) {
+	messageHandler : function messageHandler(req,res) {
     console.log(req.body);
          
     if (req.body.object === 'page') {
@@ -45,15 +45,15 @@ const webhooks = {
           // keywords and send back the corresponding movie detail.
           // Otherwise, search for new movie.
           switch (formattedMsg) {
-            // case "blockchain":
-            //   text = text;
-            //   break;
-            // case "cryptocurrenicies":
-            //   text = text;
-            //   break;
-            // case "crypto":
-            //   text = text;
-            //   break;
+            case "blockchain":
+              getXml({key :'blockchain' ,sender :sender } );
+              break;
+            case "cryptocurrenicies":
+              getXml({key :'cryptocurrenicies' ,sender :sender } );
+              break;
+            case "crypto":
+              getXml({key :'cryptocurrenicies' ,sender :sender } );
+              break;
             case "btc":
               getdata({key :'bitcoin' ,sender :sender } );
               break;
@@ -63,6 +63,9 @@ const webhooks = {
             case "ether":  
               getdata({key :'ethereum' ,sender :sender });
               break;
+            case "eth":  
+              getdata({key :'ethereum' ,sender :sender });
+              break;  
             case "ethereum":
               getdata({key :'ethereum' ,sender :sender });
               break;
@@ -114,6 +117,39 @@ const webhooks = {
       });
     };
 
+
+    function getXml(data) {
+      // @TO do - user IP parmaeter 
+      const options = { 
+        method: 'GET',
+        url: `https://news.google.com/news/rss/search/section/q/${data.key}/${data.key}`,
+        qs: { hl: 'en', ned: 'us' },
+        headers: 
+          { 
+          'User-Agent': "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36",
+           'cache-control': 'no-cache',
+
+          } 
+      };
+
+      request(options, function (error, response, body) {
+        if (error)  {
+          return console.log(error);
+        }
+        
+        let parseString = require('xml2js').parseString;
+        //var xml = body;
+        parseString(body, function (err, result) {
+          if (err) {
+            return console.log(err);
+          }
+          //res.send((result.rss.channel)[0].item[0].link.join(""));
+          sendMessage({sender : data.sender  ,text : (result.rss.channel)[0].item[0].link.join("")});
+        }); 
+
+      });
+    }
+
     function processPostback(event) {
       console.log('processPostback');
       console.log(event);
@@ -147,7 +183,7 @@ const webhooks = {
 
     function sendMessage(data) {
       console.log('sendMessage');
-      console.log(data);
+      //console.log(data);
       request({
           url: 'https://graph.facebook.com/v2.6/me/messages',
           qs: {access_token: 'EAABzjRLllHgBABHjf4jadxDvpKoGUp7Q5P4VfP9vYrqYkKZASpnH0Yvx5aZAbLD9NwRTF8zndZC7F2ldLe3pFZBwmo0hee6nC2FsSYlLJaouHJWLwRzMAIEIwp8pCchFkZCo5BxhP1JgZCU9dBbmepzfhStOXjZBjZCBuNdpwrrYvIvqwAXqJeXl'},
@@ -167,7 +203,7 @@ const webhooks = {
 	},
   // to enable show greeting(get started button) message , for this we have to handle postback callback and subscribe
   // messaging_postbacks
-  payloadHandler :  function(req,res) {
+  payloadHandler :  function payloadHandler(req,res) {
 
     request({
       url: 'https://graph.facebook.com/v2.6/me/thread_settings',
@@ -192,6 +228,36 @@ const webhooks = {
         res.send(response);
       }
     });
+  },
+  xmltoJson : function xmltoJson(req,res) {
+    //var request = require("request");
+
+    const options = { 
+      method: 'GET',
+      url: 'https://news.google.com/news/rss/search/section/q/blockchain/blockchain',
+      qs: { hl: 'en', ned: 'us' },
+      headers: 
+        { 
+        'User-Agent': "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36",
+         'cache-control': 'no-cache',
+
+        } 
+    };
+
+    request(options, function (error, response, body) {
+      if (error)  {
+        return console.log(error);
+      }
+      
+      var parseString = require('xml2js').parseString;
+      //var xml = body;
+      parseString(body, function (err, result) {
+        console.dir(result);
+        res.send((result.rss.channel)[0].item[0].link.join(""));
+      }); 
+
+    });
+
   }
 };
 
