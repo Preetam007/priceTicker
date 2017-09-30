@@ -245,7 +245,7 @@ const webhooks = {
         json.messages = { attachment :  data.attachment };
       }
 
-      //console.log(data);
+      console.log(json);
       request({
           url: 'https://graph.facebook.com/v2.6/me/messages',
           qs: {access_token: 'EAABzjRLllHgBABHjf4jadxDvpKoGUp7Q5P4VfP9vYrqYkKZASpnH0Yvx5aZAbLD9NwRTF8zndZC7F2ldLe3pFZBwmo0hee6nC2FsSYlLJaouHJWLwRzMAIEIwp8pCchFkZCo5BxhP1JgZCU9dBbmepzfhStOXjZBjZCBuNdpwrrYvIvqwAXqJeXl'},
@@ -258,7 +258,7 @@ const webhooks = {
             console.log('Error: ', response.body.error);
           }
 
-          console.log(response);
+          //console.log(response);
       });
     };
 	},
