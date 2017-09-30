@@ -141,7 +141,7 @@ const webhooks = {
                   {
                     "title": "View More",
                     "type": "postback",
-                    "payload": "payload ${data.key}"
+                    "payload": "payload"
                   }
                 ]
               }
