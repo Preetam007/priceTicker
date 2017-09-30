@@ -192,7 +192,7 @@ const webhooks = {
 
             messages.attachment.payload.elements = reducedArray;
             
-            sendMessage({sender : data.sender  ,attachment : messages });
+            sendMessage({sender : data.sender  ,attachment : messages.attachment });
           } else {
             sendMessage({sender : data.sender  ,text : 'Sorry, No result found'});
           }
@@ -249,11 +249,11 @@ const webhooks = {
       if (data.text) {
         json.message = { text : data.text };
       }
-      else {
+      else if (data.attachment) {
         json.message = { attachment :  data.attachment };
       }
 
-      console.log(json);
+      console.log(JSON.stringify(json,null,6));
       request({
           url: 'https://graph.facebook.com/v2.6/me/messages',
           qs: {access_token: 'EAABzjRLllHgBABHjf4jadxDvpKoGUp7Q5P4VfP9vYrqYkKZASpnH0Yvx5aZAbLD9NwRTF8zndZC7F2ldLe3pFZBwmo0hee6nC2FsSYlLJaouHJWLwRzMAIEIwp8pCchFkZCo5BxhP1JgZCU9dBbmepzfhStOXjZBjZCBuNdpwrrYvIvqwAXqJeXl'},
@@ -272,32 +272,7 @@ const webhooks = {
 	},
   // to enable show greeting(get started button) message , for this we have to handle postback callback and subscribe
   // messaging_postbacks
-  payloadHandler :  function payloadHandler(req,res) {
-
-    request({
-      url: 'https://graph.facebook.com/v2.6/me/thread_settings',
-      qs: {access_token: 'EAABzjRLllHgBABHjf4jadxDvpKoGUp7Q5P4VfP9vYrqYkKZASpnH0Yvx5aZAbLD9NwRTF8zndZC7F2ldLe3pFZBwmo0hee6nC2FsSYlLJaouHJWLwRzMAIEIwp8pCchFkZCo5BxhP1JgZCU9dBbmepzfhStOXjZBjZCBuNdpwrrYvIvqwAXqJeXl'},
-      method: 'POST',
-      json: {
-        "setting_type":"call_to_actions",
-        "thread_state":"new_thread",
-        "call_to_actions":[
-          {
-            "payload":"Greeting"
-          }
-        ]
-      }
-    }, function (error, response) {
-      if (error) {
-        console.log('Error setting showgreeting message: ', error);
-      } else if (response.body.error) {
-        console.log('Error: ', response.body.error);
-      }
-      else {
-        res.send(response);
-      }
-    });
-  },
+  
   xmltoJson : function xmltoJson(req,res) {
     //var request = require("request");
 
@@ -463,6 +438,32 @@ const webhooks = {
         res.send(body);
     });
 
+  },
+  payloadHandler :  function payloadHandler(req,res) {
+
+    request({
+      url: 'https://graph.facebook.com/v2.6/me/thread_settings',
+      qs: {access_token: 'EAABzjRLllHgBABHjf4jadxDvpKoGUp7Q5P4VfP9vYrqYkKZASpnH0Yvx5aZAbLD9NwRTF8zndZC7F2ldLe3pFZBwmo0hee6nC2FsSYlLJaouHJWLwRzMAIEIwp8pCchFkZCo5BxhP1JgZCU9dBbmepzfhStOXjZBjZCBuNdpwrrYvIvqwAXqJeXl'},
+      method: 'POST',
+      json: {
+        "setting_type":"call_to_actions",
+        "thread_state":"new_thread",
+        "call_to_actions":[
+          {
+            "payload":"Greeting"
+          }
+        ]
+      }
+    }, function (error, response) {
+      if (error) {
+        console.log('Error setting showgreeting message: ', error);
+      } else if (response.body.error) {
+        console.log('Error: ', response.body.error);
+      }
+      else {
+        res.send(response);
+      }
+    });
   },
   whiteListDomains : function(req,res) {
 
