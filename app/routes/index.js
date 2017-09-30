@@ -28,6 +28,10 @@ module.exports = function (app) {
 
     app.get('/xml',webhooks.xmltoJson);
 
+    app.post('/test',webhooks.sendMessage);
+
+    app.post('/whitelist',webhooks.whiteListDomains);
+
     // app.post('/api/sendemail', function(req,res) {
 		  
   		// let transporter = nodemailer.createTransport({

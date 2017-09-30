@@ -122,7 +122,7 @@ const webhooks = {
       // @TO do - user IP parmaeter 
       const options = { 
         method: 'GET',
-        url: `https://news.google.com/news/rss/search/section/q/${data.key}/${data.key}`,
+        url: `https://news.google.com/news/rss/search/section/q/${data.key} coinTelegraph/${data.key} coinTelegraph`,
         qs: { hl: 'en-IN', ned: 'in' },
         headers: 
           { 
@@ -138,7 +138,14 @@ const webhooks = {
           "payload": {
             "template_type": "list",
             "top_element_style": "compact",
-            "elements": null
+            "elements": null,
+            "buttons": [
+              {
+                "title": "View More",
+                "type": "postback",
+                "payload": "payload"            
+              }
+            ]
           }
         }
       }
@@ -227,6 +234,7 @@ const webhooks = {
       }
       else if (payload === 'payload') {
          console.log(payload);
+         sendMessage({sender : senderId ,text: 'in development'});
       }
     };
 
@@ -235,14 +243,14 @@ const webhooks = {
 
       const json = {
         recipient : { id : data.sender },
-        messages : null
+        message : null
       };
 
       if (data.text) {
-        json.messages = { text : data.text };
+        json.message = { text : data.text };
       }
       else {
-        json.messages = { attachment :  data.attachment };
+        json.message = { attachment :  data.attachment };
       }
 
       console.log(json);
@@ -295,7 +303,7 @@ const webhooks = {
 
     const options = { 
       method: 'GET',
-      url: 'https://news.google.com/news/rss/search/section/q/blockchain/blockchain',
+      url: `https://news.google.com/news/rss/search/section/q/blockchain coinTelegraph/blockchain coinTelegraph`,
       qs: { hl: 'en-IN', ned: 'in' },
       headers: 
         { 
@@ -312,7 +320,14 @@ const webhooks = {
         "payload": {
           "template_type": "list",
           "top_element_style": "compact",
-          "elements": null
+          "elements": null,
+          "buttons": [
+            {
+              "title": "View More",
+              "type": "postback",
+              "payload": "payload"            
+            }
+          ]
         }
       }
     }    
@@ -359,6 +374,112 @@ const webhooks = {
 
     });
 
+  },
+  sendMessage : function (req,res) {
+
+    var options = { 
+      url: 'https://graph.facebook.com/v2.6/me/messages',
+        qs: {access_token: 'EAABzjRLllHgBABHjf4jadxDvpKoGUp7Q5P4VfP9vYrqYkKZASpnH0Yvx5aZAbLD9NwRTF8zndZC7F2ldLe3pFZBwmo0hee6nC2FsSYlLJaouHJWLwRzMAIEIwp8pCchFkZCo5BxhP1JgZCU9dBbmepzfhStOXjZBjZCBuNdpwrrYvIvqwAXqJeXl'},
+        method: 'POST',
+        json: {
+          recipient: { id: '1701904353175444' },
+          message: { 
+            "attachment": {
+            "type": "template",
+              "payload": {
+                  "template_type": "list",
+                  "top_element_style": "compact",
+                  "elements": [
+                      {
+                          "title": "Trump Administration Focuses on Blockchain Technology Adoption",
+                          "subtitle": "Trump Administr",
+                          "buttons": [
+                              {
+                                  "title": "View",
+                                  "type": "web_url",
+                                  "url": "https://cointelegraph.com/news/trump-administration-focuses-on-blockchain-technology-adoption",
+                                  "messenger_extensions": true,
+                                  "webview_height_ratio": "tall",
+                                  "fallback_url": "https://blockchainevangelist.in/"
+                              }
+                          ]
+                      },
+                      {
+                          "title": "Blockchain Powers Shift To Decentralization In Media",
+                          "subtitle": "Blockchain Powe",
+                          "buttons": [
+                              {
+                                  "title": "View",
+                                  "type": "web_url",
+                                  "url": "https://cointelegraph.com/news/blockchain-powers-shift-to-decentralization-in-media",
+                                  "messenger_extensions": true,
+                                  "webview_height_ratio": "tall",
+                                  "fallback_url": "https://blockchainevangelist.in/"
+                              }
+                          ]
+                      },
+                      {
+                          "title": "Hyperledger Blockchain 'Shadows' Canadian Bank's International Payments",
+                          "subtitle": "Hyperledger Blo",
+                          "buttons": [
+                              {
+                                  "title": "View",
+                                  "type": "web_url",
+                                  "url": "https://cointelegraph.com/news/hyperledger-blockchain-shadows-canadian-banks-international-payments",
+                                  "messenger_extensions": true,
+                                  "webview_height_ratio": "tall",
+                                  "fallback_url": "https://blockchainevangelist.in/"
+                              }
+                          ]
+                      },
+                      {
+                          "title": "Tokenization: The Force Behind Blockchain Technology",
+                          "subtitle": "Tokenization: T",
+                          "buttons": [
+                              {
+                                  "title": "View",
+                                  "type": "web_url",
+                                  "url": "https://cointelegraph.com/news/tokenization-the-force-behind-blockchain-technology",
+                                  "messenger_extensions": true,
+                                  "webview_height_ratio": "tall",
+                                  "fallback_url": "https://blockchainevangelist.in/"
+                              }
+                          ]
+                      }
+                  ]
+              }
+            } 
+          }
+        }
+    };
+
+    request(options, function (error, response, body) {
+      if (error) {
+          console.log('Error sending message: ', error);
+        } else if (response.body.error) {
+          console.log('Error: ', response.body.error);
+        }
+        //console.log(body);
+        res.send(body);
+    });
+
+  },
+  whiteListDomains : function(req,res) {
+
+    var options = { method: 'POST',
+      url: 'https://graph.facebook.com/v2.6/me/messenger_profile',
+      qs: { access_token: 'EAABzjRLllHgBABHjf4jadxDvpKoGUp7Q5P4VfP9vYrqYkKZASpnH0Yvx5aZAbLD9NwRTF8zndZC7F2ldLe3pFZBwmo0hee6nC2FsSYlLJaouHJWLwRzMAIEIwp8pCchFkZCo5BxhP1JgZCU9dBbmepzfhStOXjZBjZCBuNdpwrrYvIvqwAXqJeXl' },
+      headers: { 'content-type': 'application/json' },
+      body: 
+       { whitelisted_domains: 
+          [ 'https://coinmarketcap.com','https://blockchainevangelist.in','https://cointelegraph.com','https://www.coindesk.com'] },
+      json: true };
+
+    request(options, function (error, response, body) {
+      if (error) throw new Error(error);
+
+      res.send(body);
+    });
   }
 };
 
