@@ -81,7 +81,7 @@ const webhooks = {
     };
 
 
-    function getdata(data){
+    function getdata(data) {
       console.log('getdata');
       let requestOptions ='',url = '';
 
@@ -108,8 +108,8 @@ const webhooks = {
 
         const price = JSON.parse(body);
         console.log(price);
-        const buy =  data.key == 'ethereum' ? price.bid : price.buy;
-        const sell = data.key == 'ethereum' ? price.ask : price.sell;
+        const buy =  data.key == 'ethereum' ? price.ask : price.buy;
+        const sell = data.key == 'ethereum' ? price.bid : price.sell;
 
         let pushString = `current ${data.key} buy rate is ${buy} INR and sell rate is ${sell} INR`;
 
@@ -132,6 +132,17 @@ const webhooks = {
           } 
       };
 
+      let messages = {
+        "attachment": {
+          "type": "template",
+          "payload": {
+            "template_type": "list",
+            "top_element_style": "compact",
+            "elements": null
+          }
+        }
+      }
+
       request(options, function (error, response, body) {
         if (error)  {
           return console.log(error);
@@ -147,8 +158,34 @@ const webhooks = {
           //console.log(((result.rss.channel)[0]));
           console.log(((result.rss.channel)[0].item)[0])
 
-          if (((result.rss.channel)[0]) && ((result.rss.channel)[0].item)[0]) {
-            sendMessage({sender : data.sender  ,text : ((result.rss.channel)[0].item)[0].link.join("")});
+          if (((result.rss.channel)[0]) && ((result.rss.channel)[0].item)) {
+             
+            let reducedArray = ((result.rss.channel)[0]).item.reduce(function(arr,curr,i) {
+          
+              if (i < 4) {
+                arr.push ({
+                  "title": curr.title.join(''),
+                  "subtitle":   curr.title.join('').slice(0,15),
+                  //"image_url": "https://peterssendreceiveapp.ngrok.io/img/collection.png",          
+                  "buttons": [
+                    {
+                      "title": "View",
+                      "type": "web_url",
+                      "url": curr.link.join(''),
+                      "messenger_extensions": true,
+                      "webview_height_ratio": "tall",
+                      "fallback_url": "https://blockchainevangelist.in/"            
+                    }
+                  ]
+                }); 
+              }
+
+              return arr;
+            },[]); 
+
+            messages.attachment.payload.elements = reducedArray;
+            
+            sendMessage({sender : data.sender  ,attachment : messages });
           } else {
             sendMessage({sender : data.sender  ,text : 'Sorry, No result found'});
           }
@@ -188,25 +225,40 @@ const webhooks = {
           sendMessage({sender : senderId ,text: message});
         });
       }
+      else if (payload === 'payload') {
+         console.log(payload);
+      }
     };
 
     function sendMessage(data) {
       console.log('sendMessage');
+
+      const json = {
+        recipient : { id : data.sender },
+        messages : null
+      };
+
+      if (data.text) {
+        json.messages = { text : data.text };
+      }
+      else {
+        json.messages = { attachment :  data.attachment };
+      }
+
       //console.log(data);
       request({
           url: 'https://graph.facebook.com/v2.6/me/messages',
           qs: {access_token: 'EAABzjRLllHgBABHjf4jadxDvpKoGUp7Q5P4VfP9vYrqYkKZASpnH0Yvx5aZAbLD9NwRTF8zndZC7F2ldLe3pFZBwmo0hee6nC2FsSYlLJaouHJWLwRzMAIEIwp8pCchFkZCo5BxhP1JgZCU9dBbmepzfhStOXjZBjZCBuNdpwrrYvIvqwAXqJeXl'},
           method: 'POST',
-          json: {
-              recipient: { id: data.sender },
-              message: { text: data.text }
-          }
+          json: json
       }, function (error, response) {
           if (error) {
             console.log('Error sending message: ', error);
           } else if (response.body.error) {
             console.log('Error: ', response.body.error);
           }
+
+          console.log(response);
       });
     };
 	},
@@ -253,6 +305,18 @@ const webhooks = {
         } 
     };
 
+
+    let messages = {
+      "attachment": {
+        "type": "template",
+        "payload": {
+          "template_type": "list",
+          "top_element_style": "compact",
+          "elements": null
+        }
+      }
+    }    
+
     request(options, function (error, response, body) {
       if (error)  {
         return console.log(error);
@@ -261,9 +325,36 @@ const webhooks = {
       var parseString = require('xml2js').parseString;
       //var xml = body;
       parseString(body, function (err, result) {
-        console.log(((result.rss.channel)[0]));
-          console.log(((result.rss.channel)[0].item)[0])
-        res.send((result.rss.channel)[0].item[0].link.join(""));
+       // console.log((((result.rss.channel)[0]).item));
+       // console.log((((result.rss.channel)[0].item)[0]).description.join().trim())
+        let reducedArray = ((result.rss.channel)[0]).item.reduce(function(arr,curr,i) {
+          
+          if (i < 4) {
+             arr.push ({
+              "title": curr.title.join(''),
+              "subtitle":   curr.title.join('').slice(0,15),
+              //"image_url": "https://peterssendreceiveapp.ngrok.io/img/collection.png",          
+              "buttons": [
+                {
+                  "title": "View",
+                  "type": "web_url",
+                  "url": curr.link.join(''),
+                  "messenger_extensions": true,
+                  "webview_height_ratio": "tall",
+                  "fallback_url": "https://blockchainevangelist.in/"            
+                }
+              ]
+            }) 
+          }
+           
+
+                   
+          return arr;
+        },[]);
+
+        messages.attachment.payload.elements = reducedArray
+
+        res.send(messages);
       }); 
 
     });
