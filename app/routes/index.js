@@ -20,17 +20,25 @@ module.exports = function (app) {
     /* Handling all messenges */
     app.post('/webhook', webhooks.messageHandler);
 
-    app.post('/showgreeting/setup',webhooks.payloadHandler);
+    /* get started button */
+    app.post('/showgreeting/setup',webhooks.welcomeScreen);
+    
+    // get xml from google neww
+    app.get('/getxml',webhooks.xmltoJson);
 
+    // for testing message
+    app.post('/testmessage',webhooks.sendMessage);
+
+    // for whitelisting domains
+    app.post('/whitelist',webhooks.whiteListDomains);    
+
+    // for messenger app menu
+    app.post('/appmenu',webhooks.appMenu);
+    
     app.get('/robots.txt', function(req,res) {
         res.sendFile(require('path').join(__dirname, '../robots.txt'));
     });
 
-    app.get('/xml',webhooks.xmltoJson);
-
-    app.post('/test',webhooks.sendMessage);
-
-    app.post('/whitelist',webhooks.whiteListDomains);
 
     // app.post('/api/sendemail', function(req,res) {
 		  
