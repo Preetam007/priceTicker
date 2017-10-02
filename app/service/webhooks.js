@@ -142,6 +142,8 @@ const webhooks = {
                 }
             };
 
+            console.log(data.page);
+
             if (data.page < 4) {
                 messages.attachment.payload.buttons = [
                     {
@@ -160,7 +162,7 @@ const webhooks = {
                 }
 
                 let parseString = require('xml2js').parseString;
-                
+
                 parseString(body, function (err, result) {
                   if (err) {
                     return console.log(err);
@@ -203,6 +205,8 @@ const webhooks = {
             console.log('processPostback');
             const senderId = event.sender.id;
             const payload = event.postback.payload;
+
+            console.log(payload);
 
             if (payload === "Greeting") {
                 // Get user's first name from the User Profile API
