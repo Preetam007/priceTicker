@@ -44,13 +44,13 @@ const webhooks = {
                   // Otherwise, search for new movie.
                   switch (formattedMsg) {
                     case "blockchain":
-                      getXml({key :'blockchain' ,sender :sender ,n :1});
+                      getXml({key :'blockchain' ,sender :sender ,page :1});
                       break;
                     case "cryptocurrenicies":
-                      getXml({key :'cryptocurrency' ,sender :sender ,n : 1 });
+                      getXml({key :'cryptocurrency' ,sender :sender ,page : 1 });
                       break;
                     case "crypto":
-                      getXml({key :'cryptocurrency' ,sender :sender ,n :1 });
+                      getXml({key :'cryptocurrency' ,sender :sender ,page :1 });
                       break;
                     case "btc":
                       getdata({key :'bitcoin' ,sender :sender } );
@@ -118,7 +118,7 @@ const webhooks = {
            // @TO do - user IP parmaeter
             //let lastIndex = 0;
             const limit = data.limit || 4;
-            const lastIndex = !!data.n ? (parseInt(data.n) - 1)*limit : 0;
+            const lastIndex = !!data.n ? (parseInt(data.page || 1) - 1)*limit : 0;
 
             const options = {
                 method: 'GET',
@@ -131,23 +131,27 @@ const webhooks = {
                 }
             };
 
-            let messages = {
+            const messages = {
                 "attachment": {
-                  "type": "template",
-                  "payload": {
-                    "template_type": "list",
-                    "top_element_style": "compact",
-                    "elements": null,
-                    "buttons": [
-                      {
-                        "title": "View More",
-                        "type": "postback",
-                        "payload": "payload"
-                      }
-                    ]
-                  }
+                    "type": "template",
+                    "payload": {
+                        "template_type": "list",
+                        "top_element_style": "compact",
+                        "elements": null
+                    }
                 }
             };
+
+            if (data.page < 4) {
+                messages.attachment.payload.buttons = [
+                    {
+                        "title": "View More",
+                        "type": "postback",
+                        // test if we can pass object
+                        "payload": `view more payload ${parseInt(data.page || 1)+1}`
+                    }
+                ]
+            }
 
             request(options, function (error, response, body) {
 
@@ -156,6 +160,7 @@ const webhooks = {
                 }
 
                 let parseString = require('xml2js').parseString;
+                
                 parseString(body, function (err, result) {
                   if (err) {
                     return console.log(err);
@@ -176,6 +181,7 @@ const webhooks = {
                               "url": curr.link.join(''),
                               "messenger_extensions": true,
                               "webview_height_ratio": "tall",
+                              // @TO DO - why fallback url coming in web view , in messenger it is working fine
                               "fallback_url": "https://blockchainevangelist.in/"
                             }
                           ]
@@ -221,9 +227,10 @@ const webhooks = {
                     sendMessage({sender : senderId ,text: message});
                 });
             }
-            else if (payload === 'payload') {
+            else if (payload.indexOf("view more payload") > 0) {
                 //getXml({ sender : senderId ,})
-                getXml({key :'cryptocurrency' ,sender :senderId ,n : 2} );
+                console.log(payload);
+                getXml({key :'cryptocurrency' ,sender :senderId ,page : parseInt(payload.match(/\d+/g)[0])});
             }
         };
 
