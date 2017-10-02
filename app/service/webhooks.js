@@ -144,7 +144,7 @@ const webhooks = {
 
             console.log(data.page);
 
-            if (data.page < 4) {
+            if (data.page <= 3) {
                 messages.attachment.payload.buttons = [
                     {
                         "title": "View More",
