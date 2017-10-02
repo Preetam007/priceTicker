@@ -118,7 +118,7 @@ const webhooks = {
            // @TO do - user IP parmaeter
             //let lastIndex = 0;
             const limit = data.limit || 4;
-            const lastIndex = !!data.n ? (parseInt(data.page || 1) - 1)*limit : 0;
+            const lastIndex = !!data.page ? (parseInt(data.page || 1) - 1)*limit : 0;
 
             const options = {
                 method: 'GET',
@@ -142,7 +142,6 @@ const webhooks = {
                 }
             };
 
-            console.log(data.page);
 
             if (data.page < 3) {
                 messages.attachment.payload.buttons = [
@@ -202,11 +201,8 @@ const webhooks = {
         }
 
         function processPostback(event) {
-            console.log('processPostback');
             const senderId = event.sender.id;
             const payload = event.postback.payload;
-
-            console.log(payload);
 
             if (payload === "Greeting") {
                 // Get user's first name from the User Profile API
@@ -232,8 +228,6 @@ const webhooks = {
                 });
             }
             else if (payload.indexOf("view more payload") >= 0) {
-                //getXml({ sender : senderId ,})
-                console.log(payload);
                 getXml({key :'cryptocurrency' ,sender :senderId ,page : parseInt(payload.match(/\d+/g)[0])});
             }
         };
