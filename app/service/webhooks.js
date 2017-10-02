@@ -231,7 +231,7 @@ const webhooks = {
                     sendMessage({sender : senderId ,text: message});
                 });
             }
-            else if (payload.indexOf("view more payload") > 0) {
+            else if (payload.indexOf("view more payload") >= 0) {
                 //getXml({ sender : senderId ,})
                 console.log(payload);
                 getXml({key :'cryptocurrency' ,sender :senderId ,page : parseInt(payload.match(/\d+/g)[0])});
