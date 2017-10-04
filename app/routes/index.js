@@ -26,6 +26,10 @@ module.exports = function (app) {
     // get xml from google neww
     app.get('/getxml',webhooks.xmltoJson);
 
+    // to test coinmarket cap apis
+    
+    app.get('/getdata',webhooks.getData);
+
     // for testing message
     app.post('/testmessage',webhooks.sendMessage);
 
@@ -34,7 +38,7 @@ module.exports = function (app) {
 
     // for messenger app menu
     app.post('/appmenu',webhooks.appMenu);
-    
+
     app.get('/robots.txt', function(req,res) {
         res.sendFile(require('path').join(__dirname, '../robots.txt'));
     });

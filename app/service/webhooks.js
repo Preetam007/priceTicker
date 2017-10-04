@@ -36,40 +36,31 @@ const webhooks = {
             if (!!event && !!event.message) {
 
                 if (event.message.text) {
-                  text = event.message.text;
-                  const formattedMsg = text.toLowerCase().trim();
+                   text = event.message.text;
+                   const formattedMsg = text.toLowerCase().trim();
 
                   // If we receive a text message, check to see if it matches any special
-                  // keywords and send back the corresponding movie detail.
-                  // Otherwise, search for new movie.
-                  switch (formattedMsg) {
-                    case "blockchain":
-                      getXml({key :'blockchain' ,sender :sender ,page :1});
-                      break;
-                    case "cryptocurrenicies":
-                      getXml({key :'cryptocurrency' ,sender :sender ,page : 1 });
-                      break;
-                    case "crypto":
-                      getXml({key :'cryptocurrency' ,sender :sender ,page :1 });
-                      break;
-                    case "btc":
-                      getdata({key :'bitcoin' ,sender :sender } );
-                      break;
-                    case "bitcoin":
-                      getdata({key :'bitcoin' ,sender :sender });
-                      break;
-                    case "ether":
-                      getdata({key :'ethereum' ,sender :sender });
-                      break;
-                    case "eth":
-                      getdata({key :'ethereum' ,sender :sender });
-                      break;
-                    case "ethereum":
-                      getdata({key :'ethereum' ,sender :sender });
-                      break;
-                    default:
-                      sendMessage({sender : sender ,text : text});
-                  }
+                  // keywords and send back the corresponding  detail.
+                    
+
+                    if (formattedMsg.indexOf(":") >= 0) {        
+                        getdata({key :formattedMsg ,sender :sender });
+                    }
+                    else {
+                        switch (formattedMsg) {
+                            case "blockchain":
+                                getXml({key :'blockchain' ,sender :sender ,page :1});
+                                break;
+                            case "cryptocurrenicies":
+                                getXml({key :'cryptocurrency' ,sender :sender ,page : 1 });
+                                break;
+                            case "crypto":
+                                getXml({key :'cryptocurrency' ,sender :sender ,page :1 });
+                                break;
+                            default:
+                                sendMessage({sender : sender ,text : text});
+                        }
+                    } 
 
                 } else if (event.message.attachments) {
                   text = "Sorry, I don't understand your request.";
@@ -78,17 +69,10 @@ const webhooks = {
             }
         };
 
-
         function getdata(data) {
             let requestOptions ='',url = '';
-
-            if (data.key == 'ethereum') {
-                url =  'https://api.ethexindia.com/ticker/';
-            }
-            else {
-                url = 'https://www.zebapi.com/api/v1/market/ticker/btc/inr';
-            }
-
+                url = `https://api.coinmarketcap.com/v1/ticker/${data.key.split(":")[0]}/?convert=${data.key.split(":")[1]}`;
+            
             requestOptions = {
                 method: 'GET',
                 url :  url,
@@ -101,18 +85,15 @@ const webhooks = {
             request(requestOptions, function requestOptions(error, response, body) {
                 if (error) {
                   console.log(error);
+                  return sendMessage({sender : data.sender  ,text : 'something went wrong...'});
                 }
 
-                const price = JSON.parse(body);
-                const buy =  data.key == 'ethereum' ? price.ask : price.buy;
-                const sell = data.key == 'ethereum' ? price.bid : price.sell;
-
-                let pushString = `current ${data.key} buy rate is ${buy} INR and sell rate is ${sell} INR`;
+                const price_data = JSON.parse(body);
+                let pushString = `current ${data.key.split(":")[0]} price is ${(price_data[0])['price_'+data.key.split(":")[1]]} ${data.key.split(":")[1].toUpperCase()}`;
 
                 sendMessage({sender : data.sender  ,text : pushString});
             });
         };
-
 
         function getXml(data) {
            // @TO do - user IP parmaeter
@@ -198,7 +179,7 @@ const webhooks = {
                   }
                 });
               });
-        }
+        };
 
         function processPostback(event) {
             const senderId = event.sender.id;
@@ -224,7 +205,7 @@ const webhooks = {
                         greeting = "Hi " + name + ". ";
                     }
                     let message = greeting + "My name is BlockChain Evangelist Bot. I can tell you various details regarding blockchain,cryptocurriencies. What topic would you like to know about?";
-                    sendMessage({sender : senderId ,text: message});
+                    sendMessage({sender : senderId ,text: message ,again : { send : true , text : 'To know coin prices in any fiat curreny just write "coin:symbol" (eg: bitcoin:usd) ' }});
                 });
             }
             else if (payload.indexOf("view more payload") >= 0) {
@@ -258,16 +239,23 @@ const webhooks = {
                     console.log('Error: ', response.body.error);
                 }
                 //console.log(response);
+                
+
+                if (!!data.again && !!data.again.send)   {
+                    data.sendMessage({ sender : data.sender ,text :  data.again.text });
+                } 
+
             });
         };
 	},
     // to enable show greeting(get started button) message , for this we have to handle postback callback and subscribe
     // messaging_postbacks
-  
     xmltoJson : function xmltoJson(req,res) {
+
         let lastIndex = 0;
         let limit = req.query.limit || 4;
-        lastIndex = !!req.query && req.query.n ? (parseInt(req.query.n) - 1)*limit : 0; 
+        lastIndex = !!req.query && req.query.n ? (parseInt(req.query.n) - 1)*limit : 0;
+
         const options = { 
           method: 'GET',
           url: `https://news.google.com/news/rss/search/section/q/blockchain coinTelegraph/blockchain coinTelegraph`,
@@ -297,12 +285,11 @@ const webhooks = {
             }
           }
         };
-
-          
-
+   
         request(options, function (error, response, body) {
+
             if (error)  {
-            return console.log(error);
+                return console.log(error);
             }
           
             let parseString = require('xml2js').parseString;
@@ -334,14 +321,11 @@ const webhooks = {
                 messages.attachment.payload.elements = reducedArray
 
                 res.send(messages);
-              }); 
-
+            }); 
         });
-
     },
     sendMessage : function (req,res) {
-
-        var options = { 
+        const options = { 
           url: 'https://graph.facebook.com/v2.6/me/messages',
             qs: {access_token: 'EAABzjRLllHgBABHjf4jadxDvpKoGUp7Q5P4VfP9vYrqYkKZASpnH0Yvx5aZAbLD9NwRTF8zndZC7F2ldLe3pFZBwmo0hee6nC2FsSYlLJaouHJWLwRzMAIEIwp8pCchFkZCo5BxhP1JgZCU9dBbmepzfhStOXjZBjZCBuNdpwrrYvIvqwAXqJeXl'},
             method: 'POST',
@@ -426,7 +410,6 @@ const webhooks = {
             //console.log(body);
             res.send(body);
         });
-
     },
     welcomeScreen :  function payloadHandler(req,res) {
 
@@ -507,6 +490,40 @@ const webhooks = {
           if (error) throw new Error(error);
 
           res.send(body);
+        });
+    },
+    getData : function getData(req,res) {
+        var data  = {
+            key : 'bitcoin:inr'
+        }
+
+        let requestOptions ='',url = '';
+                url = `https://api.coinmarketcap.com/v1/ticker/${data.key.split(":")[0]}/?convert=${data.key.split(":")[1]}`;
+            
+        requestOptions = {
+            method: 'GET',
+            url :  url,
+            headers:
+            { 'User-Agent': "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36"
+            }
+        };
+
+        console.log('coming');
+        console.log(url);
+
+        request(requestOptions, function requestOptions(error, response, body) {
+            if (error) {
+              console.log(error);
+            }
+
+            //console.log(response);
+
+            const price_data = JSON.parse(body);
+            
+            let pushString = `current ${data.key.split(":")[0]} price is ${(price_data[0])['price_'+data.key.split(":")[1]]} ${data.key.split(":")[1].toUpperCase()}`;
+
+            console.log(pushString);
+            res.send(pushString);
         });
     }
 };
