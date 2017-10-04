@@ -242,7 +242,7 @@ const webhooks = {
                 
 
                 if (!!data.again && !!data.again.send)   {
-                    data.sendMessage({ sender : data.sender ,text :  data.again.text });
+                    sendMessage({ sender : data.sender ,text :  data.again.text });
                 } 
 
             });
