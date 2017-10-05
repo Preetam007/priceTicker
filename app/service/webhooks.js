@@ -82,10 +82,10 @@ const webhooks = {
 
         function getAbout(data) {
             if (!!about[data.key.split("-")[0]]) {
-                sendMessage({sender : data.sender  ,text :about[data.key.split(":")[0]] });
+                sendMessage({sender : data.sender  ,text :about[data.key.split("-")[0]] });
             }
             else {
-                sendMessage({sender : data.sender  ,text : `no data found for ${data.key.split(":")[0]}`});
+                sendMessage({sender : data.sender  ,text : `no data found for ${data.key.split("-")[0]}`});
             }
         };
 
