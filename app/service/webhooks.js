@@ -92,7 +92,7 @@ const webhooks = {
                     }
 
                     const price_data = JSON.parse(body);
-                    let pushString = `current ${data.key.split(":")[0]} price is ${Math.round((price_data[0])['price_'+data.key.split(":")[1]])} ${data.key.split(":")[1].toUpperCase()}`;
+                    let pushString = `current ${data.key.split(":")[0].toUpperCase()} price is ${Math.round((price_data[0])['price_'+data.key.split(":")[1]]) || Math.round((price_data[0])['price_usd'])} ${ (price_data[0])['price_'+data.key.split(":")[1]] ? data.key.split(":")[1].toUpperCase() : 'USD'  }`;
 
                     sendMessage({sender : data.sender  ,text : pushString});
                 });
