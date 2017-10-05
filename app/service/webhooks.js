@@ -1,7 +1,8 @@
 'use strict';
 const request = require('request');
 
-const mapping= require('./mapping.json')
+const mapping= require('./mapping.json');
+const about = require('./about.json');
 
 const webhooks = {
 	verification  : function verification(req,res) {
@@ -41,12 +42,20 @@ const webhooks = {
                    text = event.message.text;
                    const formattedMsg = text.toLowerCase().trim();
 
-                  // If we receive a text message, check to see if it matches any special
-                  // keywords and send back the corresponding  detail.
+                   // If we receive a text message, check to see if it matches any special
+                   // keywords and send back the corresponding  detail.
                     
 
                     if (formattedMsg.indexOf(":") >= 0) {        
                         getdata({key :formattedMsg ,sender :sender });
+                    }
+                    else if (formattedMsg.indexOf("-") >= 0) {
+                        if (formattedMsg.split("-")[1] === "news") {
+                            getXml({key : mapping[formattedMsg.split("-")[0]] || "bitcoin" ,sender :sender ,page :1});
+                        }
+                        else {
+                            getAbout({key : formattedMsg , sender :  sender});
+                        }
                     }
                     else {
                         switch (formattedMsg) {
@@ -68,6 +77,15 @@ const webhooks = {
                   text = "Sorry, I don't understand your request.";
                   sendMessage({sender : sender ,text : text});
                 }
+            }
+        };
+
+        function getAbout(data) {
+            if (!!about[data.key.split(":")[0]]) {
+                sendMessage({sender : data.sender  ,text :about[data.key.split(":")[0]] });
+            }
+            else {
+                sendMessage({sender : data.sender  ,text : `no data found for ${data.key.split(":")[1]}`});
             }
         };
 
@@ -265,7 +283,7 @@ const webhooks = {
 
         const options = { 
           method: 'GET',
-          url: `https://news.google.com/news/rss/search/section/q/blockchain coinTelegraph/blockchain coinTelegraph`,
+          url: `https://news.google.com/news/rss/search/section/q/dgb coinTelegraph/dgb coinTelegraph`,
           qs: { hl: 'en-IN', ned: 'in' },
           headers: 
             { 
@@ -302,32 +320,34 @@ const webhooks = {
             let parseString = require('xml2js').parseString;
             parseString(body, function (err, result) {
 
-                let reducedArray = ((result.rss.channel)[0]).item.slice(lastIndex,lastIndex+4).reduce(function(arr,curr,i) {
-                  
-                    
-                    arr.push ({
-                      "title": curr.title.join(''),
-                      "subtitle":   curr.title.join('').slice(0,15),
-                      //"image_url": "https://peterssendreceiveapp.ngrok.io/img/collection.png",          
-                      "buttons": [
-                        {
-                          "title": "View",
-                          "type": "web_url",
-                          "url": curr.link.join(''),
-                          "messenger_extensions": true,
-                          "webview_height_ratio": "tall",
-                          "fallback_url": "https://blockchainevangelist.in/"            
-                        }
-                      ]
-                    }); 
-                    
-                        
-                  return arr;
-                },[]);
 
-                messages.attachment.payload.elements = reducedArray
 
-                res.send(messages);
+                // let reducedArray = ((result.rss.channel)[0]).item.slice(lastIndex,lastIndex+4).reduce(function(arr,curr,i) {
+                //
+                //
+                //     arr.push ({
+                //       "title": curr.title.join(''),
+                //       "subtitle":   curr.title.join('').slice(0,15),
+                //       //"image_url": "https://peterssendreceiveapp.ngrok.io/img/collection.png",
+                //       "buttons": [
+                //         {
+                //           "title": "View",
+                //           "type": "web_url",
+                //           "url": curr.link.join(''),
+                //           "messenger_extensions": true,
+                //           "webview_height_ratio": "tall",
+                //           "fallback_url": "https://blockchainevangelist.in/"
+                //         }
+                //       ]
+                //     });
+                //
+                //
+                //   return arr;
+                // },[]);
+                //
+                // messages.attachment.payload.elements = reducedArray
+
+                res.send(result);
             }); 
         });
     },
@@ -503,7 +523,7 @@ const webhooks = {
 	    //console.log(mapping.btc);
 
         var data  = {
-            key : 'oklll:inr'
+            key : 'btc:lllll'
         }
 
         let requestOptions ='',url = '';
@@ -530,8 +550,8 @@ const webhooks = {
             const price_data = JSON.parse(body);
 
             console.log(price_data);
-            
-            let pushString = `current ${data.key.split(":")[0]} price is ${(price_data[0])['price_'+data.key.split(":")[1]]} ${data.key.split(":")[1].toUpperCase()}`;
+
+            let pushString = `current ${data.key.split(":")[0].toUpperCase()} price is ${Math.round((price_data[0])['price_'+data.key.split(":")[1]]) || Math.round((price_data[0])['price_usd'])} ${ (price_data[0])['price_'+data.key.split(":")[1]] ? data.key.split(":")[1].toUpperCase() : 'USD'  }`;
 
             console.log(pushString);
             res.send(pushString);
