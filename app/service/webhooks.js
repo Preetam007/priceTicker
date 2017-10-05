@@ -1,6 +1,8 @@
 'use strict';
 const request = require('request');
 
+const mapping= require('./mapping.json')
+
 const webhooks = {
 	verification  : function verification(req,res) {
         if (req.query["hub.verify_token"] === "this_is_my_token") {
@@ -71,28 +73,33 @@ const webhooks = {
 
         function getdata(data) {
             let requestOptions ='',url = '';
-                url = `https://api.coinmarketcap.com/v1/ticker/${data.key.split(":")[0]}/?convert=${data.key.split(":")[1]}`;
-            
-            requestOptions = {
-                method: 'GET',
-                url :  url,
-                headers:
-                { 'User-Agent': "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36",
-                  'cache-control': 'no-cache'
-                }
-            };
+                url = `https://api.coinmarketcap.com/v1/ticker/${mapping[data.key.split(":")[0]]}/?convert=${data.key.split(":")[1]}`;
 
-            request(requestOptions, function requestOptions(error, response, body) {
-                if (error) {
-                  console.log(error);
-                  return sendMessage({sender : data.sender  ,text : 'something went wrong...'});
-                }
+            if (!!mapping[data.key.split(":")[0]]) {
+                requestOptions = {
+                    method: 'GET',
+                    url :  url,
+                    headers:
+                        { 'User-Agent': "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36",
+                            'cache-control': 'no-cache'
+                        }
+                };
 
-                const price_data = JSON.parse(body);
-                let pushString = `current ${data.key.split(":")[0]} price is ${(price_data[0])['price_'+data.key.split(":")[1]]} ${data.key.split(":")[1].toUpperCase()}`;
+                request(requestOptions, function requestOptions(error, response, body) {
+                    if (error) {
+                        console.log(error);
+                        return sendMessage({sender : data.sender  ,text : 'something went wrong...'});
+                    }
 
-                sendMessage({sender : data.sender  ,text : pushString});
-            });
+                    const price_data = JSON.parse(body);
+                    let pushString = `current ${data.key.split(":")[0]} price is ${Math.round((price_data[0])['price_'+data.key.split(":")[1]])} ${data.key.split(":")[1].toUpperCase()}`;
+
+                    sendMessage({sender : data.sender  ,text : pushString});
+                });
+            }
+            else {
+                sendMessage({sender : data.sender  ,text : `No data found for ${data.key.split(":")[1]} symbol` });
+            }
         };
 
         function getXml(data) {
@@ -493,12 +500,14 @@ const webhooks = {
         });
     },
     getData : function getData(req,res) {
+	    //console.log(mapping.btc);
+
         var data  = {
-            key : 'bitcoin:inr'
+            key : 'oklll:inr'
         }
 
         let requestOptions ='',url = '';
-                url = `https://api.coinmarketcap.com/v1/ticker/${data.key.split(":")[0]}/?convert=${data.key.split(":")[1]}`;
+                url = `https://api.coinmarketcap.com/v1/ticker/${mapping[data.key.split(":")[0]]}/?convert=${data.key.split(":")[1]}`;
             
         requestOptions = {
             method: 'GET',
@@ -519,6 +528,8 @@ const webhooks = {
             //console.log(response);
 
             const price_data = JSON.parse(body);
+
+            console.log(price_data);
             
             let pushString = `current ${data.key.split(":")[0]} price is ${(price_data[0])['price_'+data.key.split(":")[1]]} ${data.key.split(":")[1].toUpperCase()}`;
 

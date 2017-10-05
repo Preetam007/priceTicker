@@ -2,10 +2,11 @@
 const notifier = require('node-notifier');
 const request = require('request');
 const async = require('async');
+const fs = require('fs');
 
 exports = module.exports = function(agenda){
 
-  agenda.define('fetch ethereum price', function(job, done) {
+  agenda.define('fetch crypto price', function(job, done) {
   
     const ethexOptions = { 
       method: 'GET',
@@ -82,10 +83,63 @@ exports = module.exports = function(agenda){
     done();
   });
 
+  agenda.define('add new coins',function(job,done) {
 
-	agenda.on('ready', function(arguments) {
+      const getcurrencies = {
+          method: 'GET',
+          url: 'https://bittrex.com/api/v1.1/public/getcurrencies',
+          headers:
+              { 'User-Agent': "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36",
+                  'cache-control': 'no-cache'
+              }
+      }
+
+      let write = require('./../app/service/mapping.json');
+
+      request(getcurrencies, function (error, response, body) {
+          if (error) {
+              return done(error);
+          }
+
+          //console.log(body);
+
+          const price = JSON.parse(body);
+
+          if (!!price.success) {
+             var modOj = price.result.reduce(function (obj,curr,i) {
+
+                 obj[curr.Currency.toLocaleLowerCase()] = curr.CurrencyLong.toLocaleLowerCase();
+
+                 return obj;
+
+             },{});
+
+             console.log(modOj);
+
+              fs.open(__dirname+'/../app/service/mapping.json', 'w', function(err, fd) {
+                  if (err) {
+                      throw 'error opening file: ' + err;
+                  }
+
+                  console.log('ok');
+
+                  fs.writeFile(__dirname+'/../app/service/mapping.json',JSON.stringify(modOj), function (err) {
+                      if (err) throw err;
+                      console.log('Saved!');
+                      done();
+                  });
+              });
+
+          }
+
+      });
+  });
+
+
+	agenda.on('ready', function() {
     console.log(process.env.refreshTime,process.env.timePrefix)
-	  agenda.every(`${process.env.refreshTime || 30} ${process.env.timePrefix}`, 'fetch ethereum price');
+	  //agenda.every(`${process.env.refreshTime || 30} ${process.env.timePrefix}`, 'fetch crypto price');
+      agenda.every('23 hours', 'add new coins');
 	  agenda.start();
 	});
 
