@@ -69,6 +69,10 @@ const webhooks = {
                             sendMessage({sender : sender  ,text : `no data found for ${formattedMsg.split("-")[1]}`});
                         }
                     }
+                    else if (formattedMsg.indexOf("=") >= 0 && !! ormattedMsg.split("=")[1]) {
+                        senderAction ({sender : sender ,action : 'typing_on'});
+                        getDapps({ key : formattedMsg.split("=")[1] ,sender : sender });
+                    }
                     else {
                         switch (formattedMsg) {
                             case "blockchain":
@@ -94,6 +98,88 @@ const webhooks = {
                 }
             }
         };
+
+        function getDapps(data) {
+
+            const limit = data.limit || 4;
+            const lastIndex = !!data.page ? (parseInt(data.page || 1) - 1)*limit : 0;
+
+
+            const messages = {
+                "attachment": {
+                    "type": "template",
+                    "payload": {
+                        "template_type": "list",
+                        "top_element_style": "compact",
+                        "elements": null
+                        // ,
+                        // "buttons": [
+                        //     {
+                        //         "title": "View More",
+                        //         "type": "postback",
+                        //         "payload": "payload"
+                        //     }
+                        // ]
+                    }
+                }
+            };
+
+            const options = {
+                method: 'GET',
+                url: 'https://api.stateofthedapps.com/v1/dapps',
+                qs:
+                    { category: 'recently added',
+                        refine: 'nothing',
+                        'tags[]': data.key,
+                        text: ''
+                    },
+                headers:
+                    {
+                        'User-Agent': "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36",
+                        'cache-control': 'no-cache'
+                    }
+            };
+
+            request(options, function (error, response, body) {
+                if (error) throw new Error(error);
+
+                let dapps = JSON.parse(body);
+
+                if(Array.isArray(dapps) && dapps.length > 0) {
+                    let reducedArray = dapps.item.slice(lastIndex,lastIndex+4).reduce(function(arr,curr,i) {
+
+
+                        arr.push ({
+                          "title": curr.teaser,
+                          "subtitle":   curr.name,
+                          //"image_url": "https://peterssendreceiveapp.ngrok.io/img/collection.png",
+                          "buttons": [
+                            {
+                              "title": "View",
+                              "type": "web_url",
+                              "url": `https://www.stateofthedapps.com/dapps/${curr.slug}`,
+                              "messenger_extensions": true,
+                              "webview_height_ratio": "tall",
+                              "fallback_url": "https://blockchainevangelist.in/"
+                            }
+                          ]
+                        });
+
+
+                      return arr;
+                    },[]);
+                    //
+                    messages.attachment.payload.elements = reducedArray;
+                    sendMessage({sender : data.sender  ,attachment : messages.attachment });
+                }
+                else {
+                    sendMessage({sender : data.sender  ,text : `no dApps found for ${data.key} category`});
+                }
+
+                sendMessage({sender : data.sender  ,attachment : messages.attachment });
+            });
+
+        }
 
         /**
          * To get about coin - coin info from about.json
@@ -302,6 +388,9 @@ const webhooks = {
                 sendMessage({sender : senderId ,text: 'To know coin prices in any fiat curreny just write "coin:symbol" (eg: btc:usd) ,' +
                 'to know latest news of a coin type "coin-news" (eg: btc-news) and to know about a coin type "coin-about" (eg: btc-about)' });
             }
+            else if (payload === 'dapps') {
+                sendMessage({sender : senderId ,text:  'To get list of dApps related to a category type "dapp=category" (eg: dapp=insurance)'});
+            }
             else if (payload.indexOf("view more payload") >= 0) {
                 senderAction ({sender : senderId ,action : 'typing_on'});
                 getXml({key :'cryptocurrency' ,sender :senderId ,page : parseInt(payload.match(/\d+/g)[0])});
@@ -341,7 +430,7 @@ const webhooks = {
                     console.log("Successfully sent generic message with id %s to recipient %s", messageId, recipientId);
                     senderAction ({sender : data.sender ,action : 'typing_off'});
 
-                    if (!!data.again && !!data.again.send)   {
+                    if (!!data.again && !!data.again.send)   {s
                         sendMessage({ sender : data.sender ,text :  data.again.text });
                     }
 
@@ -603,8 +692,8 @@ const webhooks = {
                     },
                     {
                           "type":"postback",
-                          "title":"Menu",
-                          "payload":"menu"
+                          "title":"Dapps - Curated Collection of  Decentralized Apps ",
+                          "payload":"dapps"
                     },
                     {
                       "type":"web_url",
@@ -661,7 +750,7 @@ const webhooks = {
             res.send(pushString);
         });
     },
-    genericTemplate : function (req,res) {
+    genericTemplate : function genericTemplate(req,res) {
         const messageData = {
             recipient: {
                 id: '1701904353175444'
@@ -725,6 +814,31 @@ const webhooks = {
             //console.log(body);
             res.send(body);
         });
+    },
+    getDapps : function getDapps(req,res) {
+
+        const options = {
+            method: 'GET',
+            url: 'https://api.stateofthedapps.com/v1/dapps',
+            qs:
+                { category: 'recently added',
+                    refine: 'nothing',
+                    'tags[]': 'insurance',
+                    text: ''
+                },
+            headers:
+                {
+                    'User-Agent': "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36",
+                    'cache-control': 'no-cache'
+                }
+        };
+
+        request(options, function (error, response, body) {
+            if (error) throw new Error(error);
+
+            res.send(JSON.parse(body));
+        });
+
     }
 };
 

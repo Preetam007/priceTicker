@@ -35,6 +35,10 @@ module.exports = function (app) {
 
     app.post('/testgenericmessage',webhooks.genericTemplate);
 
+    // for dapps
+
+    app.get('/dapps',webhooks.getDapps);
+
     // for whitelisting domains
     app.post('/whitelist',webhooks.whiteListDomains);    
 
