@@ -145,6 +145,8 @@ const webhooks = {
 
                 let dapps = JSON.parse(body);
 
+                console.log(dapps);
+
                 if(Array.isArray(dapps) && dapps.length > 0) {
                     let reducedArray = dapps.item.slice(lastIndex,lastIndex+4).reduce(function(arr,curr,i) {
 
