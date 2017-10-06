@@ -32,6 +32,11 @@ const webhooks = {
           res.status(200).end();
         }
 
+        /**
+         * To process message sent by user except postback
+         * @param event
+         */
+
         function procressMessage(event) {
             let sender ,text ;
                 sender = event.sender.id;
@@ -90,6 +95,11 @@ const webhooks = {
             }
         };
 
+        /**
+         * To get about coin - coin info from about.json
+         * @param data
+         */
+
         function getAbout(data) {
             if (!!about[data.key.split("-")[0]]) {
                 sendMessage({sender : data.sender  ,text :about[data.key.split("-")[0]] });
@@ -98,6 +108,11 @@ const webhooks = {
                 sendMessage({sender : data.sender  ,text : `no data found for ${data.key.split("-")[0]}`});
             }
         };
+
+        /**
+         * To show bot is typing on or typing off
+         * @param data
+         */
 
         function senderAction(data) {
 
@@ -123,6 +138,10 @@ const webhooks = {
             });
         }
 
+        /**
+         * To get altcoin pricing
+         * @param data
+         */
         function getdata(data) {
             let requestOptions ='',url = '';
                 url = `https://api.coinmarketcap.com/v1/ticker/${mapping[data.key.split(":")[0]]}/?convert=${data.key.split(":")[1]}`;
@@ -153,6 +172,11 @@ const webhooks = {
                 sendMessage({sender : data.sender  ,text : `No data found for ${data.key.split(":")[1]} symbol` });
             }
         };
+
+        /**
+         * To get xml from google rss feed
+         * @param data
+         */
 
         function getXml(data) {
            // @TO do - user IP parmaeter
@@ -231,7 +255,7 @@ const webhooks = {
                       return arr;
                     },[]);
                        messages.attachment.payload.elements = reducedArray;
-                       senderAction ({sender : data.sender ,action : 'typing_off'});
+
                        sendMessage({sender : data.sender  ,attachment : messages.attachment });
                   } else {
                       senderAction ({sender : data.sender ,action : 'typing_off'});
@@ -240,6 +264,11 @@ const webhooks = {
                 });
               });
         };
+
+        /**
+         * used to process the postback like when clieck on get started or on left menu - means any button
+         * @param event
+         */
 
         function processPostback(event) {
             const senderId = event.sender.id;
@@ -265,18 +294,24 @@ const webhooks = {
                         greeting = "Hi " + name + ". ";
                     }
                     let message = greeting + "My name is BlockChain Evangelist Bot. I can tell you various details regarding blockchain,cryptocurriencies. What topic would you like to know about?";
-                    sendMessage({sender : senderId ,text: message ,again : { send : true , text : 'To know coin prices in any fiat curreny just write "coin:symbol" (eg: btc:usd) ' }});
+                    sendMessage({sender : senderId ,text: 'To know coin prices in any fiat curreny just write "coin:symbol" (eg: btc:usd) ,' +
+                    'to know latest news of a coin type "coin-news" (eg: btc-news) and to know about a coin type "coin-about" (eg: btc-about)' });
                 });
             }
             else if (payload === 'help') {
                 sendMessage({sender : senderId ,text: 'To know coin prices in any fiat curreny just write "coin:symbol" (eg: btc:usd) ,' +
-                'to know latest new of coin type "coin-news" (eg: btc-news) and to know about a coin type "coin-about" (eg: btc-news)' });
+                'to know latest news of a coin type "coin-news" (eg: btc-news) and to know about a coin type "coin-about" (eg: btc-about)' });
             }
             else if (payload.indexOf("view more payload") >= 0) {
                 senderAction ({sender : senderId ,action : 'typing_on'});
                 getXml({key :'cryptocurrency' ,sender :senderId ,page : parseInt(payload.match(/\d+/g)[0])});
             }
         };
+
+        /**
+         * To send messages to user
+         * @param data - accepts sender id and type of data
+         */
 
         function sendMessage(data) {
 
@@ -297,18 +332,25 @@ const webhooks = {
                 qs: {access_token: 'EAABzjRLllHgBABHjf4jadxDvpKoGUp7Q5P4VfP9vYrqYkKZASpnH0Yvx5aZAbLD9NwRTF8zndZC7F2ldLe3pFZBwmo0hee6nC2FsSYlLJaouHJWLwRzMAIEIwp8pCchFkZCo5BxhP1JgZCU9dBbmepzfhStOXjZBjZCBuNdpwrrYvIvqwAXqJeXl'},
                 method: 'POST',
                 json: json
-            }, function (error, response) {
-                if (error) {
-                    console.log('Error sending message: ', error);
-                } else if (response.body.error) {
-                    console.log('Error: ', response.body.error);
-                }
-                //console.log(response);
-                
+            }, function (error, response,body) {
 
-                if (!!data.again && !!data.again.send)   {
-                    sendMessage({ sender : data.sender ,text :  data.again.text });
-                } 
+                if (!error && response.statusCode == 200) {
+                    const recipientId = body.recipient_id;
+                    const messageId = body.message_id;
+
+                    console.log("Successfully sent generic message with id %s to recipient %s", messageId, recipientId);
+                    senderAction ({sender : data.sender ,action : 'typing_off'});
+
+                    if (!!data.again && !!data.again.send)   {
+                        sendMessage({ sender : data.sender ,text :  data.again.text });
+                    }
+
+                }
+                else {
+                    console.error("Unable to send message.");
+                    console.error(response);
+                    console.error(error);
+                }
 
             });
         };
@@ -393,27 +435,26 @@ const webhooks = {
     },
     sendMessage : function (req,res) {
 
-        const json = {
-            recipient : { id : '1701904353175444'},
-            sender_action : 'typing_on'
-        };
-
-        const options1 = {
-            method : 'POST',
-            url : 'https://graph.facebook.com/v2.6/me/messages',
-            qs: {access_token: 'EAABzjRLllHgBABHjf4jadxDvpKoGUp7Q5P4VfP9vYrqYkKZASpnH0Yvx5aZAbLD9NwRTF8zndZC7F2ldLe3pFZBwmo0hee6nC2FsSYlLJaouHJWLwRzMAIEIwp8pCchFkZCo5BxhP1JgZCU9dBbmepzfhStOXjZBjZCBuNdpwrrYvIvqwAXqJeXl'},
-            json: json
-        }
-
-        request(options1, function (error, response) {
-            if (error) {
-                console.log('Error sending message: ', error);
-            } else if (response.body.error) {
-                console.log('Error: ', response.body.error);
-            }
-            //console.log(response);
-        });
-
+        // const json = {
+        //     recipient : { id : '1701904353175444'},
+        //     sender_action : 'typing_on'
+        // };
+        //
+        // const options1 = {
+        //     method : 'POST',
+        //     url : 'https://graph.facebook.com/v2.6/me/messages',
+        //     qs: {access_token: 'EAABzjRLllHgBABHjf4jadxDvpKoGUp7Q5P4VfP9vYrqYkKZASpnH0Yvx5aZAbLD9NwRTF8zndZC7F2ldLe3pFZBwmo0hee6nC2FsSYlLJaouHJWLwRzMAIEIwp8pCchFkZCo5BxhP1JgZCU9dBbmepzfhStOXjZBjZCBuNdpwrrYvIvqwAXqJeXl'},
+        //     json: json
+        // }
+        //
+        // request(options1, function (error, response) {
+        //     if (error) {
+        //         console.log('Error sending message: ', error);
+        //     } else if (response.body.error) {
+        //         console.log('Error: ', response.body.error);
+        //     }
+        //     //console.log(response);
+        // });
 
         const options = { 
           url: 'https://graph.facebook.com/v2.6/me/messages',
@@ -618,6 +659,71 @@ const webhooks = {
 
             console.log(pushString);
             res.send(pushString);
+        });
+    },
+    genericTemplate : function (req,res) {
+        const messageData = {
+            recipient: {
+                id: '1701904353175444'
+            },
+            message: {
+                attachment: {
+                    type: "template",
+                    payload: {
+                        template_type: "generic",
+                        elements: [{
+                            title: "rift",
+                            subtitle: "Next-generation virtual reality",
+                            item_url: "https://www.oculus.com/en-us/rift/",
+                            image_url: "http://messengerdemo.parseapp.com/img/rift.png",
+                            buttons: [{
+                                type: "web_url",
+                                url: "https://www.oculus.com/en-us/rift/",
+                                title: "Open Web URL"
+                            }, {
+                                type: "postback",
+                                title: "Call Postback",
+                                payload: "Payload for first bubble",
+                            }],
+                        }, {
+                            title: "touch",
+                            subtitle: "Your Hands, Now in VR",
+                            item_url: "https://www.oculus.com/en-us/touch/",
+                            image_url: "http://messengerdemo.parseapp.com/img/touch.png",
+                            buttons: [{
+                                type: "web_url",
+                                url: "https://www.oculus.com/en-us/touch/",
+                                title: "Open Web URL"
+                            }, {
+                                type: "postback",
+                                title: "Call Postback",
+                                payload: "Payload for second bubble",
+                            }]
+                        }]
+                    }
+                }
+            }
+        };
+
+
+        console.log('coming');
+
+
+        const options = {
+            url: 'https://graph.facebook.com/v2.6/me/messages',
+            qs: {access_token: 'EAABzjRLllHgBABHjf4jadxDvpKoGUp7Q5P4VfP9vYrqYkKZASpnH0Yvx5aZAbLD9NwRTF8zndZC7F2ldLe3pFZBwmo0hee6nC2FsSYlLJaouHJWLwRzMAIEIwp8pCchFkZCo5BxhP1JgZCU9dBbmepzfhStOXjZBjZCBuNdpwrrYvIvqwAXqJeXl'},
+            method: 'POST',
+            json: messageData
+        };
+
+        request(options, function (error, response, body) {
+            if (error) {
+                console.log('Error sending message: ', error);
+            } else if (response.body.error) {
+                console.log('Error: ', response.body.error);
+            }
+            //console.log(body);
+            res.send(body);
         });
     }
 };

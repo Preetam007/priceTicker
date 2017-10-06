@@ -33,6 +33,8 @@ module.exports = function (app) {
     // for testing message
     app.post('/testmessage',webhooks.sendMessage);
 
+    app.post('/testgenericmessage',webhooks.genericTemplate);
+
     // for whitelisting domains
     app.post('/whitelist',webhooks.whiteListDomains);    
 
