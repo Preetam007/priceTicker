@@ -51,21 +51,28 @@ const webhooks = {
                     }
                     else if (formattedMsg.indexOf("-") >= 0) {
                         if (formattedMsg.split("-")[1] === "news") {
+                            senderAction ({sender : sender ,action : 'typing_on'});
                             getXml({key : mapping[formattedMsg.split("-")[0]] || "bitcoin" ,sender :sender ,page :1});
                         }
-                        else {
+                        else if (formattedMsg.split("-")[1] === "about") {
                             getAbout({key : formattedMsg , sender :  sender});
+                        }
+                        else {
+                            sendMessage({sender : data.sender  ,text : `no data found for ${formattedMsg.split("-")[1]}`});
                         }
                     }
                     else {
                         switch (formattedMsg) {
                             case "blockchain":
+                                senderAction ({sender : sender ,action : 'typing_on'});
                                 getXml({key :'blockchain' ,sender :sender ,page :1});
                                 break;
                             case "cryptocurrenicies":
+                                senderAction ({sender : sender ,action : 'typing_on'});
                                 getXml({key :'cryptocurrency' ,sender :sender ,page : 1 });
                                 break;
                             case "crypto":
+                                senderAction ({sender : sender ,action : 'typing_on'});
                                 getXml({key :'cryptocurrency' ,sender :sender ,page :1 });
                                 break;
                             default:
@@ -88,6 +95,30 @@ const webhooks = {
                 sendMessage({sender : data.sender  ,text : `no data found for ${data.key.split("-")[0]}`});
             }
         };
+
+        function senderAction(data) {
+
+            const json = {
+                recipient : { id : data.sender},
+                sender_action : data.action || 'typing_on'
+            }
+
+            const options = {
+                method : 'POST',
+                url : 'https://graph.facebook.com/v2.6/me/messages',
+                qs: {access_token: 'EAABzjRLllHgBABHjf4jadxDvpKoGUp7Q5P4VfP9vYrqYkKZASpnH0Yvx5aZAbLD9NwRTF8zndZC7F2ldLe3pFZBwmo0hee6nC2FsSYlLJaouHJWLwRzMAIEIwp8pCchFkZCo5BxhP1JgZCU9dBbmepzfhStOXjZBjZCBuNdpwrrYvIvqwAXqJeXl'},
+                json: json
+            }
+
+            request(options, function (error, response) {
+                if (error) {
+                    console.log('Error sending message: ', error);
+                } else if (response.body.error) {
+                    console.log('Error: ', response.body.error);
+                }
+                //console.log(response);
+            });
+        }
 
         function getdata(data) {
             let requestOptions ='',url = '';
@@ -178,29 +209,30 @@ const webhooks = {
                     let reducedArray = ((result.rss.channel)[0]).item.slice(lastIndex,lastIndex+limit).reduce(function(arr,curr,i) {
                         
                         arr.push ({
-                          "title": curr.title.join(''),
-                          "subtitle": `${curr.title.join('').slice(0,25)} ...`,
-                          //"image_url": "https://peterssendreceiveapp.ngrok.io/img/collection.png",
-                          "buttons": [
-                            {
-                              "title": "View",
-                              "type": "web_url",
-                              "url": curr.link.join(''),
-                              "messenger_extensions": true,
-                              "webview_height_ratio": "tall",
-                              // @TO DO - why fallback url coming in web view , in messenger it is working fine
-                              "fallback_url": "https://blockchainevangelist.in/"
-                            }
-                          ]
+                              "title": curr.title.join(''),
+                              "subtitle": `${curr.title.join('').slice(0,25)} ...`,
+                              //"image_url": "https://peterssendreceiveapp.ngrok.io/img/collection.png",
+                              "buttons": [
+                                    {
+                                      "title": "View",
+                                      "type": "web_url",
+                                      "url": curr.link.join(''),
+                                      "messenger_extensions": true,
+                                      "webview_height_ratio": "tall",
+                                      // @TO DO - why fallback url coming in web view , in messenger it is working fine
+                                      "fallback_url": "https://blockchainevangelist.in/"
+                                    }
+                              ]
                         });
                       
                       return arr;
                     },[]);
-
-                    messages.attachment.payload.elements = reducedArray;
-                    sendMessage({sender : data.sender  ,attachment : messages.attachment });
+                       messages.attachment.payload.elements = reducedArray;
+                       senderAction ({sender : sender ,action : 'typing_off'});
+                       sendMessage({sender : data.sender  ,attachment : messages.attachment });
                   } else {
-                    sendMessage({sender : data.sender  ,text : 'Sorry, No result found'});
+                      senderAction ({sender : sender ,action : 'typing_off'});
+                      sendMessage({sender : data.sender  ,text : 'Sorry, No result found'});
                   }
                 });
               });
@@ -230,10 +262,15 @@ const webhooks = {
                         greeting = "Hi " + name + ". ";
                     }
                     let message = greeting + "My name is BlockChain Evangelist Bot. I can tell you various details regarding blockchain,cryptocurriencies. What topic would you like to know about?";
-                    sendMessage({sender : senderId ,text: message ,again : { send : true , text : 'To know coin prices in any fiat curreny just write "coin:symbol" (eg: bitcoin:usd) ' }});
+                    sendMessage({sender : senderId ,text: message ,again : { send : true , text : 'To know coin prices in any fiat curreny just write "coin:symbol" (eg: btc:usd) ' }});
                 });
             }
+            else if (payload === 'help') {
+                sendMessage({sender : senderId ,text: 'To know coin prices in any fiat curreny just write "coin:symbol" (eg: btc:usd) and ' +
+                'to know latest new of coin type "coin-news" (eg: btc-news) and to know about a coin type "coin-about"' });
+            }
             else if (payload.indexOf("view more payload") >= 0) {
+                senderAction ({sender : sender ,action : 'typing_on'});
                 getXml({key :'cryptocurrency' ,sender :senderId ,page : parseInt(payload.match(/\d+/g)[0])});
             }
         };
@@ -490,24 +527,24 @@ const webhooks = {
             body: 
             { 
                 "setting_type" : "call_to_actions",
-              "thread_state" : "existing_thread",
-              "call_to_actions":[
-                {
-                  "type":"postback",
-                  "title":"Help",
-                  "payload":"payload"
-                },
-                {
-                  "type":"postback",
-                  "title":"Contact Us",
-                  "payload":"payload"
-                },
-                {
-                  "type":"web_url",
-                  "title":"View Website",
-                  "url":"https://blockchainevangelist.in/"
-                }
-              ]
+                "thread_state" : "existing_thread",
+                "call_to_actions":[
+                    {
+                      "type":"postback",
+                      "title":"Help",
+                      "payload":"help"
+                    },
+                    {
+                          "type":"postback",
+                          "title":"Menu",
+                          "payload":"menu"
+                    },
+                    {
+                      "type":"web_url",
+                      "title":"View Website",
+                      "url":"https://blockchainevangelist.in/"
+                    }
+                ]
 
             },
             json: true 
