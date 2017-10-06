@@ -46,7 +46,8 @@ const webhooks = {
                    // keywords and send back the corresponding  detail.
                     
 
-                    if (formattedMsg.indexOf(":") >= 0) {        
+                    if (formattedMsg.indexOf(":") >= 0) {
+                        senderAction ({sender : sender ,action : 'typing_on'});
                         getdata({key :formattedMsg ,sender :sender });
                     }
                     else if (formattedMsg.indexOf("-") >= 0) {
@@ -266,8 +267,8 @@ const webhooks = {
                 });
             }
             else if (payload === 'help') {
-                sendMessage({sender : senderId ,text: 'To know coin prices in any fiat curreny just write "coin:symbol" (eg: btc:usd) and ' +
-                'to know latest new of coin type "coin-news" (eg: btc-news) and to know about a coin type "coin-about"' });
+                sendMessage({sender : senderId ,text: 'To know coin prices in any fiat curreny just write "coin:symbol" (eg: btc:usd) ,' +
+                'to know latest new of coin type "coin-news" (eg: btc-news) and to know about a coin type "coin-about" (eg: btc-news)' });
             }
             else if (payload.indexOf("view more payload") >= 0) {
                 senderAction ({sender : sender ,action : 'typing_on'});
@@ -389,6 +390,29 @@ const webhooks = {
         });
     },
     sendMessage : function (req,res) {
+
+        const json = {
+            recipient : { id : '1701904353175444'},
+            sender_action : 'typing_on'
+        };
+
+        const options1 = {
+            method : 'POST',
+            url : 'https://graph.facebook.com/v2.6/me/messages',
+            qs: {access_token: 'EAABzjRLllHgBABHjf4jadxDvpKoGUp7Q5P4VfP9vYrqYkKZASpnH0Yvx5aZAbLD9NwRTF8zndZC7F2ldLe3pFZBwmo0hee6nC2FsSYlLJaouHJWLwRzMAIEIwp8pCchFkZCo5BxhP1JgZCU9dBbmepzfhStOXjZBjZCBuNdpwrrYvIvqwAXqJeXl'},
+            json: json
+        }
+
+        request(options1, function (error, response) {
+            if (error) {
+                console.log('Error sending message: ', error);
+            } else if (response.body.error) {
+                console.log('Error: ', response.body.error);
+            }
+            //console.log(response);
+        });
+
+
         const options = { 
           url: 'https://graph.facebook.com/v2.6/me/messages',
             qs: {access_token: 'EAABzjRLllHgBABHjf4jadxDvpKoGUp7Q5P4VfP9vYrqYkKZASpnH0Yvx5aZAbLD9NwRTF8zndZC7F2ldLe3pFZBwmo0hee6nC2FsSYlLJaouHJWLwRzMAIEIwp8pCchFkZCo5BxhP1JgZCU9dBbmepzfhStOXjZBjZCBuNdpwrrYvIvqwAXqJeXl'},
