@@ -231,10 +231,10 @@ const webhooks = {
                       return arr;
                     },[]);
                        messages.attachment.payload.elements = reducedArray;
-                       senderAction ({sender : sender ,action : 'typing_off'});
+                       senderAction ({sender : data.sender ,action : 'typing_off'});
                        sendMessage({sender : data.sender  ,attachment : messages.attachment });
                   } else {
-                      senderAction ({sender : sender ,action : 'typing_off'});
+                      senderAction ({sender : data.sender ,action : 'typing_off'});
                       sendMessage({sender : data.sender  ,text : 'Sorry, No result found'});
                   }
                 });
@@ -273,7 +273,7 @@ const webhooks = {
                 'to know latest new of coin type "coin-news" (eg: btc-news) and to know about a coin type "coin-about" (eg: btc-news)' });
             }
             else if (payload.indexOf("view more payload") >= 0) {
-                senderAction ({sender : sender ,action : 'typing_on'});
+                senderAction ({sender : senderId ,action : 'typing_on'});
                 getXml({key :'cryptocurrency' ,sender :senderId ,page : parseInt(payload.match(/\d+/g)[0])});
             }
         };
