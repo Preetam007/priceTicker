@@ -56,11 +56,12 @@ const webhooks = {
                             getXml({key : mapping[formattedMsg.split("-")[0]] || "bitcoin" ,sender :sender ,page :1});
                         }
                         else if (formattedMsg.split("-")[1] === "about") {
-                            senderAction ({sender : sender ,action : 'typing_on'});
+                            //senderAction ({sender : sender ,action : 'typing_on'});
                             getAbout({key : formattedMsg , sender :  sender});
+                            //senderAction ({sender : sender ,action : 'typing_off'});
                         }
                         else {
-                            sendMessage({sender : data.sender  ,text : `no data found for ${formattedMsg.split("-")[1]}`});
+                            sendMessage({sender : sender  ,text : `no data found for ${formattedMsg.split("-")[1]}`});
                         }
                     }
                     else {
