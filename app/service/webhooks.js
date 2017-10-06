@@ -69,7 +69,7 @@ const webhooks = {
                             sendMessage({sender : sender  ,text : `no data found for ${formattedMsg.split("-")[1]}`});
                         }
                     }
-                    else if (formattedMsg.indexOf("=") >= 0 && !! ormattedMsg.split("=")[1]) {
+                    else if (formattedMsg.indexOf("=") >= 0 && !! formattedMsg.split("=")[1]) {
                         senderAction ({sender : sender ,action : 'typing_on'});
                         getDapps({ key : formattedMsg.split("=")[1] ,sender : sender });
                     }
