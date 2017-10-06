@@ -148,7 +148,7 @@ const webhooks = {
                 console.log(dapps);
 
                 if(Array.isArray(dapps) && dapps.length > 0) {
-                    let reducedArray = dapps.item.slice(lastIndex,lastIndex+4).reduce(function(arr,curr,i) {
+                    let reducedArray = dapps.slice(lastIndex,lastIndex+4).reduce(function(arr,curr,i) {
 
 
                         arr.push ({
@@ -694,7 +694,7 @@ const webhooks = {
                     },
                     {
                           "type":"postback",
-                          "title":"Dapps - Curated Collection of  Decentralized Apps ",
+                          "title":"Dapps",
                           "payload":"dapps"
                     },
                     {
