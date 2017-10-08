@@ -15,6 +15,9 @@ module.exports = function (app) {
 
     // Facebook Webhook
     // Used for verification
+    // Facebook doesn’t just check these tokens when you first establish the connection.
+    // It will continuously recheck the credentials from time to time, so your server should be able to send back
+    // the same Verify Token whenever required
     app.get("/webhook", webhooks.verification);
 
     /* Handling all messenges */
@@ -33,14 +36,30 @@ module.exports = function (app) {
     // for testing message
     app.post('/testmessage',webhooks.sendMessage);
 
+
+    // for testing button messages
+    app.post('/buttons',webhooks.buttonTemplate);
+
+    // for testing generic template messages
     app.post('/testgenericmessage',webhooks.genericTemplate);
 
-    // for dapps
+    // for quick replies
 
+    app.post('/quickreplies',webhooks.quickReplies);
+
+    // for testing opengraph template messages
+    app.post('/podcast',webhooks.openGraph);
+
+    // for testing transaction receipt  template messages
+    app.post('/receipt',webhooks.receiptTemplate);
+
+    // for dapps
     app.get('/dapps',webhooks.getDapps);
 
     // for whitelisting domains
-    app.post('/whitelist',webhooks.whiteListDomains);    
+    app.post('/whitelist',webhooks.whiteListDomains);
+
+
 
     // for messenger app menu
     app.post('/appmenu',webhooks.appMenu);

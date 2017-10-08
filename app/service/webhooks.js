@@ -18,6 +18,7 @@ const webhooks = {
          
         if (req.body.object === 'page') {
             req.body.entry.forEach((entry) => {
+                // entry.time => time of update in milliseconds
                 entry.messaging.forEach((event) => {
                     if (event.message) {
                       procressMessage(event);
@@ -44,6 +45,13 @@ const webhooks = {
             if (!!event && !!event.message) {
 
                 if (event.message.text) {
+
+                    // for handling click on quick reply messages
+                    if (event.messages.text.quick_reply && event.messages.text.quick_reply.payload) {
+                       console.log('quick_reply click detected');
+                    }
+
+
                    text = event.message.text;
                    const formattedMsg = text.toLowerCase().trim();
 
@@ -92,7 +100,11 @@ const webhooks = {
                         }
                     } 
 
-                } else if (event.message.attachments) {
+                }
+                else if (event.message.attachments) {
+                    console.log(event.message.attachments);
+                    // like button sticker ids - 369239263222822 for the small one, 369239383222810 for
+                    // the big one and 369239343222814 for the medium one
                   text = "Sorry, I don't understand your request.";
                   sendMessage({sender : sender ,text : text});
                 }
@@ -145,8 +157,6 @@ const webhooks = {
 
                 let dapps = JSON.parse(body);
 
-                console.log(dapps);
-
                 if(Array.isArray(dapps) && dapps.length > 0) {
                     let reducedArray = dapps.slice(lastIndex,lastIndex+4).reduce(function(arr,curr,i) {
 
@@ -178,7 +188,6 @@ const webhooks = {
                     sendMessage({sender : data.sender  ,text : `no dApps found for ${data.key} category`});
                 }
 
-                sendMessage({sender : data.sender  ,attachment : messages.attachment });
             });
 
         }
@@ -206,6 +215,7 @@ const webhooks = {
 
             const json = {
                 recipient : { id : data.sender},
+                // typing_on || typing_off || mark_seen
                 sender_action : data.action || 'typing_on'
             }
 
@@ -391,7 +401,7 @@ const webhooks = {
                 'to know latest news of a coin type "coin-news" (eg: btc-news) and to know about a coin type "coin-about" (eg: btc-about)' });
             }
             else if (payload === 'dapps') {
-                sendMessage({sender : senderId ,text:  'To get list of dApps related to a category type "dapp=category" (eg: dapp=insurance)'});
+                sendMessage({sender : senderId ,text:  'To get list of dApps related to a category type "dapps=category" (eg: dapps=insurance)'});
             }
             else if (payload.indexOf("view more payload") >= 0) {
                 senderAction ({sender : senderId ,action : 'typing_on'});
@@ -667,7 +677,7 @@ const webhooks = {
           headers: { 'content-type': 'application/json' },
           body: 
            { whitelisted_domains: 
-              [ 'https://coinmarketcap.com','https://blockchainevangelist.in','https://cointelegraph.com','https://www.coindesk.com'] },
+              [ 'https://coinmarketcap.com','https://www.stateofthedapps.com','https://blockchainevangelist.in','https://cointelegraph.com','https://www.coindesk.com'] },
           json: true };
 
         request(options, function (error, response, body) {
@@ -817,6 +827,54 @@ const webhooks = {
             res.send(body);
         });
     },
+    buttonTemplate :  function buttonTemplate(req,res) {
+
+
+
+        const messageData = {
+            recipient: {
+                id: '1701904353175444'
+            },
+            message: {
+                "attachment":{
+                    "type":"template",
+                        "payload":{
+                       "template_type":"button",
+                            "text":"What do you want to do next?",
+                            "buttons":[
+                            {
+                                "type":"web_url",
+                                "url":"https://cointelegraph.com/news/american-billionaire-investor-mark-cuban-claims-cryptocurrencies-and-blockchain-are-future",
+                                "title":"ICO"
+                            }]
+                    }
+                }
+            }
+        };
+
+
+        console.log('coming');
+
+
+        const options = {
+            url: 'https://graph.facebook.com/v2.6/me/messages',
+            qs: {access_token: 'EAABzjRLllHgBABHjf4jadxDvpKoGUp7Q5P4VfP9vYrqYkKZASpnH0Yvx5aZAbLD9NwRTF8zndZC7F2ldLe3pFZBwmo0hee6nC2FsSYlLJaouHJWLwRzMAIEIwp8pCchFkZCo5BxhP1JgZCU9dBbmepzfhStOXjZBjZCBuNdpwrrYvIvqwAXqJeXl'},
+            method: 'POST',
+            json: messageData
+        };
+
+        request(options, function (error, response, body) {
+            if (error) {
+                console.log('Error sending message: ', error);
+            } else if (response.body.error) {
+                console.log('Error: ', response.body.error);
+            }
+            //console.log(body);
+            res.send(body);
+        });
+
+
+    },
     getDapps : function getDapps(req,res) {
 
         const options = {
@@ -841,6 +899,184 @@ const webhooks = {
             res.send(JSON.parse(body));
         });
 
+    },
+    openGraph : function (req,res) {
+        const messageData = {
+            recipient: {
+                id: '1701904353175444'
+            },
+            message: {
+                attachment: {
+                    type: "template",
+                    payload: {
+                        template_type: "open_graph",
+                        elements:[
+                            {
+                                "url":"https://player.fm/series/1443548/188819684",
+                                "buttons":[
+                                    {
+                                        "type":"web_url",
+                                        "url":"https://player.fm/series/b21-block-cryptocurrency-blockchain-school",
+                                        "title":"View More"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        };
+
+
+        console.log('coming');
+
+
+        const options = {
+            url: 'https://graph.facebook.com/v2.6/me/messages',
+            qs: {access_token: 'EAABzjRLllHgBABHjf4jadxDvpKoGUp7Q5P4VfP9vYrqYkKZASpnH0Yvx5aZAbLD9NwRTF8zndZC7F2ldLe3pFZBwmo0hee6nC2FsSYlLJaouHJWLwRzMAIEIwp8pCchFkZCo5BxhP1JgZCU9dBbmepzfhStOXjZBjZCBuNdpwrrYvIvqwAXqJeXl'},
+            method: 'POST',
+            json: messageData
+        };
+
+        request(options, function (error, response, body) {
+            if (error) {
+                console.log('Error sending message: ', error);
+            } else if (response.body.error) {
+                console.log('Error: ', response.body.error);
+            }
+            //console.log(body);
+            res.send(body);
+        });
+    },
+    receiptTemplate : function (req,res) {
+        const messageData = {
+            recipient: {
+                id: '1701904353175444'
+            },
+            message: {
+                attachment: {
+                    type: "template",
+                    "payload":{
+                        "template_type":"receipt",
+                        "recipient_name":"Stephane Crozatier",
+                        "order_number":"12345678902",
+                        "currency":"USD",
+                        "payment_method":"Visa 2345",
+                        "order_url":"http://petersapparel.parseapp.com/order?order_id=123456",
+                        "timestamp":"1428444852",
+                        "address":{
+                            "street_1":"1 Hacker Way",
+                            "street_2":"",
+                            "city":"Menlo Park",
+                            "postal_code":"94025",
+                            "state":"CA",
+                            "country":"US"
+                        },
+                        "summary":{
+                            "subtotal":75.00,
+                            "shipping_cost":4.95,
+                            "total_tax":6.19,
+                            "total_cost":56.14
+                        },
+                        "adjustments":[
+                            {
+                                "name":"New Customer Discount",
+                                "amount":20
+                            },
+                            {
+                                "name":"$10 Off Coupon",
+                                "amount":10
+                            }
+                        ],
+                        "elements":[
+                            {
+                                "title":"Classic White T-Shirt",
+                                "subtitle":"100% Soft and Luxurious Cotton",
+                                "quantity":2,
+                                "price":50,
+                                "currency":"USD",
+                                "image_url":"http://petersapparel.parseapp.com/img/whiteshirt.png"
+                            },
+                            {
+                                "title":"Classic Gray T-Shirt",
+                                "subtitle":"100% Soft and Luxurious Cotton",
+                                "quantity":1,
+                                "price":25,
+                                "currency":"USD",
+                                "image_url":"http://petersapparel.parseapp.com/img/grayshirt.png"
+                            }
+                        ]
+                    }
+                }
+            }
+        };
+
+
+        console.log('coming');
+
+
+        const options = {
+            url: 'https://graph.facebook.com/v2.6/me/messages',
+            qs: {access_token: 'EAABzjRLllHgBABHjf4jadxDvpKoGUp7Q5P4VfP9vYrqYkKZASpnH0Yvx5aZAbLD9NwRTF8zndZC7F2ldLe3pFZBwmo0hee6nC2FsSYlLJaouHJWLwRzMAIEIwp8pCchFkZCo5BxhP1JgZCU9dBbmepzfhStOXjZBjZCBuNdpwrrYvIvqwAXqJeXl'},
+            method: 'POST',
+            json: messageData
+        };
+
+        request(options, function (error, response, body) {
+            if (error) {
+                console.log('Error sending message: ', error);
+            } else if (response.body.error) {
+                console.log('Error: ', response.body.error);
+            }
+            //console.log(body);
+            res.send(body);
+        });
+    },
+    quickReplies : function (req,res) {
+        const messageData = {
+            recipient: {
+                id: '1701904353175444'
+            },
+            message:{
+                "text": "Here's a quick reply!",
+                "quick_replies":[
+                    {
+                        "content_type":"text",
+                        "title":"Search",
+                        "payload":"dapps"
+                    },
+                    {
+                        "content_type":"location"
+                    },
+                    {
+                        "content_type":"text",
+                        "title":"Something Else",
+                        "payload":"dapps"
+                    }
+                ]
+            }
+        };
+
+
+        console.log('coming');
+
+
+        const options = {
+            url: 'https://graph.facebook.com/v2.6/me/messages',
+            qs: {access_token: 'EAABzjRLllHgBABHjf4jadxDvpKoGUp7Q5P4VfP9vYrqYkKZASpnH0Yvx5aZAbLD9NwRTF8zndZC7F2ldLe3pFZBwmo0hee6nC2FsSYlLJaouHJWLwRzMAIEIwp8pCchFkZCo5BxhP1JgZCU9dBbmepzfhStOXjZBjZCBuNdpwrrYvIvqwAXqJeXl'},
+            method: 'POST',
+            json: messageData
+        };
+
+        request(options, function (error, response, body) {
+            if (error) {
+                console.log('Error sending message: ', error);
+            } else if (response.body.error) {
+                console.log('Error: ', response.body.error);
+            }
+            //console.log(body);
+            res.send(body);
+        });
     }
 };
 
