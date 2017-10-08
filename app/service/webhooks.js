@@ -47,7 +47,7 @@ const webhooks = {
                 if (event.message.text) {
 
                     // for handling click on quick reply messages
-                    if (event.messages.text.quick_reply && event.messages.text.quick_reply.payload) {
+                    if (!!event.message.text.quick_reply && !!event.message.text.quick_reply.payload) {
                        console.log('quick_reply click detected');
                     }
 
