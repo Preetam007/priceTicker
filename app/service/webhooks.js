@@ -3,6 +3,7 @@ const request = require('request');
 
 const mapping= require('./mapping.json');
 const about = require('./about.json');
+const smiley = '\U0001F604';
 
 const webhooks = {
 	verification  : function verification(req,res) {
@@ -103,6 +104,7 @@ const webhooks = {
                 }
                 else if (event.message.attachments) {
                     console.log(event.message.attachments);
+                    console.log(JSON.stringify(event.message.attachments,null,6));
                     // like button sticker ids - 369239263222822 for the small one, 369239383222810 for
                     // the big one and 369239343222814 for the medium one
                   text = "Sorry, I don't understand your request.";
@@ -389,7 +391,7 @@ const webhooks = {
                     } else {
                         const bodyObj = JSON.parse(body);
                         name = bodyObj.first_name;
-                        greeting = "Hi " + name + ". ";
+                        greeting = `Hi  ${name} ${smiley} .`;
                     }
                     let message = greeting + "My name is BlockChain Evangelist Bot. I can tell you various details regarding blockchain,cryptocurriencies. What topic would you like to know about?";
                     sendMessage({sender : senderId ,text: 'To know coin prices in any fiat curreny just write "coin:symbol" (eg: btc:usd) ,' +
