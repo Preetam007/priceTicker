@@ -394,8 +394,9 @@ const webhooks = {
                         greeting = `Hi  ${name} ${smiley} .`;
                     }
                     let message = greeting + "My name is BlockChain Evangelist Bot. I can tell you various details regarding blockchain,cryptocurriencies. What topic would you like to know about?";
-                    sendMessage({sender : senderId ,text: 'To know coin prices in any fiat curreny just write "coin:symbol" (eg: btc:usd) ,' +
-                    'to know latest news of a coin type "coin-news" (eg: btc-news) and to know about a coin type "coin-about" (eg: btc-about)' });
+
+                    sendMessage({sender : senderId ,text : message , again : {send : true ,text: 'To know coin prices in any fiat curreny just write "coin:symbol" (eg: btc:usd) ,' +
+                    'to know latest news of a coin type "coin-news" (eg: btc-news) and to know about a coin type "coin-about" (eg: btc-about)' }});
                 });
             }
             else if (payload === 'help') {
@@ -444,7 +445,7 @@ const webhooks = {
                     console.log("Successfully sent generic message with id %s to recipient %s", messageId, recipientId);
                     senderAction ({sender : data.sender ,action : 'typing_off'});
 
-                    if (!!data.again && !!data.again.send)   {s
+                    if (!!data.again && !!data.again.send)   {
                         sendMessage({ sender : data.sender ,text :  data.again.text });
                     }
 
