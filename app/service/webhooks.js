@@ -3,7 +3,7 @@ const request = require('request');
 
 const mapping= require('./mapping.json');
 const about = require('./about.json');
-const smiley = '\U0001F604';
+const smiley = ':)';
 
 const webhooks = {
 	verification  : function verification(req,res) {
