@@ -388,6 +388,7 @@ const webhooks = {
                                 req.app.client.set(`${data.key}-${data.page}`,JSON.stringify(messages.attachment),function(err,reply) {
                                     console.log(err);
                                     console.log('set done');
+                                    req.app.client.expire(`${data.key}-${data.page}`, 30);
                                     sendMessage({sender : data.sender  ,  attachment : messages.attachment });
                                 });
 
