@@ -380,7 +380,7 @@ const webhooks = {
                             },[]);
 
                             // if no articles found by whitelisted domain then send text
-                            if (messages.attachment.payload.elements.length > 0 ) {
+                            if (reducedArray.length > 0 ) {
                                 messages.attachment.payload.elements = reducedArray;
 
                                 //client.set('some key', 'some value');
