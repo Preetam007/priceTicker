@@ -4,6 +4,7 @@ const request = require('request');
 const mapping= require('./mapping.json');
 const about = require('./about.json');
 const smiley = ':)';
+const url = require('url');
 
 const webhooks = {
 	verification  : function verification(req,res) {
@@ -281,6 +282,10 @@ const webhooks = {
         function getXml(data) {
            // @TO do - user IP parmaeter
             //let lastIndex = 0;
+
+
+
+            // redis
             const limit = data.limit || 4;
             const lastIndex = !!data.page ? (parseInt(data.page || 1) - 1)*limit : 0;
 
@@ -318,51 +323,90 @@ const webhooks = {
                 ]
             }
 
-            request(options, function (error, response, body) {
 
-                if (error)  {
-                  return console.log(error);
+            req.app.client.get(`${data.key}-${data.page}`,function(err,reply) {
+
+                if (err) {
+                    throw new Error(err);
                 }
 
-                let parseString = require('xml2js').parseString;
 
-                parseString(body, function (err, result) {
-                  if (err) {
-                    return console.log(err);
-                  }
+                if (!!reply) {
+                    console.log('found');
+                    //console.log(JSON.parse(reply));
+                    //return res.send(JSON.parse(reply));
+                    return sendMessage({sender : data.sender  ,  attachment : JSON.parse(reply) });
+                }
 
-                  if (((result.rss.channel)[0]) && ((result.rss.channel)[0].item)) {
+                request(options, function (error, response, body) {
 
-                    let reducedArray = ((result.rss.channel)[0]).item.slice(lastIndex,lastIndex+limit).reduce(function(arr,curr,i) {
-                        
-                        arr.push ({
-                              "title": curr.title.join(''),
-                              "subtitle": `${curr.title.join('').slice(0,25)} ...`,
-                              //"image_url": "https://peterssendreceiveapp.ngrok.io/img/collection.png",
-                              "buttons": [
-                                    {
-                                      "title": "View",
-                                      "type": "web_url",
-                                      "url": curr.link.join(''),
-                                      "messenger_extensions": true,
-                                      "webview_height_ratio": "tall",
-                                      // @TO DO - why fallback url coming in web view , in messenger it is working fine
-                                      "fallback_url": "https://blockchainevangelist.in/"
-                                    }
-                              ]
-                        });
-                      
-                      return arr;
-                    },[]);
-                       messages.attachment.payload.elements = reducedArray;
+                    if (error)  {
+                        return console.log(error);
+                    }
 
-                       sendMessage({sender : data.sender  ,attachment : messages.attachment });
-                  } else {
-                      senderAction ({sender : data.sender ,action : 'typing_off'});
-                      sendMessage({sender : data.sender  ,text : 'Sorry, No result found'});
-                  }
+                    let parseString = require('xml2js').parseString;
+
+                    parseString(body, function (err, result) {
+                        if (err) {
+                            return console.log(err);
+                        }
+
+                        if (((result.rss.channel)[0]) && ((result.rss.channel)[0].item)) {
+
+                            let reducedArray = ((result.rss.channel)[0]).item.slice(lastIndex,lastIndex+limit).reduce(function(arr,curr,i) {
+
+                                const domain = url.parse(curr.link.join(''));
+
+                                if (req.app.config.messengerBot.whitelistedDomains.indexOf(`${domain.protocol}//${domain.host}`) >=0) {
+                                    arr.push ({
+                                        "title": curr.title.join(''),
+                                        "subtitle": `${curr.title.join('').slice(0,25)} ...`,
+                                        //"image_url": "https://peterssendreceiveapp.ngrok.io/img/collection.png",
+                                        "buttons": [
+                                            {
+                                                "title": "View",
+                                                "type": "web_url",
+                                                "url": curr.link.join(''),
+                                                "messenger_extensions": true,
+                                                "webview_height_ratio": "tall",
+                                                // @TO DO - why fallback url coming in web view , in messenger it is working fine
+                                                "fallback_url": "https://blockchainevangelist.in/"
+                                            }
+                                        ]
+                                    });
+                                }
+
+                                return arr;
+                            },[]);
+
+                            // if no articles found by whitelisted domain then send text
+                            if (messages.attachment.payload.elements.length > 0 ) {
+                                messages.attachment.payload.elements = reducedArray;
+
+                                //client.set('some key', 'some value');
+
+                                req.app.client.set(`${data.key}-${data.page}`,JSON.stringify(messages.attachment),function(err,reply) {
+                                    console.log(err);
+                                    console.log('set done');
+                                    sendMessage({sender : data.sender  ,  attachment : messages.attachment });
+                                });
+
+
+                            }
+                            else {
+                                sendMessage({ sender : data.sender , text : 'Sorry, No more data found'});
+                            }
+
+                        } else {
+                            senderAction ({sender : data.sender ,action : 'typing_off'});
+                            sendMessage({sender : data.sender  ,text : 'Sorry, No result found'});
+                        }
+                    });
                 });
-              });
+
+            });
+
+
         };
 
         /**
@@ -452,7 +496,7 @@ const webhooks = {
                 }
                 else {
                     console.error("Unable to send message.");
-                    console.error(response);
+                    console.error(response.body.error);
                     console.error(error);
                 }
 
@@ -463,13 +507,14 @@ const webhooks = {
     // messaging_postbacks
     xmltoJson : function xmltoJson(req,res) {
 
+
         let lastIndex = 0;
         let limit = req.query.limit || 4;
         lastIndex = !!req.query && req.query.n ? (parseInt(req.query.n) - 1)*limit : 0;
 
         const options = { 
           method: 'GET',
-          url: `https://news.google.com/news/rss/search/section/q/dgb coinTelegraph/dgb coinTelegraph`,
+          url: `https://news.google.com/news/rss/search/section/q/blockchain coinTelegraph/blockchain coinTelegraph`,
           qs: { hl: 'en-IN', ned: 'in' },
           headers: 
             { 
@@ -496,46 +541,91 @@ const webhooks = {
             }
           }
         };
-   
-        request(options, function (error, response, body) {
 
-            if (error)  {
-                return console.log(error);
+
+        req.app.client.get("blockchain-2",function(err,reply) {
+            console.log(err);
+
+
+            if(reply) {
+                console.log('found');
+                console.log(JSON.parse(reply));
+                return res.send(JSON.parse(reply));
             }
-          
-            let parseString = require('xml2js').parseString;
-            parseString(body, function (err, result) {
+            else {
+                console.log('not');
+            }
+
+            console.log('not coming');
+
+            request(options, function (error, response, body) {
+
+                if (error)  {
+                    return console.log(error);
+                }
+
+                let parseString = require('xml2js').parseString;
+                parseString(body, function (err, result) {
 
 
 
-                // let reducedArray = ((result.rss.channel)[0]).item.slice(lastIndex,lastIndex+4).reduce(function(arr,curr,i) {
-                //
-                //
-                //     arr.push ({
-                //       "title": curr.title.join(''),
-                //       "subtitle":   curr.title.join('').slice(0,15),
-                //       //"image_url": "https://peterssendreceiveapp.ngrok.io/img/collection.png",
-                //       "buttons": [
-                //         {
-                //           "title": "View",
-                //           "type": "web_url",
-                //           "url": curr.link.join(''),
-                //           "messenger_extensions": true,
-                //           "webview_height_ratio": "tall",
-                //           "fallback_url": "https://blockchainevangelist.in/"
-                //         }
-                //       ]
-                //     });
-                //
-                //
-                //   return arr;
-                // },[]);
-                //
-                // messages.attachment.payload.elements = reducedArray
+                    let reducedArray = ((result.rss.channel)[0]).item.slice(lastIndex,lastIndex+4).reduce(function(arr,curr,i) {
 
-                res.send(result);
-            }); 
+
+                        //console.log(req.app.config);
+
+
+                        const domain = url.parse(curr.link.join(''));
+
+                        console.log(`${domain.protocol}//${domain.host}`);
+                        console.log(req.app.config.messengerBot.whitelistedDomains.indexOf(`${domain.protocol}//${domain.host}`));
+
+                        if (req.app.config.messengerBot.whitelistedDomains.indexOf(`${domain.protocol}//${domain.host}`) >=0) {
+                            arr.push ({
+                                "title": curr.title.join(''),
+                                "subtitle":   curr.title.join('').slice(0,15),
+                                //"image_url": "https://peterssendreceiveapp.ngrok.io/img/collection.png",
+                                "buttons": [
+                                    {
+                                        "title": "View",
+                                        "type": "web_url",
+                                        "url": curr.link.join(''),
+                                        "messenger_extensions": true,
+                                        "webview_height_ratio": "tall",
+                                        "fallback_url": "https://blockchainevangelist.in/"
+                                    }
+                                ]
+                            });
+                        }
+                        else {
+                            console.log('not');
+                            console.log(curr.link.join(''));
+                        }
+
+
+
+
+                        return arr;
+                    },[]);
+
+                    messages.attachment.payload.elements = reducedArray;
+
+                    /*
+                        there is one drawback of this JSON.stringify--> You can not retrieve parts of the object You can not specify the selection of certain keys.
+                        You necessarily need to retrieve everything, which is likely to become a performance issue on really large objects
+                    */
+
+                    req.app.client.set(`blockchain-2`,JSON.stringify(messages),function(err,reply) {
+                        console.log(err);
+                        console.log(reply);
+                        res.send(messages);
+                    });
+
+                });
+            });
         });
+   
+
     },
     sendMessage : function (req,res) {
 

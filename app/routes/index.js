@@ -13,6 +13,10 @@ module.exports = function (app) {
       res.sendFile(require('path').join(__dirname, '../views/index.html'));
     });
 
+    app.get('/stream',function (req,res) {
+       res.sendFile(require('path').join(__dirname, '../views/stream.html'))
+    })
+
     // Facebook Webhook
     // Used for verification
     // Facebook doesn’t just check these tokens when you first establish the connection.

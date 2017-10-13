@@ -2,6 +2,7 @@
 //dependencies
 const config = require('./config'),
   express = require('express'),
+  redis = require('redis'),
   http = require('http'),
   path = require('path'),
   helmet = require('helmet'),
@@ -14,7 +15,7 @@ const config = require('./config'),
 const app = express();
 
 exports = module.exports = function(agenda){
-   
+
   //keep reference to config
   app.config = config;
   // to avoid bottleneckin of system
@@ -29,7 +30,19 @@ exports = module.exports = function(agenda){
   app.db.once('open', function () {
     //and... we have a data store
   });
-  
+
+    // keep reference to redis client
+  app.client = redis.createClient(app.config.redisPort);
+
+  app.client.on('ready',function() {
+      console.log("Redis is ready");
+  });
+
+  app.client.on('error',function() {
+      console.log("Error in Redis");
+  });
+
+
   app.disable('x-powered-by');
   app.enable('trust proxy'); 
   app.set('port', config.port);
