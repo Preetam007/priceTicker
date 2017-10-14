@@ -1,15 +1,1403 @@
 {
-  "ok" : "",
-  "btcd" : "Komodo will use Zcash zero knowledge proofs — the best privacy technology available — along with a new consensus method called delayed Proof of Work (dPoW). The BTCD can be swapped for Komodo coin after the ICO has ended.",
-  "bcn" : "CryptoNote is an application layer protocol that powers several decentralized privacy oriented digital currencies. It aims to be an evolution of the ideas behind bitcoin.The main difference between the two technologies is that Bitcoin (and most digital currencies) is less opaque than CryptoNote-based currencies due to the latter's blockchain being almost anonymous, contrary to non-Cryptonote blockchains. CryptoNote currencies use a distributed public ledger that records all balances and transactions of its in-built currency like Bitcoin",
-  "bcc" : "BitConnect is an open source Bitcoin and crypto community developed by an unknown programmer, or a group of programmers, using their own cryptocurrency BitConnect Coin for all BitConnect lending operations. The price of BitConnect was 0.17 USD in January 2017, and as of august 2017 it trades for more than $50 dollars, increasing a 1800% value in the first 6 months. BitConnect coin released as open source software in January 2017",
-  "bat" :"Basic Attention Token radically improves the efficiency of digital advertising by creating a new token that can be exchanged between publishers, advertisers, and users. The token can be used to obtain a variety of advertising and attention-based services on the Brave platform. The utility of the token is based on user attention, which simply means a person’s focused mental engagement.",
-  "rep" : "Augur is a fully open-source and decentralized prediction market platform built on Ethereum, a blockchain technology that allows for the execution of smart contracts. JavaScript is also used for a browser-based GUI supplementing the command line. Notable supporters of the project include Intrade co-founder Ron Bernstein, the Thiel Foundation and Vitalik Buterin.Early development of the software began in autumn 2014, and an alpha version was released in June 2015",
-  "ardr" : "Ardor is a blockchain-as-a-service platform that will allow people to utilize the blockchain technology of Nxt through the use of child chains. Since all processing will be done on the Ardor main chain, child chain creators won’t need to worry about common issues when creating a blockchain as well as securing it with enough nodes. Child chains will be able to utilize features currently seen in Nxt such as decentralized phasing, voting, and trading, as well as be able to interact with other child chains on the platform, including IGNIS, the first child chain to be launched.",
-  "etc" : "Ethereum Classic is an open-source, public, blockchain-based distributed computing platform featuring smart contract (scripting) functionality. It provides a decentralized Turing-complete virtual machine, the Ethereum Virtual Machine (EVM), which can execute scripts using an international network of public nodes. Ethereum Classic also provides a value token called 'classic ether', which can be transferred between participants, stored in a cryptocurrency wallet and is used to compensate participant nodes for computations performed",
-  "eth" : "Ethereum is an open-source, public, blockchain-based distributed computing platform featuring smart contract (scripting) functionality. It provides a decentralized Turing-complete virtual machine, the Ethereum Virtual Machine (EVM), which can execute scripts using an international network of public nodes. Ethereum also provides a cryptocurrency token called 'ether', which can be transferred between accounts and used to compensate participant nodes for computations performed.",
-  "doge" : "Dogecoin ( DOHZH-koyn, code: DOGE, symbol: Ð and D) is a cryptocurrency featuring a likeness of the Shiba Inu dog from the 'Doge' Internet meme as its logo. Introduced as a 'joke currency' on 8 December 2013, Dogecoin quickly developed its own online community and reached a capitalization of US$60 million in January 2014; as of June 2017, it has a capitalization of US$340 million.Compared with other cryptocurrencies, Dogecoin has a fast initial coin production schedule: 100 billion coins have been in circulation by mid 2015 with an additional 5.256 billion coins every year thereafter. As of 30 June 2015, the 100 billionth Dogecoin has been mined",
-  "bch" : "Bitcoin Cash (BCC) is a hard fork of the cryptocurrency bitcoin. The fork occurred on August 1, 2017.",
-  "btc" : "Bitcoin is a worldwide cryptocurrency and digital payment system, called the first decentralized digital currency, since the system works without a central repository or single administrator. It was invented by an unknown programmer, or a group of programmers, under the name Satoshi Nakamoto and released as open-source software in 2009.",
-  "xrp" : "Ripple is a real-time gross settlement system (RTGS), currency exchange and remittance network by Ripple. Also called the Ripple Transaction Protocol (RTXP) or Ripple protocol,it is built upon a distributed open source Internet protocol, consensus ledger and native currency called XRP (ripples)"
+  "ok" : {
+    "about" : "",
+    "symbolToName" : "OKCash",
+    "tweetId" : ""
+  },
+  "btcd" : {
+    "about" : "Komodo will use Zcash zero knowledge proofs — the best privacy technology available — along with a new consensus method called delayed Proof of Work (dPoW). The BTCD can be swapped for Komodo coin after the ICO has ended.",
+    "symbolToName" : "bitcoindark",
+    "tweetId" : ""
+  },
+  "bcn" : {
+    "about" : "CryptoNote is an application layer protocol that powers several decentralized privacy oriented digital currencies. It aims to be an evolution of the ideas behind bitcoin.The main difference between the two technologies is that Bitcoin (and most digital currencies) is less opaque than CryptoNote-based currencies due to the latter's blockchain being almost anonymous, contrary to non-Cryptonote blockchains. CryptoNote currencies use a distributed public ledger that records all balances and transactions of its in-built currency like Bitcoin",
+    "symbolToName" : "Bytecoin",
+    "tweetId" : ""
+  },
+  "bcc" : {
+    "about" : "BitConnect is an open source Bitcoin and crypto community developed by an unknown programmer, or a group of programmers, using their own cryptocurrency BitConnect Coin for all BitConnect lending operations. The price of BitConnect was 0.17 USD in January 2017, and as of august 2017 it trades for more than $50 dollars, increasing a 1800% value in the first 6 months. BitConnect coin released as open source software in January 2017",
+    "symbolToName" : "BitConnect",
+    "tweetId" : ""
+  },
+  "bat" : {
+    "about" : "Basic Attention Token radically improves the efficiency of digital advertising by creating a new token that can be exchanged between publishers, advertisers, and users. The token can be used to obtain a variety of advertising and attention-based services on the Brave platform. The utility of the token is based on user attention, which simply means a person’s focused mental engagement.",
+    "symbolToName" : "basic attention token",
+    "tweetId" : ""
+  },
+  "rep" : {
+    "about" : "Augur is a fully open-source and decentralized prediction market platform built on Ethereum, a blockchain technology that allows for the execution of smart contracts. JavaScript is also used for a browser-based GUI supplementing the command line. Notable supporters of the project include Intrade co-founder Ron Bernstein, the Thiel Foundation and Vitalik Buterin.Early development of the software began in autumn 2014, and an alpha version was released in June 2015",
+    "symbolToName" : "augur",
+    "tweetId" : ""
+  },
+  "ardr" : {
+    "about" : "Ardor is a blockchain-as-a-service platform that will allow people to utilize the blockchain technology of Nxt through the use of child chains. Since all processing will be done on the Ardor main chain, child chain creators won’t need to worry about common issues when creating a blockchain as well as securing it with enough nodes. Child chains will be able to utilize features currently seen in Nxt such as decentralized phasing, voting, and trading, as well as be able to interact with other child chains on the platform, including IGNIS, the first child chain to be launched.",
+    "symbolToName" : "ardor",
+    "tweetId" : ""
+  },
+  "etc" : {
+    "about" : "Ethereum Classic is an open-source, public, blockchain-based distributed computing platform featuring smart contract (scripting) functionality. It provides a decentralized Turing-complete virtual machine, the Ethereum Virtual Machine (EVM), which can execute scripts using an international network of public nodes. Ethereum Classic also provides a value token called 'classic ether', which can be transferred between participants, stored in a cryptocurrency wallet and is used to compensate participant nodes for computations performed",
+    "symbolToName" : "ethereum classic",
+    "tweetId" : ""
+  },
+  "eth" : {
+    "about" : "Ethereum is an open-source, public, blockchain-based distributed computing platform featuring smart contract (scripting) functionality. It provides a decentralized Turing-complete virtual machine, the Ethereum Virtual Machine (EVM), which can execute scripts using an international network of public nodes. Ethereum also provides a cryptocurrency token called 'ether', which can be transferred between accounts and used to compensate participant nodes for computations performed.",
+    "symbolToName" : "ethereum",
+    "tweetId" : "ethereumproject"
+  },
+  "doge" : {
+    "about" : "Dogecoin ( DOHZH-koyn, code: DOGE, symbol: Ð and D) is a cryptocurrency featuring a likeness of the Shiba Inu dog from the 'Doge' Internet meme as its logo. Introduced as a 'joke currency' on 8 December 2013, Dogecoin quickly developed its own online community and reached a capitalization of US$60 million in January 2014; as of June 2017, it has a capitalization of US$340 million.Compared with other cryptocurrencies, Dogecoin has a fast initial coin production schedule: 100 billion coins have been in circulation by mid 2015 with an additional 5.256 billion coins every year thereafter. As of 30 June 2015, the 100 billionth Dogecoin has been mined",
+    "symbolToName" : "dogecoin",
+    "tweetId" : ""
+  },
+  "bch" :{
+    "about" : "Bitcoin Cash (BCC) is a hard fork of the cryptocurrency bitcoin. The fork occurred on August 1, 2017.",
+    "symbolToName" : "bitcoin cash",
+    "tweetId" : ""
+  },
+  "btc" : {
+    "about" : "Bitcoin is a worldwide cryptocurrency and digital payment system, called the first decentralized digital currency, since the system works without a central repository or single administrator. It was invented by an unknown programmer, or a group of programmers, under the name Satoshi Nakamoto and released as open-source software in 2009.",
+    "symbolToName" : "bitcoin",
+    "tweetId" : ""
+  },
+  "xrp" : {
+    "about" : "Ripple is a real-time gross settlement system (RTGS), currency exchange and remittance network by Ripple. Also called the Ripple Transaction Protocol (RTXP) or Ripple protocol,it is built upon a distributed open source Internet protocol, consensus ledger and native currency called XRP (ripples)",
+    "symbolToName" : "ripple",
+    "tweetId" : ""
+  },
+  "ltc": {
+    "about" : "",
+    "symbolToName" : "litecoin",
+    "tweetId" : ""
+  },
+  "vtc":
+  {
+    "about" : "",
+    "symbolToName" : "vertcoin",
+    "tweetId" : ""
+  },
+  "ppc": {
+    "about" : "",
+    "symbolToName" : "peercoin",
+    "tweetId" : ""
+  },
+  "ftc":{
+    "about" : "",
+    "symbolToName" : "feathercoin",
+    "tweetId" : ""
+  },
+  "rdd":{
+    "about" : "",
+    "symbolToName" : "reddcoin",
+    "tweetId" : ""
+  },
+  "nxt":{
+    "about" :  "",
+    "symbolToName" : "nxt",
+    "tweetId" : ""
+  },
+  "dash":{
+    "about" : "",
+    "symbolToName" : "dash",
+    "tweetId" : ""
+  },
+  "pot":{
+    "about" : "",
+    "symbolToName" : "potcoin",
+    "tweetId" : ""
+  },
+  "blk":{
+    "about" : "",
+    "symbolToName" : "blackcoin",
+    "tweetId" : ""
+  },
+  "emc2":{
+    "about" : "",
+    "symbolToName" : "einsteinium",
+    "tweetId" : ""
+  },
+  "xmy":{
+    "about" : "",
+    "symbolToName" : "myriad",
+    "tweetId" : ""
+  },
+  "aur":{
+    "about" : "",
+    "symbolToName" : "auroracoin",
+    "tweetId" : ""
+  },
+  "utc": {
+    "about" : "",
+    "symbolToName" : "ultracoin",
+    "tweetId" : ""
+  },
+  "mzc":{
+    "about" : "",
+    "symbolToName" : "mazacoin",
+    "tweetId" : ""
+  },
+  "efl":{
+    "about" : "",
+    "symbolToName" : "electronicgulden",
+    "tweetId" : ""
+  },
+  "gld":{
+    "about" : "",
+    "symbolToName" : "goldcoin",
+    "tweetId" : ""
+  },
+  "fair": {
+    "about" : "",
+    "symbolToName" : "faircoin",
+    "tweetId" : ""
+  },
+  "slr":{
+    "about" : "",
+    "symbolToName" : "solarcoin",
+    "tweetId" : ""
+  },
+  "ptc":{
+    "about" : "",
+    "symbolToName" : "pesetacoin",
+    "tweetId" : ""
+  },
+  "grs": {
+    "about" : "",
+    "symbolToName" : "groestlcoin",
+    "tweetId" : ""
+  },
+  "nlg":{
+    "about" : "",
+    "symbolToName" : "gulden",
+    "tweetId" : ""
+  },
+  "rby":{
+    "about" : "",
+    "symbolToName" : "rubycoin",
+    "tweetId" : ""
+  },
+  "xwc":{
+    "about" : "",
+    "symbolToName" : "whitecoin",
+    "tweetId" : ""
+  },
+  "mona":{
+    "about" : "",
+    "symbolToName" : "monacoin",
+    "tweetId" : ""
+  },
+  "bits":{
+    "about" :  "",
+    "symbolToName" : "bitstarcoin",
+    "tweetId" : ""
+  },
+  "oc":{
+    "about" : "",
+    "symbolToName" : "orangecoin",
+    "tweetId" : ""
+  },
+  "thc":{
+    "about" : "",
+    "symbolToName" : "hempcoin",
+    "tweetId" : ""
+  },
+  "enrg":{
+    "about" : "",
+    "symbolToName" : "energycoin",
+    "tweetId" : ""
+  },
+  "sfr":{
+    "about" : "",
+    "symbolToName" : "saffroncoin",
+    "tweetId" : ""
+  },
+  "erc":{
+    "about" : "",
+    "symbolToName" : "europecoin",
+    "tweetId" : ""
+  },
+  "naut":{
+    "about" : "",
+    "symbolToName" : "nautiluscoin",
+    "tweetId" : ""
+  },
+  "vrc":{
+    "about" : "",
+    "symbolToName" : "vericoin",
+    "tweetId" : ""
+  },
+  "cure":{
+    "about" : "",
+    "symbolToName" : "curecoin",
+    "tweetId" : ""
+  },
+  "blc":{
+    "about" : "",
+    "symbolToName" : "blakecoin",
+    "tweetId" : ""
+  },
+  "xc":{
+    "about" : "",
+    "symbolToName" : "xcurrency",
+    "tweetId" : ""
+  },
+  "xdq":{
+    "about" : "",
+    "symbolToName" : "dirac",
+    "tweetId" : ""
+  },
+  "xbb":{
+    "about" : "",
+    "symbolToName" : "boolberry",
+    "tweetId" : ""
+  },
+  "hyper":{
+    "about" :  "",
+    "symbolToName" : "hyper",
+    "tweetId" : ""
+  },
+  "ccn":{
+    "about" : "",
+    "symbolToName" : "cannacoin",
+    "tweetId" : ""
+  },
+  "xmr":{
+    "about" : "",
+    "symbolToName" : "monero",
+    "tweetId" : ""
+  },
+  "cloak":{
+    "about" : "",
+    "symbolToName" : "cloakcoin",
+    "tweetId" : ""
+  },
+  "bsd":{
+    "about" : "",
+    "symbolToName" : "bitsend",
+    "tweetId" : ""
+  },
+  "crypt":{
+    "about" : "",
+    "symbolToName" : "cryptcoin",
+    "tweetId" : ""
+  },
+  "start":{
+    "about" : "",
+    "symbolToName" : "startcoin",
+    "tweetId" : ""
+  },
+  "kore":{
+    "about" : "",
+    "symbolToName" : "korecoin",
+    "tweetId" : ""
+  },
+  "xdn":{
+    "about" : "",
+    "symbolToName" : "digitalnote",
+    "tweetId" : ""
+  },
+  "trk":{
+    "about" : "",
+    "symbolToName" : "truckcoin",
+    "tweetId" : ""
+  },
+  "trust":{
+    "about" : "",
+    "symbolToName" : "trustplus",
+    "tweetId" : ""
+  },
+  "nav":{
+    "about" : "",
+    "symbolToName" : "navcoin",
+    "tweetId" : ""
+  },
+  "xst":{
+    "about" : "",
+    "symbolToName" : "stealthcoin",
+    "tweetId" : ""
+  },
+  "apex":{
+    "about" : "",
+    "symbolToName" : "apexcoin",
+    "tweetId" : ""
+  },
+  "via":{
+    "about" : "",
+    "symbolToName" : "viacoin",
+    "tweetId" : ""
+  },
+  "tri":{
+    "about" : "",
+    "symbolToName" : "triangles",
+    "tweetId" : ""
+  },
+  "uno":{
+    "about" : "",
+    "symbolToName" : "unobtanium",
+    "tweetId" : ""
+  },
+  "pink":{
+    "about" : "",
+    "symbolToName" : "pinkcoin",
+    "tweetId" : ""
+  },
+  "ioc":{
+    "about" : "",
+    "symbolToName" : "i/ocoin",
+    "tweetId" : ""
+  },
+  "max":{
+    "about" : "",
+    "symbolToName" : "maxcoin",
+    "tweetId" : ""
+  },
+  "lxc":{
+    "about" : "",
+    "symbolToName" : "librexcoin",
+    "tweetId" : ""
+  },
+  "bob": {
+    "about" : "",
+    "symbolToName" : "dobbscoin",
+    "tweetId" : ""
+  },
+  "cann":{
+    "about" : "",
+    "symbolToName" : "cannabiscoin",
+    "tweetId" : ""
+  },
+  "fc2":{
+    "about" : "",
+    "symbolToName" : "fuelcoin",
+    "tweetId" : ""
+  },
+  "ssd":{
+    "about" : "",
+    "symbolToName" : "soniccoin",
+    "tweetId" : ""
+  },
+  "j":{
+    "about" : "",
+    "symbolToName" : "joincoin",
+    "tweetId" : ""
+  },
+  "sys":{
+    "about" : "",
+    "symbolToName" : "syscoin",
+    "tweetId" : ""
+  },
+  "neos":{
+    "about" : "",
+    "symbolToName" : "neoscoin",
+    "tweetId" : ""
+  },
+  "dgb":{
+    "about" : "",
+    "symbolToName" : "digibyte",
+    "tweetId" : ""
+  },
+  "root":{
+    "about" : "",
+    "symbolToName" : "rootcoin",
+    "tweetId" : ""
+  },
+  "bts":{
+    "about" : "",
+    "symbolToName" : "bitshares",
+    "tweetId" : ""
+  },
+  "burst":{
+    "about" : "",
+    "symbolToName" : "burst",
+    "tweetId" : ""
+  },
+  "tit":{
+    "about" : "",
+    "symbolToName" : "titcoin",
+    "tweetId" : ""
+  },
+  "bsty":{
+    "about" : "",
+    "symbolToName" : "globalboost-y",
+    "tweetId" : ""
+  },
+  "pxi":{
+    "about" : "",
+    "symbolToName" : "prime-xi",
+    "tweetId" : ""
+  },
+  "dgc":{
+    "about" : "",
+    "symbolToName" : "digitalcoin",
+    "tweetId" : ""
+  },
+  "slg":{
+    "about" : "",
+    "symbolToName" : "sterlingcoin",
+    "tweetId" : ""
+  },
+  "stv":{
+    "about" : "",
+    "symbolToName" : "sativacoin",
+    "tweetId" : ""
+  },
+  "excl":{
+    "about" : "",
+    "symbolToName" : "exclusivecoin",
+    "tweetId" : ""
+  },
+  "swift":{
+    "about" : "",
+    "symbolToName" : "bitswift",
+    "tweetId" : ""
+  },
+  "net":{
+    "about" : "",
+    "symbolToName" : "netcoin",
+    "tweetId" : ""
+  },
+  "ghc":{
+    "about" : "",
+    "symbolToName" : "gamerholiccoin",
+    "tweetId" : ""
+  },
+  "dope":{
+    "about" : "",
+    "symbolToName" : "dopecoin",
+    "tweetId" : ""
+  },
+  "block":{
+    "about" : "",
+    "symbolToName" : "blocknet",
+    "tweetId" : ""
+  },
+  "aby":{
+    "about" : "",
+    "symbolToName" : "artbyte",
+    "tweetId" : ""
+  },
+  "vior":{
+    "about" : "",
+    "symbolToName" : "viorcoin",
+    "tweetId" : ""
+  },
+  "byc":{
+    "about" : "",
+    "symbolToName" : "bytecent",
+    "tweetId" : ""
+  },
+  "ufo":{
+    "about" : "",
+    "symbolToName" :"ufocoin",
+    "tweetId" : ""
+  },
+  "xmg":{
+    "about" : "",
+    "symbolToName" : "magi",
+    "tweetId" : ""
+  },
+  "xqn":{
+    "about" : "",
+    "symbolToName" : "quotient",
+    "tweetId" : ""
+  },
+  "blitz":{
+    "about" : "",
+    "symbolToName" : "blitzcash",
+    "tweetId" : ""
+  },
+  "vpn":{
+    "about" : "",
+    "symbolToName" : "vpncoin",
+    "tweetId" : ""
+  },
+  "bay":{
+    "about" : "",
+    "symbolToName" : "bitbay",
+    "tweetId" : ""
+  },
+  "dtc":{
+    "about" : "",
+    "symbolToName" : "daytradercoin",
+    "tweetId" : ""
+  },
+  "am":{
+    "about" : "",
+    "symbolToName" : "aerome",
+    "tweetId" : ""
+  },
+  "metal":{
+    "about" : "",
+    "symbolToName" : "metalcoin",
+    "tweetId" : ""
+  },
+  "spr":{
+    "about" : "",
+    "symbolToName" : "spreadcoin",
+    "tweetId" : ""
+  },
+  "vtr":{
+    "about" : "",
+    "symbolToName" : "vtorrent",
+    "tweetId" : ""
+  },
+  "xpy":{
+    "about" : "",
+    "symbolToName" : "paycoin",
+    "tweetId" : ""
+  },
+  "game":{
+    "about" : "",
+    "symbolToName" : "gamecredits",
+    "tweetId" : ""
+  },
+  "gp":{
+    "about" : "",
+    "symbolToName" : "goldpieces",
+    "tweetId" : ""
+  },
+  "nxs":{
+    "about" : "",
+    "symbolToName" : "nexus",
+    "tweetId" : ""
+  },
+  "coval":{
+    "about" : "",
+    "symbolToName" : "circuits of value",
+    "tweetId" : ""
+  },
+  "fsc2":{
+    "about" : "",
+    "symbolToName" :  "friendshipcoin2",
+    "tweetId" : ""
+  },
+  "soon":{
+    "about" : "",
+    "symbolToName" : "sooncoin",
+    "tweetId" : ""
+  },
+  "hz":{
+    "about" : "",
+    "symbolToName" : "horizon",
+    "tweetId" : ""
+  },
+  "xcp":{
+    "about" : "",
+    "symbolToName" : "counterparty",
+    "tweetId" : ""
+  },
+  "bitb":{
+    "about" : "",
+    "symbolToName" : "bitbean",
+    "tweetId" : ""
+  },
+  "xtc":{
+    "about" : "",
+    "symbolToName" : "tilecoin",
+    "tweetId" : ""
+  },
+  "xvg":{
+    "about" : "",
+    "symbolToName" : "verge",
+    "tweetId" : ""
+  },
+  "geo":{
+    "about" : "",
+    "symbolToName" : "geocoin",
+    "tweetId" : ""
+  },
+  "fldc":{
+    "about" : "",
+    "symbolToName" : "foldingcoin",
+    "tweetId" : ""
+  },
+  "gemz":{
+    "about" : "",
+    "symbolToName" : "gemz",
+    "tweetId" : ""
+  },
+  "grc":{
+    "about" : "",
+    "symbolToName" : "gridcoin",
+    "tweetId" : ""
+  },
+  "xco":{
+    "about" : "",
+    "symbolToName" : "x-coin",
+    "tweetId" : ""
+  },
+  "mtr":{
+    "about" : "",
+    "symbolToName" : "mastertradercoin",
+    "tweetId" : ""
+  },
+  "flo":{
+    "about" : "",
+    "symbolToName" : "florin",
+    "tweetId" : ""
+  },
+  "u":{
+    "about" : "",
+    "symbolToName" : "ucoin",
+    "tweetId" : ""
+  },
+  "nbt":{
+    "about" : "",
+    "symbolToName" : "nubits",
+    "tweetId" : ""
+  },
+  "xem":{
+    "about" : "",
+    "symbolToName" : "neweconomymovement",
+    "tweetId" : ""
+  },
+  "mue":{
+    "about" : "",
+    "symbolToName" : "monetaryunit",
+    "tweetId" : ""
+  },
+  "xvc":{
+    "about" : "",
+    "symbolToName" : "vcash",
+    "tweetId" : ""
+  },
+  "8bit":{
+    "about" : "",
+    "symbolToName" : "8bit",
+    "tweetId" : ""
+  },
+  "clam":{
+    "about" : "",
+    "symbolToName" : "clams",
+    "tweetId" : ""
+  },
+  "xseed":{
+    "about" : "",
+    "symbolToName" : "bitseeds",
+    "tweetId" : ""
+  },
+  "ntrn":{
+    "about" : "",
+    "symbolToName" : "neutron",
+    "tweetId" : ""
+  },
+  "sling":{
+    "about" : "",
+    "symbolToName" : "sling",
+    "tweetId" : ""
+  },
+  "dmd":{
+    "about" : "",
+    "symbolToName" : "diamond",
+    "tweetId" : ""
+  },
+  "gam":{
+    "about" : "",
+    "symbolToName" :  "gambit",
+    "tweetId" : ""
+  },
+  "unit":{
+    "about" : "",
+    "symbolToName" : "universalcurrency",
+    "tweetId" : ""
+  },
+  "grt":{
+    "about" : "",
+    "symbolToName" : "grantcoin",
+    "tweetId" : ""
+  },
+  "viral":{
+    "about" : "",
+    "symbolToName" : "viral",
+    "tweetId" : ""
+  },
+  "sphr":{
+    "about" : "",
+    "symbolToName" : "sphere",
+    "tweetId" : ""
+  },
+  "arb":{
+    "about" : "",
+    "symbolToName" : "arbitcoin",
+    "tweetId" : ""
+  },
+  "adc": {
+    "about" : "",
+    "symbolToName" : "audiocoin",
+    "tweetId" : ""
+  },
+  "snrg":{
+    "about" : "",
+    "symbolToName" : "synergy",
+    "tweetId" : ""
+  },
+  "pkb":{
+    "about" : "",
+    "symbolToName" : "parkbyte",
+    "tweetId" : ""
+  },
+  "tes":{
+    "about" : "",
+    "symbolToName" : "teslacoin",
+    "tweetId" : ""
+  },
+  "cpc":{
+    "about" : "",
+    "symbolToName" : "capricoin",
+    "tweetId" : ""
+  },
+  "aeon":{
+    "about" : "",
+    "symbolToName" : "aeon",
+    "tweetId" : ""
+  },
+  "bitz":{
+    "about" : "",
+    "symbolToName" : "bitz",
+    "tweetId" : ""
+  },
+  "gcr":{
+    "about" : "",
+    "symbolToName" : "globalcurrencyreserve",
+    "tweetId" : ""
+  },
+  "tx":{
+    "about" : "",
+    "symbolToName" : "transfercoin",
+    "tweetId" : ""
+  },
+  "bcy":{
+    "about" : "",
+    "symbolToName" : "bitcrystals",
+    "tweetId" : ""
+  },
+  "prime":{
+    "about" : "",
+    "symbolToName" : "primechain",
+    "tweetId" : ""
+  },
+  "exp":{
+    "about" : "",
+    "symbolToName" : "expanse",
+    "tweetId" : ""
+  },
+  "neu":{
+    "about" : "",
+    "symbolToName" : "neucoin",
+    "tweetId" : ""
+  },
+  "swing":{
+    "about" : "",
+    "symbolToName" : "swingcoin",
+    "tweetId" : ""
+  },
+  "infx":{
+    "about" : "",
+    "symbolToName" : "influxcoin",
+    "tweetId" : ""
+  },
+  "omni":{
+    "about" : "",
+    "symbolToName" : "omnicoin",
+    "tweetId" : ""
+  },
+  "usdt":{
+    "about" : "",
+    "symbolToName" : "tether",
+    "tweetId" : ""
+  },
+  "amp":{
+    "about" : "",
+    "symbolToName" : "synereoamp",
+    "tweetId" : ""
+  },
+  "agrs":{
+    "about" : "",
+    "symbolToName" : "idni agoras",
+    "tweetId" : ""
+  },
+  "xlm":{
+    "about" : "",
+    "symbolToName" : "lumen",
+    "tweetId" : ""
+  },
+  "sprts":{
+    "about" : "",
+    "symbolToName" : "sprouts",
+    "tweetId" : ""
+  },
+  "ybc":{
+    "about" : "",
+    "symbolToName" : "ybcoin",
+    "tweetId" : ""
+  },
+  "bta":{
+    "about" : "",
+    "symbolToName" : "bata",
+    "tweetId" : ""
+  },
+  "mec":{
+    "about" : "",
+    "symbolToName" : "megacoin",
+    "tweetId" : ""
+  },
+  "bitcny":{
+    "about" : "",
+    "symbolToName" : "bitcny",
+    "tweetId" : ""
+  },
+  "ams":{
+    "about" : "",
+    "symbolToName" : "amsterdamcoin",
+    "tweetId" : ""
+  },
+  "scrt":{
+    "about" : "",
+    "symbolToName" : "secretcoin",
+    "tweetId" : ""
+  },
+  "scot":{
+    "about" : "",
+    "symbolToName" : "scotcoin",
+    "tweetId" : ""
+  },
+  "club":{
+    "about" : "",
+    "symbolToName" : "clubcoin",
+    "tweetId" : ""
+  },
+  "vox":{
+    "about" : "",
+    "symbolToName" : "voxels",
+    "tweetId" : ""
+  },
+  "mnd":{
+    "about" : "",
+    "symbolToName" : "mindcoin",
+    "tweetId" : ""
+  },
+  "emc":{
+    "about" : "",
+    "symbolToName" : "emercoin",
+    "tweetId" : ""
+  },
+  "fct":{
+    "about" : "",
+    "symbolToName" : "factom",
+    "tweetId" : ""
+  },
+  "maid":{
+    "about" : "",
+    "symbolToName" : "maidsafecoin",
+    "tweetId" : ""
+  },
+  "frk":{
+    "about" : "",
+    "symbolToName" : "franko",
+    "tweetId" : ""
+  },
+  "egc":{
+    "about" : "",
+    "symbolToName" : "evergreencoin",
+    "tweetId" : ""
+  },
+  "sls":{
+    "about" : "",
+    "symbolToName" : "salus",
+    "tweetId" : ""
+  },
+  "orb":{
+    "about" : "",
+    "symbolToName" : "orbitcoin",
+    "tweetId" : ""
+  },
+  "steps":{
+    "about" : "",
+    "symbolToName" : "steps",
+    "tweetId" : ""
+  },
+  "rads":{
+    "about" : "",
+    "symbolToName" : "radium",
+    "tweetId" : ""
+  },
+  "dcr":{
+    "about" : "",
+    "symbolToName" : "decred",
+    "tweetId" : ""
+  },
+  "safex":{
+    "about" : "",
+    "symbolToName" : "safeexchangecoin",
+    "tweetId" : ""
+  },
+  "pivx":{
+    "about" : "",
+    "symbolToName" : "pivx",
+    "tweetId" : ""
+  },
+  "warp":{
+    "about" : "",
+    "symbolToName" : "warpcoin",
+    "tweetId" : ""
+  },
+  "crbit":{
+    "about" : "",
+    "symbolToName" : "creditbit",
+    "tweetId" : ""
+  },
+  "meme":{
+    "about" : "",
+    "symbolToName" : "memetic",
+    "tweetId" : ""
+  },
+  "steem":{
+    "about" : "",
+    "symbolToName" : "steem",
+    "tweetId" : ""
+  },
+  "2give":{
+    "about" : "",
+    "symbolToName" : "2give",
+    "tweetId" : ""
+  },
+  "lsk": {
+    "about" : "",
+    "symbolToName" : "lisk",
+    "tweetId" : ""
+  },
+  "kr":{
+    "about" : "",
+    "symbolToName" : "krypton",
+    "tweetId" : ""
+  },
+  "pdc":{
+    "about" : "",
+    "symbolToName" : "project decorum",
+    "tweetId" : ""
+  },
+  "dgd":{
+    "about" : "",
+    "symbolToName" : "digix dao",
+    "tweetId" : ""
+  },
+  "brk":{
+    "about" : "",
+    "symbolToName" : "breakout",
+    "tweetId" : ""
+  },
+  "waves":{
+    "about" : "",
+    "symbolToName" : "waves",
+    "tweetId" : ""
+  },
+  "rise":{
+    "about" : "",
+    "symbolToName" : "rise",
+    "tweetId" : ""
+  },
+  "lbc":{
+    "about" : "",
+    "symbolToName" : "lbry credits",
+    "tweetId" : ""
+  },
+  "sbd":{
+    "about" : "",
+    "symbolToName" : "steemdollars",
+    "tweetId" : ""
+  },
+  "brx":{
+    "about" : "",
+    "symbolToName" : "breakout stake",
+    "tweetId" : ""
+  },
+  "draco":{
+    "about" : "",
+    "symbolToName" :"dt token",
+    "tweetId" : ""
+  },
+  "uniq":{
+    "about" : "",
+    "symbolToName" : "uniqredit",
+    "tweetId" : ""
+  },
+  "strat":{
+    "about" : "",
+    "symbolToName" : "stratis",
+    "tweetId" : ""
+  },
+  "unb": {
+    "about" : "",
+    "symbolToName" : "unbreakablecoin",
+    "tweetId" : ""
+  },
+  "synx":{
+    "about" : "",
+    "symbolToName" : "syndicate",
+    "tweetId" : ""
+  },
+  "trig":{
+    "about" : "",
+    "symbolToName" : "trig token",
+    "tweetId" : ""
+  },
+  "ebst":{
+    "about" : "",
+    "symbolToName" :  "eboost",
+    "tweetId" : ""
+  },
+  "vrm":{
+    "about" : "",
+    "symbolToName" : "verium",
+    "tweetId" : ""
+  },
+  "xaur":{
+    "about" : "",
+    "symbolToName" :"xaurum",
+    "tweetId" : ""
+  },
+  "seq": {
+    "about" : "",
+    "symbolToName" : "sequence",
+    "tweetId" : ""
+  },
+  "sngls":{
+    "about" : "",
+    "symbolToName" : "singulardtv",
+    "tweetId" : ""
+  },
+  "shift":{
+    "about" : "",
+    "symbolToName" : "shift",
+    "tweetId" : ""
+  },
+  "xzc":{
+    "about" : "",
+    "symbolToName" :"zcoin",
+    "tweetId" : ""
+  },
+  "neo":{
+    "about" : "",
+    "symbolToName" :  "neo",
+    "tweetId" : ""
+  },
+  "zec":{
+    "about" : "",
+    "symbolToName" : "zcash",
+    "tweetId" : ""
+  },
+  "zcl":{
+    "about" : "",
+    "symbolToName" :"zclassic",
+    "tweetId" : ""
+  },
+  "iop":{
+    "about" : "",
+    "symbolToName" : "internet of people",
+    "tweetId" : ""
+  },
+  "dar":{
+    "about" : "",
+    "symbolToName" : "darcrus",
+    "tweetId" : ""
+  },
+  "golos":{
+    "about" : "",
+    "symbolToName" : "golos",
+    "tweetId" : ""
+  },
+  "gbg":{
+    "about" : "",
+    "symbolToName" : "gbg",
+    "tweetId" : ""
+  },
+  "ubq": {
+    "about" : "",
+    "symbolToName" : "ubiq",
+    "tweetId" : ""
+  },
+  "hkg":{
+    "about" : "",
+    "symbolToName" :  "hackergold",
+    "tweetId" : ""
+  },
+  "kmd":{
+    "about" : "",
+    "symbolToName" : "komodo",
+    "tweetId" : ""
+  },
+  "sib":{
+    "about" : "",
+    "symbolToName" : "siberian chervonets",
+    "tweetId" : ""
+  },
+  "ion":{
+    "about" : "",
+    "symbolToName" : "ion",
+    "tweetId" : ""
+  },
+  "lmc":{
+    "about" : "",
+    "symbolToName" : "lomocoin",
+    "tweetId" : ""
+  },
+  "qwark":{
+    "about" : "",
+    "symbolToName" :  "qwark",
+    "tweetId" : ""
+  },
+  "crw":{
+    "about" : "",
+    "symbolToName" :"crown",
+    "tweetId" : ""
+  },
+  "swt": {
+    "about" : "",
+    "symbolToName" : "swarm city token",
+    "tweetId" : ""
+  },
+  "time":{
+    "about" : "",
+    "symbolToName" : "chronobank time",
+    "tweetId" : ""
+  },
+  "mln":{
+    "about" : "",
+    "symbolToName" : "melon",
+    "tweetId" : ""
+  },
+  "tks":{
+    "about" : "",
+    "symbolToName" :"tokes",
+    "tweetId" : ""
+  },
+  "ark":{
+    "about" : "",
+    "symbolToName" : "ark",
+    "tweetId" : ""
+  },
+  "dyn":{
+    "about" : "",
+    "symbolToName" : "dynamic",
+    "tweetId" : ""
+  },
+  "music": {
+    "about" : "",
+    "symbolToName" : "musicoin",
+    "tweetId" : ""
+  },
+  "dtb":{
+    "about" : "",
+    "symbolToName" : "databits",
+    "tweetId" : ""
+  },
+  "incnt":{
+    "about" : "",
+    "symbolToName" : "incent",
+    "tweetId" : ""
+  },
+  "gbyte":{
+    "about" : "",
+    "symbolToName" :  "bytes",
+    "tweetId" : ""
+  },
+  "gnt":{
+    "about" : "",
+    "symbolToName" : "golem",
+    "tweetId" : ""
+  },
+  "nxc":{
+    "about" : "",
+    "symbolToName" : "nexium",
+    "tweetId" : ""
+  },
+  "edg": {
+    "about" : "",
+    "symbolToName" :"edgeless",
+    "tweetId" : ""
+  },
+  "lgd":{
+    "about" : "",
+    "symbolToName" : "legends",
+    "tweetId" : ""
+  },
+  "trst":{
+    "about" : "",
+    "symbolToName" : "trustcoin",
+    "tweetId" : ""
+  },
+  "wings":{
+    "about" : "",
+    "symbolToName" : "wings dao",
+    "tweetId" : ""
+  },
+  "rlc":{
+    "about" : "",
+    "symbolToName" : "iex.ec",
+    "tweetId" : ""
+  },
+  "gno": {
+    "about" : "",
+    "symbolToName" : "gnosis",
+    "tweetId" : ""
+  },
+  "gup": {
+    "about" : "",
+    "symbolToName" :"guppy",
+    "tweetId" : ""
+  },
+  "lun":{
+    "about" : "",
+    "symbolToName" : "lunyr",
+    "tweetId" : ""
+  },
+  "apx":{
+    "about" : "",
+    "symbolToName" :"apx",
+    "tweetId" : ""
+  },
+  "tkn": {
+    "about" : "",
+    "symbolToName" : "tokencard",
+    "tweetId" : ""
+  },
+  "hmq":{
+    "about" : "",
+    "symbolToName" : "humaniq",
+    "tweetId" : ""
+  },
+  "ant":{
+    "about" : "",
+    "symbolToName" : "aragon",
+    "tweetId" : ""
+  },
+  "zen":{
+    "about" : "",
+    "symbolToName" : "zencash",
+    "tweetId" : ""
+  },
+  "sc":{
+    "about" : "",
+    "symbolToName" : "siacoin",
+    "tweetId" : ""
+  },
+  "1st":{
+    "about" : "",
+    "symbolToName" : "firstblood",
+    "tweetId" : ""
+  },
+  "qrl":{
+    "about" : "",
+    "symbolToName" :  "quantum resistant ledger",
+    "tweetId" : ""
+  },
+  "crb":{
+    "about" : "",
+    "symbolToName" : "creditbit",
+    "tweetId" : ""
+  },
+  "troll":{
+    "about" : "",
+    "symbolToName" :"bittrex test currency",
+    "tweetId" : ""
+  },
+  "ptoy":{
+    "about" : "",
+    "symbolToName" : "patientory",
+    "tweetId" : ""
+  },
+  "myst":{
+    "about" : "",
+    "symbolToName" : "mysterium",
+    "tweetId" : ""
+  },
+  "cfi":{
+    "about" : "",
+    "symbolToName" : "cofound.it",
+    "tweetId" : ""
+  },
+  "bnt":{
+    "about" : "",
+    "symbolToName" : "bancor",
+    "tweetId" : ""
+  },
+  "nmr":{
+    "about" : "",
+    "symbolToName" : "numeraire",
+    "tweetId" : ""
+  },
+  "snt":{
+    "about" : "",
+    "symbolToName" : "status network token",
+    "tweetId" : ""
+  },
+  "dct": {
+    "about" : "",
+    "symbolToName" : "decent",
+    "tweetId" : ""
+  },
+  "xel":{
+    "about" : "",
+    "symbolToName" :  "elastic",
+    "tweetId" : ""
+  },
+  "mco":{
+    "about" : "",
+    "symbolToName" : "monaco",
+    "tweetId" : ""
+  },
+  "adt":{
+    "about" : "",
+    "symbolToName" : "adtoken",
+    "tweetId" : ""
+  },
+  "fun":{
+    "about" : "",
+    "symbolToName" : "funfair",
+    "tweetId" : ""
+  },
+  "pay":{
+    "about" : "",
+    "symbolToName" : "tenx pay token",
+    "tweetId" : ""
+  },
+  "mtl":{
+    "about" : "",
+    "symbolToName" : "metal",
+    "tweetId" : ""
+  },
+  "storj":{
+    "about" : "",
+    "symbolToName" : "storj",
+    "tweetId" : ""
+  },
+  "adx":{
+    "about" : "",
+    "symbolToName" :  "adex",
+    "tweetId" : ""
+  },
+  "omg":{
+    "about" : "",
+    "symbolToName" : "omisego",
+    "tweetId" : ""
+  },
+  "cvc":{
+    "about" : "",
+    "symbolToName" : "civic",
+    "tweetId" : ""
+  },
+  "part":{
+    "about" : "",
+    "symbolToName" : "particl",
+    "tweetId" : ""
+  },
+  "qtum":{
+    "about" : "",
+    "symbolToName" : "qtum",
+    "tweetId" : ""
+  },
+  "ada":{
+    "about" : "",
+    "symbolToName" : "ada",
+    "tweetId" : ""
+  }
 }

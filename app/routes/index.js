@@ -63,7 +63,9 @@ module.exports = function (app) {
     // for whitelisting domains
     app.post('/whitelist',webhooks.whiteListDomains);
 
+    // for testing tweets
 
+    app.get('/tweets',webhooks.getTweets);
 
     // for messenger app menu
     app.post('/appmenu',webhooks.appMenu);

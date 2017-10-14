@@ -1,8 +1,9 @@
 'use strict';
 const request = require('request');
 
-const mapping= require('./mapping.json');
+// const mapping= require('./mapping.json');
 const about = require('./about.json');
+
 const smiley = ':)';
 const url = require('url');
 
@@ -68,12 +69,15 @@ const webhooks = {
                     else if (formattedMsg.indexOf("-") >= 0) {
                         if (formattedMsg.split("-")[1] === "news") {
                             senderAction ({sender : sender ,action : 'typing_on'});
-                            getXml({key : mapping[formattedMsg.split("-")[0]] || "bitcoin" ,sender :sender ,page :1});
+                            getXml({key : about[formattedMsg.split("-")[0]].symbolToName || "bitcoin" ,sender :sender ,page :1});
                         }
                         else if (formattedMsg.split("-")[1] === "about") {
                             //senderAction ({sender : sender ,action : 'typing_on'});
                             getAbout({key : formattedMsg , sender :  sender});
                             //senderAction ({sender : sender ,action : 'typing_off'});
+                        }
+                        else if (/(tweet)+(s|er)?$/.test(formattedMsg.split("-")[1])) {
+                            getTweets({ key : about[formattedMsg.split("-")[0]].tweetId , sender : sender });
                         }
                         else {
                             sendMessage({sender : sender  ,text : `no data found for ${formattedMsg.split("-")[1]}`});
@@ -113,6 +117,82 @@ const webhooks = {
                 }
             }
         };
+
+
+        /**
+         * To get data from coin handler
+         * @param data
+         */
+
+        function getTweets(data) {
+
+            const params = {
+                from : `@${data.key}`,
+                count: 4,
+                result_type: 'recent',
+                lang: 'en'
+            };
+
+            const messages = {
+                "attachment": {
+                    "type": "template",
+                    "payload": {
+                        "template_type": "list",
+                        "top_element_style": "compact",
+                        "elements": null
+                    }
+                }
+            };
+
+            req.app.config.T.get('search/tweets', params, function(err, data, response) {
+                if (!err) {
+                    // Loop through the returned tweets
+
+                    let reducedArray = data.statuses.reduce(function(arr,curr,i) {
+
+                        arr.push ({
+                            "title": curr.text,
+                            "subtitle":   curr.text.slice(0,15),
+                            //"image_url": "https://peterssendreceiveapp.ngrok.io/img/collection.png",
+                            "buttons": [
+                                {
+                                    "title": "View",
+                                    "type": "web_url",
+                                    "url": curr.entities.urls.length  > 0 ? (curr.entities.urls)[0].url : "",
+                                    "messenger_extensions": true,
+                                    "webview_height_ratio": "tall",
+                                    "fallback_url": "https://blockchainevangelist.in/"
+                                }
+                            ]
+                        });
+
+                        return arr;
+                    },[]);
+
+                    if (reducedArray.length > 0 ) {
+                        messages.attachment.payload.elements = reducedArray;
+
+                        //client.set('some key', 'some value');
+
+                        // req.app.client.set(`${data.key}-${data.page}`,JSON.stringify(messages.attachment),function(err,reply) {
+                        //     console.log(err);
+                        //     console.log('set done');
+                        //     req.app.client.expire(`${data.key}-${data.page}`, 1800);
+                            sendMessage({sender : data.sender  ,  attachment : messages.attachment });
+                        // });
+
+
+                    }
+                    else {
+                        sendMessage({ sender : data.sender , text : 'Sorry, No more data found'});
+                    }
+
+                }
+                else {
+                    throw new Error(err);
+                }
+            })
+        }
 
         function getDapps(data) {
 
@@ -201,8 +281,8 @@ const webhooks = {
          */
 
         function getAbout(data) {
-            if (!!about[data.key.split("-")[0]]) {
-                sendMessage({sender : data.sender  ,text :about[data.key.split("-")[0]] });
+            if (!!about[data.key.split("-")[0]].about) {
+                sendMessage({sender : data.sender  ,text :about[data.key.split("-")[0]].about });
             }
             else {
                 sendMessage({sender : data.sender  ,text : `no data found for ${data.key.split("-")[0]}`});
@@ -245,9 +325,9 @@ const webhooks = {
          */
         function getdata(data) {
             let requestOptions ='',url = '';
-                url = `https://api.coinmarketcap.com/v1/ticker/${mapping[data.key.split(":")[0]]}/?convert=${data.key.split(":")[1]}`;
+                url = `https://api.coinmarketcap.com/v1/ticker/${about[data.key.split(":")[0]].symbolToName}/?convert=${data.key.split(":")[1]}`;
 
-            if (!!mapping[data.key.split(":")[0]]) {
+            if (!!about[data.key.split(":")[0]].symbolToName) {
                 requestOptions = {
                     method: 'GET',
                     url :  url,
@@ -822,11 +902,11 @@ const webhooks = {
 	    //console.log(mapping.btc);
 
         var data  = {
-            key : 'btc:lllll'
+            key : 'ok:inr'
         }
 
         let requestOptions ='',url = '';
-                url = `https://api.coinmarketcap.com/v1/ticker/${mapping[data.key.split(":")[0]]}/?convert=${data.key.split(":")[1]}`;
+                url = `https://api.coinmarketcap.com/v1/ticker/${about[data.key.split(":")[0]].symbolToName}/?convert=${data.key.split(":")[1]}`;
             
         requestOptions = {
             method: 'GET',
@@ -1171,6 +1251,50 @@ const webhooks = {
             //console.log(body);
             res.send(body);
         });
+    },
+    getTweets : function (req,res) {
+
+	    console.log(req.query.t);
+	    console.log(/(tweet)+(s|er)?$/.test(req.query.t));
+        const params = {
+            from : '@ethereumproject',
+            count: 4,
+            result_type: 'recent',
+            lang: 'en'
+        };
+
+        req.app.config.T.get('search/tweets', params, function(err, data, response) {
+            if (!err) {
+                // Loop through the returned tweets
+
+                let reducedArray = data.statuses.reduce(function(arr,curr,i) {
+
+                        arr.push ({
+                            "title": curr.text,
+                            "subtitle":   curr.text.slice(0,15),
+                            //"image_url": "https://peterssendreceiveapp.ngrok.io/img/collection.png",
+                            "buttons": [
+                                {
+                                    "title": "View",
+                                    "type": "web_url",
+                                    "url": curr.entities.urls.length  > 0 ? (curr.entities.urls)[0].url : "",
+                                    "messenger_extensions": true,
+                                    "webview_height_ratio": "tall",
+                                    "fallback_url": "https://blockchainevangelist.in/"
+                                }
+                            ]
+                        });
+
+                    return arr;
+                },[]);
+
+                res.send(reducedArray);
+
+            } else {
+                console.log(err);
+            }
+        })
+
     }
 };
 

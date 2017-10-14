@@ -37,6 +37,7 @@
     "serve-favicon": "*",
     "serve-static": "^1.9.x",
     "shortid": "^2.2.6",
+    "twitter": "1.7.1",
     "winston": "^2.2.0",
     "xml2js": "0.4.19"
   }
