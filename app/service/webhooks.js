@@ -144,11 +144,11 @@ const webhooks = {
                 }
             };
 
-            req.app.config.T.get('search/tweets', params, function(err, data, response) {
+            req.app.config.T.get('search/tweets', params, function(err, body, response) {
                 if (!err) {
                     // Loop through the returned tweets
 
-                    let reducedArray = data.statuses.reduce(function(arr,curr,i) {
+                    let reducedArray = body.statuses.reduce(function(arr,curr,i) {
 
                         arr.push ({
                             "title": curr.text,
