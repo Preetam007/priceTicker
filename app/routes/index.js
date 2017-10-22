@@ -10,12 +10,12 @@ module.exports = function (app) {
     // is to use a reverse proxy to serve static files; see Use a reverse proxy for more information
 
     app.get('/', function(req,res) {
-      res.sendFile(require('path').join(__dirname, '../views/index.html'));
+       res.sendFile(require('path').join(__dirname, '../views/index.html'));
     });
 
     app.get('/stream',function (req,res) {
        res.sendFile(require('path').join(__dirname, '../views/stream.html'))
-    })
+    });
 
     // Facebook Webhook
     // Used for verification
@@ -34,12 +34,10 @@ module.exports = function (app) {
     app.get('/getxml',webhooks.xmltoJson);
 
     // to test coinmarket cap apis
-    
     app.get('/getdata',webhooks.getData);
 
     // for testing message
     app.post('/testmessage',webhooks.sendMessage);
-
 
     // for testing button messages
     app.post('/buttons',webhooks.buttonTemplate);
@@ -48,7 +46,6 @@ module.exports = function (app) {
     app.post('/testgenericmessage',webhooks.genericTemplate);
 
     // for quick replies
-
     app.post('/quickreplies',webhooks.quickReplies);
 
     // for testing opengraph template messages
@@ -64,7 +61,6 @@ module.exports = function (app) {
     app.post('/whitelist',webhooks.whiteListDomains);
 
     // for testing tweets
-
     app.get('/tweets',webhooks.getTweets);
 
     // for messenger app menu

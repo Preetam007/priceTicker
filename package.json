@@ -31,6 +31,7 @@
     "multer": "^1.1.0",
     "node-notifier": "5.1.2",
     "nodemailer": "0.7.1",
+    "puppeteer": "git+https://github.com/GoogleChrome/puppeteer.git",
     "qs": "^6.1.0",
     "redis": "2.8.0",
     "request": "2.81.0",

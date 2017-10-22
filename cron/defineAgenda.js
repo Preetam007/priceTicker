@@ -3,6 +3,7 @@ const notifier = require('node-notifier');
 const request = require('request');
 const async = require('async');
 const fs = require('fs');
+const test = require('./../app/service/test.json');
 
 exports = module.exports = function(agenda){
 
@@ -79,9 +80,11 @@ exports = module.exports = function(agenda){
   });
 
   agenda.define('get new data', function(job, done) {
-    console.log('yess');
-    done();
+        console.log('yess');
+        done();
   });
+  
+  
 
   agenda.define('add new coins',function(job,done) {
 
@@ -134,13 +137,35 @@ exports = module.exports = function(agenda){
 
       });
   });
+  
+  
+  
+  agenda.define('fetch coins social handlers',function (job,done) {
+      console.log('once');
+      done();
+
+
+  })
+
+
+    function graceful() {
+        agenda.stop(function() {
+            process.exit(0);
+        });
+    }
+
+    process.on('SIGTERM', graceful);
+    process.on('SIGINT' , graceful);
 
 
 	agenda.on('ready', function() {
-    console.log(process.env.refreshTime,process.env.timePrefix)
-	  //agenda.every(`${process.env.refreshTime || 30} ${process.env.timePrefix}`, 'fetch crypto price');
-      agenda.every('23 hours', 'add new coins');
-	  agenda.start();
+    //console.log(process.env.refreshTime,process.env.timePrefix);
+          //agenda.every(`${process.env.refreshTime || 30} ${process.env.timePrefix}`, 'fetch crypto price');
+          agenda.every('233 hours', 'add new coins');
+
+          agenda.now('fetch coins social handlers');
+
+          agenda.start();
 	});
 
 

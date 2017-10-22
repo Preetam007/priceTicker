@@ -158,8 +158,7 @@ const webhooks = {
                                 {
                                     "title": "View",
                                     "type": "web_url",
-                                    "url": curr.entities.urls.length  > 0 ? (curr.entities.urls)[0].url : "",
-                                    "messenger_extensions": true,
+                                    "url": curr.entities.urls.length  > 0 ? (curr.entities.urls)[0].url : (!!curr.retweeted_status && !!curr.retweeted_status.entities && !!curr.retweeted_status.entities.urls ? ((curr.retweeted_status.entities.urls)[0]).url : '' ),
                                     "webview_height_ratio": "tall",
                                     "fallback_url": "https://blockchainevangelist.in/"
                                 }
@@ -168,6 +167,7 @@ const webhooks = {
 
                         return arr;
                     },[]);
+
 
                     if (reducedArray.length > 0 ) {
                         messages.attachment.payload.elements = reducedArray;
@@ -191,9 +191,13 @@ const webhooks = {
                 else {
                     throw new Error(err);
                 }
-            })
+            });
         }
 
+        /**
+         *
+         * @param data
+         */
         function getDapps(data) {
 
             const limit = data.limit || 4;
@@ -851,7 +855,7 @@ const webhooks = {
           headers: { 'content-type': 'application/json' },
           body: 
            { whitelisted_domains: 
-              [ 'https://coinmarketcap.com','https://www.stateofthedapps.com','https://blockchainevangelist.in','https://cointelegraph.com','https://www.coindesk.com'] },
+              [ 'https://t.co','https://coinmarketcap.com','https://www.stateofthedapps.com','https://blockchainevangelist.in','https://cointelegraph.com','https://www.coindesk.com'] },
           json: true };
 
         request(options, function (error, response, body) {
@@ -1257,8 +1261,8 @@ const webhooks = {
 	    console.log(req.query.t);
 	    console.log(/(tweet)+(s|er)?$/.test(req.query.t));
         const params = {
-            from : '@ethereumproject',
-            count: 4,
+            from : '@AttentionToken',
+            count: 7,
             result_type: 'recent',
             lang: 'en'
         };
@@ -1268,7 +1272,7 @@ const webhooks = {
                 // Loop through the returned tweets
 
                 let reducedArray = data.statuses.reduce(function(arr,curr,i) {
-
+                        //console.log(curr.text);
                         arr.push ({
                             "title": curr.text,
                             "subtitle":   curr.text.slice(0,15),
@@ -1277,7 +1281,7 @@ const webhooks = {
                                 {
                                     "title": "View",
                                     "type": "web_url",
-                                    "url": curr.entities.urls.length  > 0 ? (curr.entities.urls)[0].url : "",
+                                    "url": curr.entities.urls.length  > 0 ? (curr.entities.urls)[0].url : (!!curr.retweeted_status && !!curr.retweeted_status.entities && !!curr.retweeted_status.entities.urls ? ((curr.retweeted_status.entities.urls)[0]).url : '' ),
                                     "messenger_extensions": true,
                                     "webview_height_ratio": "tall",
                                     "fallback_url": "https://blockchainevangelist.in/"

@@ -1,279 +1,277 @@
-{
-  "ok" : {
+{"ok" : {
     "about" : "",
-    "symbolToName" : "OKCash",
-    "tweetId" : ""
+    "symbolToName" : "okcash",
+    "tweetId" : "https://twitter.com/OKCashCrypto"
   },
   "btcd" : {
     "about" : "Komodo will use Zcash zero knowledge proofs — the best privacy technology available — along with a new consensus method called delayed Proof of Work (dPoW). The BTCD can be swapped for Komodo coin after the ICO has ended.",
     "symbolToName" : "bitcoindark",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/BitcoinDark"
   },
   "bcn" : {
     "about" : "CryptoNote is an application layer protocol that powers several decentralized privacy oriented digital currencies. It aims to be an evolution of the ideas behind bitcoin.The main difference between the two technologies is that Bitcoin (and most digital currencies) is less opaque than CryptoNote-based currencies due to the latter's blockchain being almost anonymous, contrary to non-Cryptonote blockchains. CryptoNote currencies use a distributed public ledger that records all balances and transactions of its in-built currency like Bitcoin",
-    "symbolToName" : "Bytecoin",
-    "tweetId" : ""
+    "symbolToName" : "bytecoin-bcn",
+    "tweetId" : "https://twitter.com/Bytecoin_BCN"
   },
   "bcc" : {
     "about" : "BitConnect is an open source Bitcoin and crypto community developed by an unknown programmer, or a group of programmers, using their own cryptocurrency BitConnect Coin for all BitConnect lending operations. The price of BitConnect was 0.17 USD in January 2017, and as of august 2017 it trades for more than $50 dollars, increasing a 1800% value in the first 6 months. BitConnect coin released as open source software in January 2017",
     "symbolToName" : "BitConnect",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/bitconnect"
   },
   "bat" : {
     "about" : "Basic Attention Token radically improves the efficiency of digital advertising by creating a new token that can be exchanged between publishers, advertisers, and users. The token can be used to obtain a variety of advertising and attention-based services on the Brave platform. The utility of the token is based on user attention, which simply means a person’s focused mental engagement.",
-    "symbolToName" : "basic attention token",
-    "tweetId" : ""
+    "symbolToName" : "basic-attention-token",
+    "tweetId" : "https://twitter.com/AttentionToken"
   },
   "rep" : {
     "about" : "Augur is a fully open-source and decentralized prediction market platform built on Ethereum, a blockchain technology that allows for the execution of smart contracts. JavaScript is also used for a browser-based GUI supplementing the command line. Notable supporters of the project include Intrade co-founder Ron Bernstein, the Thiel Foundation and Vitalik Buterin.Early development of the software began in autumn 2014, and an alpha version was released in June 2015",
     "symbolToName" : "augur",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/AugurProject"
   },
   "ardr" : {
     "about" : "Ardor is a blockchain-as-a-service platform that will allow people to utilize the blockchain technology of Nxt through the use of child chains. Since all processing will be done on the Ardor main chain, child chain creators won’t need to worry about common issues when creating a blockchain as well as securing it with enough nodes. Child chains will be able to utilize features currently seen in Nxt such as decentralized phasing, voting, and trading, as well as be able to interact with other child chains on the platform, including IGNIS, the first child chain to be launched.",
     "symbolToName" : "ardor",
-    "tweetId" : ""
+    "tweetId" : "twitter.com/ArdorPlatform"
   },
   "etc" : {
     "about" : "Ethereum Classic is an open-source, public, blockchain-based distributed computing platform featuring smart contract (scripting) functionality. It provides a decentralized Turing-complete virtual machine, the Ethereum Virtual Machine (EVM), which can execute scripts using an international network of public nodes. Ethereum Classic also provides a value token called 'classic ether', which can be transferred between participants, stored in a cryptocurrency wallet and is used to compensate participant nodes for computations performed",
-    "symbolToName" : "ethereum classic",
-    "tweetId" : ""
+    "symbolToName" : "ethereum-classic",
+    "tweetId" : "https://twitter.com/eth_classic"
   },
   "eth" : {
     "about" : "Ethereum is an open-source, public, blockchain-based distributed computing platform featuring smart contract (scripting) functionality. It provides a decentralized Turing-complete virtual machine, the Ethereum Virtual Machine (EVM), which can execute scripts using an international network of public nodes. Ethereum also provides a cryptocurrency token called 'ether', which can be transferred between accounts and used to compensate participant nodes for computations performed.",
     "symbolToName" : "ethereum",
-    "tweetId" : "ethereumproject"
+    "tweetId" : "https://twitter.com/ethereumproject"
   },
   "doge" : {
     "about" : "Dogecoin ( DOHZH-koyn, code: DOGE, symbol: Ð and D) is a cryptocurrency featuring a likeness of the Shiba Inu dog from the 'Doge' Internet meme as its logo. Introduced as a 'joke currency' on 8 December 2013, Dogecoin quickly developed its own online community and reached a capitalization of US$60 million in January 2014; as of June 2017, it has a capitalization of US$340 million.Compared with other cryptocurrencies, Dogecoin has a fast initial coin production schedule: 100 billion coins have been in circulation by mid 2015 with an additional 5.256 billion coins every year thereafter. As of 30 June 2015, the 100 billionth Dogecoin has been mined",
     "symbolToName" : "dogecoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/dogecoin"
   },
   "bch" :{
     "about" : "Bitcoin Cash (BCC) is a hard fork of the cryptocurrency bitcoin. The fork occurred on August 1, 2017.",
-    "symbolToName" : "bitcoin cash",
-    "tweetId" : ""
+    "symbolToName" : "bitcoin-cash",
+    "tweetId" : "https://twitter.com/BITCOlNCASH"
   },
   "btc" : {
     "about" : "Bitcoin is a worldwide cryptocurrency and digital payment system, called the first decentralized digital currency, since the system works without a central repository or single administrator. It was invented by an unknown programmer, or a group of programmers, under the name Satoshi Nakamoto and released as open-source software in 2009.",
     "symbolToName" : "bitcoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/Bitcoin"
   },
   "xrp" : {
     "about" : "Ripple is a real-time gross settlement system (RTGS), currency exchange and remittance network by Ripple. Also called the Ripple Transaction Protocol (RTXP) or Ripple protocol,it is built upon a distributed open source Internet protocol, consensus ledger and native currency called XRP (ripples)",
     "symbolToName" : "ripple",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/Ripple"
   },
   "ltc": {
     "about" : "",
     "symbolToName" : "litecoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/LitecoinProject"
   },
-  "vtc":
-  {
+  "vtc": {
     "about" : "",
     "symbolToName" : "vertcoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/Vertcoin"
   },
   "ppc": {
     "about" : "",
     "symbolToName" : "peercoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/PeercoinPPC"
   },
   "ftc":{
     "about" : "",
     "symbolToName" : "feathercoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/Feathercoin"
   },
   "rdd":{
     "about" : "",
     "symbolToName" : "reddcoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/reddcoin"
   },
   "nxt":{
     "about" :  "",
     "symbolToName" : "nxt",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/NxtCommunity"
   },
   "dash":{
     "about" : "",
     "symbolToName" : "dash",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/Dashpay"
   },
   "pot":{
     "about" : "",
     "symbolToName" : "potcoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/PotCoin"
   },
   "blk":{
     "about" : "",
     "symbolToName" : "blackcoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/CoinBlack"
   },
   "emc2":{
     "about" : "",
     "symbolToName" : "einsteinium",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/einsteiniumcoin"
   },
   "xmy":{
     "about" : "",
     "symbolToName" : "myriad",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/myriadcoin'"
   },
   "aur":{
     "about" : "",
     "symbolToName" : "auroracoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/OfficialAUR"
   },
   "utc": {
     "about" : "",
     "symbolToName" : "ultracoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/official_utc"
   },
   "mzc":{
     "about" : "",
     "symbolToName" : "mazacoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/mazacoin"
   },
   "efl":{
     "about" : "",
-    "symbolToName" : "electronicgulden",
-    "tweetId" : ""
+    "symbolToName" : "e-gulden",
+    "tweetId" : "twitter.com/eguldenfoundati"
   },
   "gld":{
     "about" : "",
     "symbolToName" : "goldcoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/goldcoin"
   },
   "fair": {
     "about" : "",
     "symbolToName" : "faircoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/FairCoinTeam"
   },
   "slr":{
     "about" : "",
     "symbolToName" : "solarcoin",
-    "tweetId" : ""
+    "tweetId" : "twitter.com/SolarCoin_SLR"
   },
   "ptc":{
     "about" : "",
     "symbolToName" : "pesetacoin",
-    "tweetId" : ""
+    "tweetId" : "twitter.com/PesetacoinOfic"
   },
   "grs": {
     "about" : "",
     "symbolToName" : "groestlcoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/GroestlcoinTeam"
   },
   "nlg":{
     "about" : "",
     "symbolToName" : "gulden",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/Gulden"
   },
   "rby":{
     "about" : "",
     "symbolToName" : "rubycoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/RubyCoinOrg"
   },
   "xwc":{
     "about" : "",
     "symbolToName" : "whitecoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/WhiteCoiner"
   },
   "mona":{
     "about" : "",
     "symbolToName" : "monacoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/search?q=monacoin&src=tyah"
   },
   "bits":{
     "about" :  "",
-    "symbolToName" : "bitstarcoin",
-    "tweetId" : ""
+    "symbolToName" : "bitstar",
+    "tweetId" : "twitter.com/Bitstar_coin"
   },
   "oc":{
     "about" : "",
     "symbolToName" : "orangecoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/Orangecoins"
   },
   "thc":{
     "about" : "",
     "symbolToName" : "hempcoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/TheHempCoin"
   },
   "enrg":{
     "about" : "",
     "symbolToName" : "energycoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/ECF4U"
   },
   "sfr":{
     "about" : "",
     "symbolToName" : "saffroncoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/sfrcoin"
   },
   "erc":{
     "about" : "",
     "symbolToName" : "europecoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/europecoinEUORG"
   },
   "naut":{
     "about" : "",
     "symbolToName" : "nautiluscoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/Nautiluscoin"
   },
   "vrc":{
     "about" : "",
     "symbolToName" : "vericoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/VeriCoin"
   },
   "cure":{
     "about" : "",
     "symbolToName" : "curecoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/CureCoin_Team"
   },
   "blc":{
     "about" : "",
     "symbolToName" : "blakecoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/BlakeCoin"
   },
   "xc":{
     "about" : "",
     "symbolToName" : "xcurrency",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/XCurrency"
   },
   "xdq":{
     "about" : "",
     "symbolToName" : "dirac",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/search?q=Dirac%20coin&src=typd"
   },
   "xbb":{
     "about" : "",
     "symbolToName" : "boolberry",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/BoolberryTeam"
   },
   "hyper":{
     "about" :  "",
     "symbolToName" : "hyper",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/HyperCrypto"
   },
   "ccn":{
     "about" : "",
     "symbolToName" : "cannacoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/CCNProject"
   },
   "xmr":{
     "about" : "",
     "symbolToName" : "monero",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/monerocurrency"
   },
   "cloak":{
     "about" : "",
     "symbolToName" : "cloakcoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/CloakCoin"
   },
   "bsd":{
     "about" : "",
     "symbolToName" : "bitsend",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/bit_send"
   },
   "crypt":{
     "about" : "",
@@ -283,47 +281,47 @@
   "start":{
     "about" : "",
     "symbolToName" : "startcoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/start_coin"
   },
   "kore":{
     "about" : "",
     "symbolToName" : "korecoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/NewKoreCoin"
   },
   "xdn":{
     "about" : "",
     "symbolToName" : "digitalnote",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/XDNCommunity"
   },
   "trk":{
     "about" : "",
     "symbolToName" : "truckcoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/truckcoin_v2"
   },
   "trust":{
     "about" : "",
     "symbolToName" : "trustplus",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/TrustPlus'"
   },
   "nav":{
     "about" : "",
-    "symbolToName" : "navcoin",
-    "tweetId" : ""
+    "symbolToName" : "nav-coin",
+    "tweetId" : "https://twitter.com/NAVCoin"
   },
   "xst":{
     "about" : "",
     "symbolToName" : "stealthcoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/stealthcoin"
   },
   "apex":{
     "about" : "",
     "symbolToName" : "apexcoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/APEX_Crypto"
   },
   "via":{
     "about" : "",
     "symbolToName" : "viacoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/viacoin"
   },
   "tri":{
     "about" : "",
@@ -333,22 +331,22 @@
   "uno":{
     "about" : "",
     "symbolToName" : "unobtanium",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/unobtanium_uno"
   },
   "pink":{
     "about" : "",
     "symbolToName" : "pinkcoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/Pinkcoin_"
   },
   "ioc":{
     "about" : "",
-    "symbolToName" : "i/ocoin",
-    "tweetId" : ""
+    "symbolToName" : "iocoin",
+    "tweetId" : "https://twitter.com/IO_Coin"
   },
   "max":{
     "about" : "",
     "symbolToName" : "maxcoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/MaxcoinProject"
   },
   "lxc":{
     "about" : "",
@@ -358,307 +356,307 @@
   "bob": {
     "about" : "",
     "symbolToName" : "dobbscoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/Dobbscoin"
   },
   "cann":{
     "about" : "",
     "symbolToName" : "cannabiscoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/CannabisCoins"
   },
   "fc2":{
     "about" : "",
     "symbolToName" : "fuelcoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/FuelCoin"
   },
   "ssd":{
     "about" : "",
     "symbolToName" : "soniccoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/SonicScrewDev"
   },
   "j":{
     "about" : "",
     "symbolToName" : "joincoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/Joincoin_Team"
   },
   "sys":{
     "about" : "",
     "symbolToName" : "syscoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/syscoin"
   },
   "neos":{
     "about" : "",
     "symbolToName" : "neoscoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/NeosCoin"
   },
   "dgb":{
     "about" : "",
     "symbolToName" : "digibyte",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/DigiByteCoin"
   },
   "root":{
     "about" : "",
     "symbolToName" : "rootcoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/search?q=rootcoin&src=typd"
   },
   "bts":{
     "about" : "",
     "symbolToName" : "bitshares",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/bitshares"
   },
   "burst":{
     "about" : "",
     "symbolToName" : "burst",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/Burstcoin_dev"
   },
   "tit":{
     "about" : "",
     "symbolToName" : "titcoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/OfficialTitcoin"
   },
   "bsty":{
     "about" : "",
     "symbolToName" : "globalboost-y",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/GlobalBoost"
   },
   "pxi":{
     "about" : "",
     "symbolToName" : "prime-xi",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/OfficialPXI"
   },
   "dgc":{
     "about" : "",
     "symbolToName" : "digitalcoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/DigitalcoinDGC"
   },
   "slg":{
     "about" : "",
     "symbolToName" : "sterlingcoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/SterlingcoinSLG"
   },
   "stv":{
     "about" : "",
     "symbolToName" : "sativacoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/sativacoins"
   },
   "excl":{
     "about" : "",
     "symbolToName" : "exclusivecoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/exclusivecoin"
   },
   "swift":{
     "about" : "",
     "symbolToName" : "bitswift",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/Bit_Swift"
   },
   "net":{
     "about" : "",
     "symbolToName" : "netcoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/NETCOIN_NET"
   },
   "ghc":{
     "about" : "",
     "symbolToName" : "gamerholiccoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/Gamerholic"
   },
   "dope":{
     "about" : "",
     "symbolToName" : "dopecoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/DopeCoinGold"
   },
   "block":{
     "about" : "",
     "symbolToName" : "blocknet",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/The_Blocknet"
   },
   "aby":{
     "about" : "",
     "symbolToName" : "artbyte",
-    "tweetId" : ""
+    "tweetId" : "twitter.com/ArtByteMe"
   },
   "vior":{
     "about" : "",
     "symbolToName" : "viorcoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/viorcoin"
   },
   "byc":{
     "about" : "",
     "symbolToName" : "bytecent",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/Bytecent_BYC"
   },
   "ufo":{
     "about" : "",
     "symbolToName" :"ufocoin",
-    "tweetId" : ""
+    "tweetId" : "twitter.com/UFOCoins"
   },
   "xmg":{
     "about" : "",
     "symbolToName" : "magi",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/CoinMagi"
   },
   "xqn":{
     "about" : "",
     "symbolToName" : "quotient",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/QuotientXQN"
   },
   "blitz":{
     "about" : "",
     "symbolToName" : "blitzcash",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/bitalize"
   },
   "vpn":{
     "about" : "",
     "symbolToName" : "vpncoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/vpn_dev"
   },
   "bay":{
     "about" : "",
     "symbolToName" : "bitbay",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/BitBayofficial"
   },
   "dtc":{
     "about" : "",
     "symbolToName" : "daytradercoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/DayTraderCoin"
   },
   "am":{
     "about" : "",
     "symbolToName" : "aerome",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/aerocoin"
   },
   "metal":{
     "about" : "",
     "symbolToName" : "metalcoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/MetalCoinTeam"
   },
   "spr":{
     "about" : "",
     "symbolToName" : "spreadcoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/spread_coin"
   },
   "vtr":{
     "about" : "",
     "symbolToName" : "vtorrent",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/vTorrentCrypto"
   },
   "xpy":{
     "about" : "",
     "symbolToName" : "paycoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/TeamPayCoin"
   },
   "game":{
     "about" : "",
     "symbolToName" : "gamecredits",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/gamecredits"
   },
   "gp":{
     "about" : "",
     "symbolToName" : "goldpieces",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/GPCoin"
   },
   "nxs":{
     "about" : "",
     "symbolToName" : "nexus",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/NxsEarth"
   },
   "coval":{
     "about" : "",
-    "symbolToName" : "circuits of value",
-    "tweetId" : ""
+    "symbolToName" : "circuits-of-value",
+    "tweetId" : "https://twitter.com/circuitsofvalue"
   },
   "fsc2":{
     "about" : "",
     "symbolToName" :  "friendshipcoin2",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/Friendshipcoin"
   },
   "soon":{
     "about" : "",
     "symbolToName" : "sooncoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/SoonCoin"
   },
   "hz":{
     "about" : "",
     "symbolToName" : "horizon",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/Horizon_HZ"
   },
   "xcp":{
     "about" : "",
     "symbolToName" : "counterparty",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/CounterpartyXCP"
   },
   "bitb":{
     "about" : "",
     "symbolToName" : "bitbean",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/BitBeanCoin"
   },
   "xtc":{
     "about" : "",
     "symbolToName" : "tilecoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/tilecoinx"
   },
   "xvg":{
     "about" : "",
     "symbolToName" : "verge",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/vergecurrency"
   },
   "geo":{
     "about" : "",
     "symbolToName" : "geocoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/geo_coin"
   },
   "fldc":{
     "about" : "",
     "symbolToName" : "foldingcoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/FoldingCoin"
   },
   "gemz":{
     "about" : "",
     "symbolToName" : "gemz",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/getgemsorg"
   },
   "grc":{
     "about" : "",
     "symbolToName" : "gridcoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/GridcoinNetwork"
   },
   "xco":{
     "about" : "",
     "symbolToName" : "x-coin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/XcoinNews"
   },
   "mtr":{
     "about" : "",
     "symbolToName" : "mastertradercoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/MTRDevelopers"
   },
   "flo":{
     "about" : "",
     "symbolToName" : "florin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/Official_Florin"
   },
   "u":{
     "about" : "",
     "symbolToName" : "ucoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/ucointeam"
   },
   "nbt":{
     "about" : "",
     "symbolToName" : "nubits",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/OfficialNuBits"
   },
   "xem":{
     "about" : "",
     "symbolToName" : "neweconomymovement",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/NEMofficial"
   },
   "mue":{
     "about" : "",
     "symbolToName" : "monetaryunit",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/MonetaryUnit"
   },
   "xvc":{
     "about" : "",
     "symbolToName" : "vcash",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/Vcashinfo"
   },
   "8bit":{
     "about" : "",
@@ -668,107 +666,107 @@
   "clam":{
     "about" : "",
     "symbolToName" : "clams",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/ClamClient"
   },
   "xseed":{
     "about" : "",
     "symbolToName" : "bitseeds",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/BitSeeds"
   },
   "ntrn":{
     "about" : "",
     "symbolToName" : "neutron",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/Neutron_Crypto"
   },
   "sling":{
     "about" : "",
     "symbolToName" : "sling",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/search?q=slingcoin&src=typd"
   },
   "dmd":{
     "about" : "",
     "symbolToName" : "diamond",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/dmdcoin"
   },
   "gam":{
     "about" : "",
     "symbolToName" :  "gambit",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/gambitcrypto"
   },
   "unit":{
     "about" : "",
-    "symbolToName" : "universalcurrency",
-    "tweetId" : ""
+    "symbolToName" : "universal-currency",
+    "tweetId" : "https://twitter.com/UnitCurrency"
   },
   "grt":{
     "about" : "",
     "symbolToName" : "grantcoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/grantcoin"
   },
   "viral":{
     "about" : "",
     "symbolToName" : "viral",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/ViralDev"
   },
   "sphr":{
     "about" : "",
     "symbolToName" : "sphere",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/ProjectSPHR"
   },
   "arb":{
     "about" : "",
     "symbolToName" : "arbitcoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/get_ARbit"
   },
   "adc": {
     "about" : "",
     "symbolToName" : "audiocoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/ADCaudiocoin"
   },
   "snrg":{
     "about" : "",
     "symbolToName" : "synergy",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/SynergyCoin"
   },
   "pkb":{
     "about" : "",
     "symbolToName" : "parkbyte",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/ParkByte_PKB"
   },
   "tes":{
     "about" : "",
     "symbolToName" : "teslacoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/TeslaCoins"
   },
   "cpc":{
     "about" : "",
     "symbolToName" : "capricoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/CapriCoinTeam"
   },
   "aeon":{
     "about" : "",
     "symbolToName" : "aeon",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/AeonCoin"
   },
   "bitz":{
     "about" : "",
     "symbolToName" : "bitz",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/search?q=bitzcurrency&src=typd"
   },
   "gcr":{
     "about" : "",
-    "symbolToName" : "globalcurrencyreserve",
-    "tweetId" : ""
+    "symbolToName" : "global-currency-reserve",
+    "tweetId" : "https://twitter.com/GCRWorldwide"
   },
   "tx":{
     "about" : "",
     "symbolToName" : "transfercoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/Transfer_dev"
   },
   "bcy":{
     "about" : "",
     "symbolToName" : "bitcrystals",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/SpellsofGenesis"
   },
   "prime":{
     "about" : "",
@@ -778,67 +776,67 @@
   "exp":{
     "about" : "",
     "symbolToName" : "expanse",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/ExpanseOfficial"
   },
   "neu":{
     "about" : "",
     "symbolToName" : "neucoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/NeuCoin"
   },
   "swing":{
     "about" : "",
-    "symbolToName" : "swingcoin",
-    "tweetId" : ""
+    "symbolToName" : "swing",
+    "tweetId" : "https://twitter.com/search?q=swingcoin&src=typd"
   },
   "infx":{
     "about" : "",
     "symbolToName" : "influxcoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/infxcoin"
   },
   "omni":{
     "about" : "",
     "symbolToName" : "omnicoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/OmnicoinOrg"
   },
   "usdt":{
     "about" : "",
     "symbolToName" : "tether",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/Tether_to"
   },
   "amp":{
     "about" : "",
-    "symbolToName" : "synereoamp",
-    "tweetId" : ""
+    "symbolToName" : "synereo",
+    "tweetId" : "twitter.com/Synereo"
   },
   "agrs":{
     "about" : "",
-    "symbolToName" : "idni agoras",
-    "tweetId" : ""
+    "symbolToName" : "agoras-tokens",
+    "tweetId" : "https://twitter.com/TauChainOrg"
   },
   "xlm":{
     "about" : "",
-    "symbolToName" : "lumen",
-    "tweetId" : ""
+    "symbolToName" : "stellar",
+    "tweetId" : "twitter.com/StellarOrg"
   },
   "sprts":{
     "about" : "",
     "symbolToName" : "sprouts",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/cryptosprouts"
   },
   "ybc":{
     "about" : "",
     "symbolToName" : "ybcoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/YBcoin"
   },
   "bta":{
     "about" : "",
     "symbolToName" : "bata",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/Bata_Money"
   },
   "mec":{
     "about" : "",
     "symbolToName" : "megacoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/mega_coin"
   },
   "bitcny":{
     "about" : "",
@@ -848,57 +846,57 @@
   "ams":{
     "about" : "",
     "symbolToName" : "amsterdamcoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/amsterdam_coin"
   },
   "scrt":{
     "about" : "",
     "symbolToName" : "secretcoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/SecretCoinDevs"
   },
   "scot":{
     "about" : "",
     "symbolToName" : "scotcoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/ScotcoinProject"
   },
   "club":{
     "about" : "",
     "symbolToName" : "clubcoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/clubcoin_co"
   },
   "vox":{
     "about" : "",
     "symbolToName" : "voxels",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/Voxelus"
   },
   "mnd":{
     "about" : "",
     "symbolToName" : "mindcoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/MindCoinCrypto"
   },
   "emc":{
     "about" : "",
     "symbolToName" : "emercoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/emercoin_press"
   },
   "fct":{
     "about" : "",
     "symbolToName" : "factom",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/factom"
   },
   "maid":{
     "about" : "",
     "symbolToName" : "maidsafecoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/maidsafe"
   },
   "frk":{
     "about" : "",
     "symbolToName" : "franko",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/FrankoCurrency"
   },
   "egc":{
     "about" : "",
     "symbolToName" : "evergreencoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/EverGreenCoin_"
   },
   "sls":{
     "about" : "",
@@ -908,97 +906,97 @@
   "orb":{
     "about" : "",
     "symbolToName" : "orbitcoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/Orbitcoin"
   },
   "steps":{
     "about" : "",
     "symbolToName" : "steps",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/AltcoinSteps"
   },
   "rads":{
     "about" : "",
     "symbolToName" : "radium",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/RadiumCore"
   },
   "dcr":{
     "about" : "",
     "symbolToName" : "decred",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/decredproject"
   },
   "safex":{
     "about" : "",
-    "symbolToName" : "safeexchangecoin",
-    "tweetId" : ""
+    "symbolToName" : "safe-exchange-coin",
+    "tweetId" : "twitter.com/safe_exchange"
   },
   "pivx":{
     "about" : "",
     "symbolToName" : "pivx",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/_pivx'"
   },
   "warp":{
     "about" : "",
     "symbolToName" : "warpcoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/warpcoin"
   },
   "crbit":{
     "about" : "",
     "symbolToName" : "creditbit",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/creditbit"
   },
   "meme":{
     "about" : "",
     "symbolToName" : "memetic",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/pepecoins"
   },
   "steem":{
     "about" : "",
     "symbolToName" : "steem",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/steemit"
   },
   "2give":{
     "about" : "",
     "symbolToName" : "2give",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/2GiveCoin"
   },
   "lsk": {
     "about" : "",
     "symbolToName" : "lisk",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/LiskHQ"
   },
   "kr":{
     "about" : "",
     "symbolToName" : "krypton",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/covertress"
   },
   "pdc":{
     "about" : "",
-    "symbolToName" : "project decorum",
-    "tweetId" : ""
+    "symbolToName" : "project-decorum",
+    "tweetId" : "https://twitter.com/ProjectDecorum"
   },
   "dgd":{
     "about" : "",
-    "symbolToName" : "digix dao",
-    "tweetId" : ""
+    "symbolToName" : "digixdao",
+    "tweetId" : "https://twitter.com/DigixGlobal"
   },
   "brk":{
     "about" : "",
     "symbolToName" : "breakout",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/BreakoutGaming"
   },
   "waves":{
     "about" : "",
     "symbolToName" : "waves",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/wavesplatform"
   },
   "rise":{
     "about" : "",
     "symbolToName" : "rise",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/RiseVisionTeam"
   },
   "lbc":{
     "about" : "",
-    "symbolToName" : "lbry credits",
-    "tweetId" : ""
+    "symbolToName" : "library-credit",
+    "tweetId" : "https://twitter.com/LBRYio"
   },
   "sbd":{
     "about" : "",
@@ -1007,397 +1005,392 @@
   },
   "brx":{
     "about" : "",
-    "symbolToName" : "breakout stake",
-    "tweetId" : ""
+    "symbolToName" : "breakout-stake",
+    "tweetId" : "https://twitter.com/BreakoutGaming"
   },
   "draco":{
     "about" : "",
-    "symbolToName" :"dt token",
-    "tweetId" : ""
+    "symbolToName" :"dt-token",
+    "tweetId" : "https://twitter.com/E_Drachma"
   },
   "uniq":{
     "about" : "",
     "symbolToName" : "uniqredit",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/UniQredit_"
   },
   "strat":{
     "about" : "",
     "symbolToName" : "stratis",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/stratisplatform"
   },
   "unb": {
     "about" : "",
     "symbolToName" : "unbreakablecoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/Unbreakablcoin"
   },
   "synx":{
     "about" : "",
     "symbolToName" : "syndicate",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/Project_Synx"
   },
   "trig":{
     "about" : "",
-    "symbolToName" : "trig token",
-    "tweetId" : ""
+    "symbolToName" : "triggers",
+    "tweetId" : "https://twitter.com/blocksafe"
   },
   "ebst":{
     "about" : "",
-    "symbolToName" :  "eboost",
-    "tweetId" : ""
+    "symbolToName" :  "eboostcoin",
+    "tweetId" : "twitter.com/eBoostCoin"
   },
   "vrm":{
     "about" : "",
     "symbolToName" : "verium",
-    "tweetId" : ""
+    "tweetId" : "twitter.com/VeriumReserve"
   },
   "xaur":{
     "about" : "",
     "symbolToName" :"xaurum",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/XaurumOfficial"
   },
   "seq": {
     "about" : "",
     "symbolToName" : "sequence",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/dualitychain"
   },
   "sngls":{
     "about" : "",
     "symbolToName" : "singulardtv",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/SingularDTV"
   },
   "shift":{
     "about" : "",
     "symbolToName" : "shift",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/ShiftNrg"
   },
   "xzc":{
     "about" : "",
     "symbolToName" :"zcoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/zcoinofficial"
   },
   "neo":{
     "about" : "",
     "symbolToName" :  "neo",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/NEO_Blockchain"
   },
   "zec":{
     "about" : "",
     "symbolToName" : "zcash",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/zcashco"
   },
   "zcl":{
     "about" : "",
     "symbolToName" :"zclassic",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/ZclassicCoin"
   },
   "iop":{
     "about" : "",
-    "symbolToName" : "internet of people",
-    "tweetId" : ""
+    "symbolToName" : "internet-of-people",
+    "tweetId" : "https://twitter.com/IoP_community"
   },
   "dar":{
     "about" : "",
     "symbolToName" : "darcrus",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/darcrus"
   },
   "golos":{
     "about" : "",
     "symbolToName" : "golos",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/goloschain"
   },
   "gbg":{
     "about" : "",
     "symbolToName" : "gbg",
-    "tweetId" : ""
+    "tweetId" : "twitter.com/Golos_Gold"
   },
   "ubq": {
     "about" : "",
     "symbolToName" : "ubiq",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/ubiqsmart"
   },
   "hkg":{
     "about" : "",
     "symbolToName" :  "hackergold",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/CampEther"
   },
   "kmd":{
     "about" : "",
     "symbolToName" : "komodo",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/KomodoPlatform"
   },
   "sib":{
     "about" : "",
     "symbolToName" : "siberian chervonets",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/SibChervonec"
   },
   "ion":{
     "about" : "",
     "symbolToName" : "ion",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/ionomics"
   },
   "lmc":{
     "about" : "",
     "symbolToName" : "lomocoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/LoMoCoinTeam"
   },
   "qwark":{
     "about" : "",
     "symbolToName" :  "qwark",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/QwarkToken"
   },
   "crw":{
     "about" : "",
     "symbolToName" :"crown",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/CrownPlatform"
   },
   "swt": {
     "about" : "",
-    "symbolToName" : "swarm city token",
-    "tweetId" : ""
+    "symbolToName" : "swarm-city",
+    "tweetId" : "https://twitter.com/SwarmCityDApp"
   },
   "time":{
     "about" : "",
-    "symbolToName" : "chronobank time",
-    "tweetId" : ""
+    "symbolToName" : "chronobank",
+    "tweetId" : "https://twitter.com/ChronobankNews"
   },
   "mln":{
     "about" : "",
     "symbolToName" : "melon",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/melonport"
   },
   "tks":{
     "about" : "",
     "symbolToName" :"tokes",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/TokesPlatform"
   },
   "ark":{
     "about" : "",
     "symbolToName" : "ark",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/ArkEcosystem'"
   },
   "dyn":{
     "about" : "",
     "symbolToName" : "dynamic",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/dualitychain"
   },
   "music": {
     "about" : "",
     "symbolToName" : "musicoin",
-    "tweetId" : ""
+    "tweetId" : "twitter.com/musicoins"
   },
   "dtb":{
     "about" : "",
     "symbolToName" : "databits",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/AugmentorsGame"
   },
   "incnt":{
     "about" : "",
     "symbolToName" : "incent",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/IncentLoyalty"
   },
   "gbyte":{
     "about" : "",
-    "symbolToName" :  "bytes",
-    "tweetId" : ""
+    "symbolToName" :  "byteball",
+    "tweetId" : "twitter.com/ByteballOrg"
   },
   "gnt":{
     "about" : "",
     "symbolToName" : "golem",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/golemproject"
   },
   "nxc":{
     "about" : "",
     "symbolToName" : "nexium",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/BeyondVoidGame"
   },
   "edg": {
     "about" : "",
     "symbolToName" :"edgeless",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/edgelessproject"
   },
   "lgd":{
     "about" : "",
     "symbolToName" : "legends",
-    "tweetId" : ""
+    "tweetId" : "twitter.com/LegendsRoom"
   },
   "trst":{
     "about" : "",
-    "symbolToName" : "trustcoin",
+    "symbolToName" : "https://twitter.com/WeTrustPlatform",
     "tweetId" : ""
   },
   "wings":{
     "about" : "",
-    "symbolToName" : "wings dao",
-    "tweetId" : ""
+    "symbolToName" : "wings",
+    "tweetId" : "https://twitter.com/wingsplatform"
   },
   "rlc":{
     "about" : "",
     "symbolToName" : "iex.ec",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/iEx_ec"
   },
   "gno": {
     "about" : "",
     "symbolToName" : "gnosis",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/gnosisPM"
   },
   "gup": {
     "about" : "",
     "symbolToName" :"guppy",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/matchpool"
   },
   "lun":{
     "about" : "",
     "symbolToName" : "lunyr",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/LunyrInc"
   },
   "apx":{
     "about" : "",
     "symbolToName" :"apx",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/APX_Ventures"
   },
   "tkn": {
     "about" : "",
     "symbolToName" : "tokencard",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/tokencard_io"
   },
   "hmq":{
     "about" : "",
     "symbolToName" : "humaniq",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/Humaniq"
   },
   "ant":{
     "about" : "",
     "symbolToName" : "aragon",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/AragonProject"
   },
   "zen":{
     "about" : "",
     "symbolToName" : "zencash",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/zencashofficial"
   },
   "sc":{
     "about" : "",
     "symbolToName" : "siacoin",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/SiaTechHQ"
   },
   "1st":{
     "about" : "",
     "symbolToName" : "firstblood",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/firstbloodio"
   },
   "qrl":{
     "about" : "",
-    "symbolToName" :  "quantum resistant ledger",
-    "tweetId" : ""
+    "symbolToName" :  "quantum-resistant-ledger",
+    "tweetId" : "https://twitter.com/QRLedger"
   },
   "crb":{
     "about" : "",
     "symbolToName" : "creditbit",
-    "tweetId" : ""
-  },
-  "troll":{
-    "about" : "",
-    "symbolToName" :"bittrex test currency",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/creditbit"
   },
   "ptoy":{
     "about" : "",
     "symbolToName" : "patientory",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/patientory"
   },
   "myst":{
     "about" : "",
     "symbolToName" : "mysterium",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/MysteriumNet"
   },
   "cfi":{
     "about" : "",
-    "symbolToName" : "cofound.it",
-    "tweetId" : ""
+    "symbolToName" : "cofound-it",
+    "tweetId" : "https://twitter.com/cofound_it"
   },
   "bnt":{
     "about" : "",
     "symbolToName" : "bancor",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/BancorNetwork"
   },
   "nmr":{
     "about" : "",
     "symbolToName" : "numeraire",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/numerai"
   },
   "snt":{
     "about" : "",
-    "symbolToName" : "status network token",
-    "tweetId" : ""
+    "symbolToName" : "status",
+    "tweetId" : "https://twitter.com/ethstatus"
   },
   "dct": {
     "about" : "",
     "symbolToName" : "decent",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/DECENTplatform"
   },
   "xel":{
     "about" : "",
     "symbolToName" :  "elastic",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/elastic_coin"
   },
   "mco":{
     "about" : "",
     "symbolToName" : "monaco",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/monaco_card"
   },
   "adt":{
     "about" : "",
     "symbolToName" : "adtoken",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/ad_chain"
   },
   "fun":{
     "about" : "",
     "symbolToName" : "funfair",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/FunFairTech"
   },
   "pay":{
     "about" : "",
-    "symbolToName" : "tenx pay token",
-    "tweetId" : ""
+    "symbolToName" : "tenx",
+    "tweetId" : "https://twitter.com/tenxwallet"
   },
   "mtl":{
     "about" : "",
     "symbolToName" : "metal",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/metalpaysme"
   },
   "storj":{
     "about" : "",
     "symbolToName" : "storj",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/storjproject"
   },
   "adx":{
     "about" : "",
     "symbolToName" :  "adex",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/AdEx_Network"
   },
   "omg":{
     "about" : "",
     "symbolToName" : "omisego",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/omise_go"
   },
   "cvc":{
     "about" : "",
     "symbolToName" : "civic",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/civickey"
   },
   "part":{
     "about" : "",
     "symbolToName" : "particl",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/ParticlProject"
   },
   "qtum":{
     "about" : "",
     "symbolToName" : "qtum",
-    "tweetId" : ""
+    "tweetId" : "https://twitter.com/QtumOfficial"
   },
   "ada":{
     "about" : "",
-    "symbolToName" : "ada",
-    "tweetId" : ""
+    "symbolToName" : "cardano",
+    "tweetId" : "https://twitter.com/cardanocom"
   }
 }
