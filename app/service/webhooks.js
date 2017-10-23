@@ -597,10 +597,11 @@ const webhooks = {
                             { new: true, upsert: true ,select: { uid: 1 } },
                             function findOne(err, user) {
                             if (!err) {
-                                console.log('user saved');
+                                 return console.log('user saved');
                             }
 
                             console.log('user error');
+                            console.log(err);
                         });
                     }
 
