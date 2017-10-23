@@ -31,7 +31,7 @@
   "ardr" : {
     "about" : "Ardor is a blockchain-as-a-service platform that will allow people to utilize the blockchain technology of Nxt through the use of child chains. Since all processing will be done on the Ardor main chain, child chain creators won’t need to worry about common issues when creating a blockchain as well as securing it with enough nodes. Child chains will be able to utilize features currently seen in Nxt such as decentralized phasing, voting, and trading, as well as be able to interact with other child chains on the platform, including IGNIS, the first child chain to be launched.",
     "symbolToName" : "ardor",
-    "tweetId" : "twitter.com/ArdorPlatform"
+    "tweetId" : "ArdorPlatform"
   },
   "etc" : {
     "about" : "Ethereum Classic is an open-source, public, blockchain-based distributed computing platform featuring smart contract (scripting) functionality. It provides a decentralized Turing-complete virtual machine, the Ethereum Virtual Machine (EVM), which can execute scripts using an international network of public nodes. Ethereum Classic also provides a value token called 'classic ether', which can be transferred between participants, stored in a cryptocurrency wallet and is used to compensate participant nodes for computations performed",
@@ -136,7 +136,7 @@
   "efl":{
     "about" : "",
     "symbolToName" : "e-gulden",
-    "tweetId" : "twitter.com/eguldenfoundati"
+    "tweetId" : "eguldenfoundati"
   },
   "gld":{
     "about" : "",
@@ -151,12 +151,12 @@
   "slr":{
     "about" : "",
     "symbolToName" : "solarcoin",
-    "tweetId" : "twitter.com/SolarCoin_SLR"
+    "tweetId" : "SolarCoin_SLR"
   },
   "ptc":{
     "about" : "",
     "symbolToName" : "pesetacoin",
-    "tweetId" : "twitter.com/PesetacoinOfic"
+    "tweetId" : "PesetacoinOfic"
   },
   "grs": {
     "about" : "",
@@ -186,7 +186,7 @@
   "bits":{
     "about" :  "",
     "symbolToName" : "bitstar",
-    "tweetId" : "twitter.com/Bitstar_coin"
+    "tweetId" : "Bitstar_coin"
   },
   "oc":{
     "about" : "",
@@ -471,7 +471,7 @@
   "aby":{
     "about" : "",
     "symbolToName" : "artbyte",
-    "tweetId" : "twitter.com/ArtByteMe"
+    "tweetId" : "ArtByteMe"
   },
   "vior":{
     "about" : "",
@@ -486,7 +486,7 @@
   "ufo":{
     "about" : "",
     "symbolToName" :"ufocoin",
-    "tweetId" : "twitter.com/UFOCoins"
+    "tweetId" : "UFOCoins"
   },
   "xmg":{
     "about" : "",
@@ -806,7 +806,7 @@
   "amp":{
     "about" : "",
     "symbolToName" : "synereo",
-    "tweetId" : "twitter.com/Synereo"
+    "tweetId" : "Synereo"
   },
   "agrs":{
     "about" : "",
@@ -816,7 +816,7 @@
   "xlm":{
     "about" : "",
     "symbolToName" : "stellar",
-    "tweetId" : "twitter.com/StellarOrg"
+    "tweetId" : "StellarOrg"
   },
   "sprts":{
     "about" : "",
@@ -926,7 +926,7 @@
   "safex":{
     "about" : "",
     "symbolToName" : "safe-exchange-coin",
-    "tweetId" : "twitter.com/safe_exchange"
+    "tweetId" : "safe_exchange"
   },
   "pivx":{
     "about" : "",
@@ -1041,12 +1041,12 @@
   "ebst":{
     "about" : "",
     "symbolToName" :  "eboostcoin",
-    "tweetId" : "twitter.com/eBoostCoin"
+    "tweetId" : "eBoostCoin"
   },
   "vrm":{
     "about" : "",
     "symbolToName" : "verium",
-    "tweetId" : "twitter.com/VeriumReserve"
+    "tweetId" : "VeriumReserve"
   },
   "xaur":{
     "about" : "",
@@ -1106,7 +1106,7 @@
   "gbg":{
     "about" : "",
     "symbolToName" : "gbg",
-    "tweetId" : "twitter.com/Golos_Gold"
+    "tweetId" : "Golos_Gold"
   },
   "ubq": {
     "about" : "",
@@ -1181,7 +1181,7 @@
   "music": {
     "about" : "",
     "symbolToName" : "musicoin",
-    "tweetId" : "twitter.com/musicoins"
+    "tweetId" : "musicoins"
   },
   "dtb":{
     "about" : "",
@@ -1196,7 +1196,7 @@
   "gbyte":{
     "about" : "",
     "symbolToName" :  "byteball",
-    "tweetId" : "twitter.com/ByteballOrg"
+    "tweetId" : "ByteballOrg"
   },
   "gnt":{
     "about" : "",
@@ -1216,7 +1216,7 @@
   "lgd":{
     "about" : "",
     "symbolToName" : "legends",
-    "tweetId" : "twitter.com/LegendsRoom"
+    "tweetId" : "LegendsRoom"
   },
   "trst":{
     "about" : "",

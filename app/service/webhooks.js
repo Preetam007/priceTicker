@@ -167,7 +167,7 @@ const webhooks = {
                                 {
                                     "title": "View",
                                     "type": "web_url",
-                                    "url": curr.entities.urls.length  > 0 ? (curr.entities.urls)[0].url : (!!curr.retweeted_status && !!curr.retweeted_status.entities && !!curr.retweeted_status.entities.urls ? ((curr.retweeted_status.entities.urls)[0]).url : '' ),
+                                    "url": curr.entities.urls.length  > 0 ? (curr.entities.urls)[0].url : (!!curr.retweeted_status && !!curr.retweeted_status.id_str  ? (`https://twitter.com/AugurProject/status/${curr.retweeted_status.id_str}`) : `https://twitter.com/${data.key}/status/${curr.id_str}` ),
                                     "messenger_extensions": true,
                                     "webview_height_ratio": "tall",
                                     "fallback_url": "https://blockchainevangelist.in/"
@@ -1268,10 +1268,10 @@ const webhooks = {
     },
     getTweets : function (req,res) {
 
-	    console.log(req.query.t);
+	   // console.log(req.query.t);
 	    console.log(/(tweet)+(s|er)?$/.test(req.query.t));
         const params = {
-            from : '@AttentionToken',
+            from : '@AugurProject',
             count: 7,
             result_type: 'recent',
             lang: 'en'
@@ -1281,8 +1281,10 @@ const webhooks = {
             if (!err) {
                 // Loop through the returned tweets
 
+                //console.log(data.statuses);
+
                 let reducedArray = data.statuses.reduce(function(arr,curr,i) {
-                        //console.log(curr.text);
+                        console.log(i);
                         arr.push ({
                             "title": curr.text,
                             "subtitle":   curr.text.slice(0,15),
@@ -1291,7 +1293,7 @@ const webhooks = {
                                 {
                                     "title": "View",
                                     "type": "web_url",
-                                    "url": curr.entities.urls.length  > 0 ? (curr.entities.urls)[0].url : (!!curr.retweeted_status && !!curr.retweeted_status.entities && !!curr.retweeted_status.entities.urls ? ((curr.retweeted_status.entities.urls)[0]).url : '' ),
+                                    "url": curr.entities.urls.length  > 0 ? (curr.entities.urls)[0].url : (!!curr.retweeted_status && !!curr.retweeted_status.id_str  ? (`https://twitter.com/AugurProject/status/${curr.retweeted_status.id_str}`) : `https://twitter.com/AugurProject/status/${curr.id_str}` ),
                                     "messenger_extensions": true,
                                     "webview_height_ratio": "tall",
                                     "fallback_url": "https://blockchainevangelist.in/"
