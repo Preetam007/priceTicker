@@ -31,6 +31,22 @@ exports = module.exports = function(agenda){
     //and... we have a data store
   });
 
+
+    app.db.on('disconnected', function() {
+        console.warn('MongoDB event disconnected');
+    });
+
+  // If the Node process ends, close the Mongoose connection
+    process.on('SIGINT', function() {
+        app.db.close(function () {
+            console.log('Mongoose default connection disconnected through app termination');
+            process.exit(0);
+        });
+    });
+
+//config data models
+  require(__dirname+'/models')(app, mongoose);
+
     // keep reference to redis client
   app.client = redis.createClient(app.config.redisPort);
 

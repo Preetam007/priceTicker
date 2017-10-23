@@ -587,6 +587,22 @@ const webhooks = {
                     if (!!data.again && !!data.again.send)   {
                         sendMessage({ sender : data.sender ,text :  data.again.text });
                     }
+                    else {
+                        /* ## TODO
+                           - microservice or rabbitmq
+                         */
+                        req.app.db.models.User.findOneAndUpdate(
+                            { 'uid' : data.sender },
+                            { $setOnInsert: { lastLogin: new Date() } },
+                            { new: true, upsert: true ,select: { uid: 1 } },
+                            function findOne(err, user) {
+                            if (!err) {
+                                console.log('user saved');
+                            }
+
+                            console.log('user error');
+                        });
+                    }
 
                 }
                 else {
@@ -828,7 +844,19 @@ const webhooks = {
                console.log('Error: ', response.body.error);
             } 
             //console.log(body);
-            res.send(body);
+            req.app.db.models.User.findOneAndUpdate(
+                { 'uid' : '1701904353175444' },
+                { $setOnInsert: { lastLogin: new Date() } },
+                { new: true, upsert: true ,select: { uid: 1 } },
+                function findOne(err, user) {
+                    if (!err) {
+                        console.log('user saved');
+                    }
+
+                    console.log('user error');
+                    res.send(body);
+                });
+
         });
     },
     welcomeScreen :  function payloadHandler(req,res) {
@@ -865,7 +893,7 @@ const webhooks = {
           headers: { 'content-type': 'application/json' },
           body: 
            { whitelisted_domains: 
-              [ 'https://t.co','https://coinmarketcap.com','https://www.stateofthedapps.com','https://blockchainevangelist.in','https://cointelegraph.com','https://www.coindesk.com'] },
+              [ 'https://t.co','https://twitter.com','https://coinmarketcap.com','https://www.stateofthedapps.com','https://blockchainevangelist.in','https://cointelegraph.com','https://www.coindesk.com'] },
           json: true };
 
         request(options, function (error, response, body) {
