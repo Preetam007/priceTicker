@@ -133,6 +133,7 @@ const webhooks = {
                 lang: 'en'
             };
 
+
             const messages = {
                 "attachment": {
                     "type": "template",
@@ -140,6 +141,14 @@ const webhooks = {
                         "template_type": "list",
                         "top_element_style": "compact",
                         "elements": null
+                        // ,
+                        // "buttons": [
+                        //     {
+                        //         "title": "View More",
+                        //         "type": "postback",
+                        //         "payload": "payload"
+                        //     }
+                        // ]
                     }
                 }
             };
@@ -159,6 +168,7 @@ const webhooks = {
                                     "title": "View",
                                     "type": "web_url",
                                     "url": curr.entities.urls.length  > 0 ? (curr.entities.urls)[0].url : (!!curr.retweeted_status && !!curr.retweeted_status.entities && !!curr.retweeted_status.entities.urls ? ((curr.retweeted_status.entities.urls)[0]).url : '' ),
+                                    "messenger_extensions": true,
                                     "webview_height_ratio": "tall",
                                     "fallback_url": "https://blockchainevangelist.in/"
                                 }
