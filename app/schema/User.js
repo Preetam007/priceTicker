@@ -3,7 +3,7 @@ exports = module.exports = function(app, mongoose) {
 
     var userSchema = new mongoose.Schema(
         {
-            email: { type: String, unique: true },
+            email: { type: String },
             uid : { type : String , unique: true},
             lastLogin : {type : Date,default : new Date()}
         },
