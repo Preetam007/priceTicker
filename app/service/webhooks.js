@@ -47,6 +47,8 @@ const webhooks = {
 
             if (!!event && !!event.message) {
 
+                console.log(event.message);
+
                 if (event.message.text) {
 
                     // for handling click on quick reply messages
@@ -594,6 +596,7 @@ const webhooks = {
                         req.app.db.models.User.findOneAndUpdate(
                             { 'uid' : data.sender },
                             { $setOnInsert: { lastLogin: new Date() } },
+                            { $setOnInsert: { lastLogin: new Date() } },
                             { new: true, upsert: true ,select: { uid: 1 } },
                             function findOne(err, user) {
                             if (!err) {
@@ -859,6 +862,11 @@ const webhooks = {
                 });
 
         });
+    },
+    alerts_BreakingNews : function (req,res) {
+
+        req.app.utility.agenda.now('buy ,sell ,ico alerts and breaking news', { msg: req.body.msg });
+        res.send('ok');
     },
     welcomeScreen :  function payloadHandler(req,res) {
 

@@ -2,7 +2,7 @@
 //const nodemailer = require('nodemailer');
 const webhooks = require('../service/webhooks');
 
-module.exports = function (app) {
+module.exports = function (app,agenda) {
 
     // Note that res.sendFile() is not implemented with the sendfile system call, which 
     // would make it far more efficient. Instead, use serve-static middleware (or something 
@@ -38,6 +38,8 @@ module.exports = function (app) {
 
     // for testing message
     app.post('/testmessage',webhooks.sendMessage);
+
+    app.post('/send',webhooks.alerts_BreakingNews);
 
     // for testing button messages
     app.post('/buttons',webhooks.buttonTemplate);

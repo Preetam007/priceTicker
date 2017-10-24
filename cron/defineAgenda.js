@@ -145,7 +145,91 @@ exports = module.exports = function(agenda){
       done();
 
 
-  })
+  });
+
+
+    agenda.define('buy ,sell ,ico alerts and breaking news', function(job, done) {
+
+        console.log(job.attrs.data.msg);
+
+        agenda.jobs.db.model('User').count({}, function( err, count) {
+            if(err) {
+                console.log(err.stack);
+                return done(err);
+            }
+
+
+            const arr = [];
+            /*
+               ##TODO http://thecodebarbarian.com/cursors-in-mongoose-45
+             */
+
+            let streams =  agenda.jobs.db.model('User').find({},{ uid : 1 }).limit(count).lean().cursor();
+
+            streams.on('data', function (product) {
+                /*
+                  need to pause for data processing
+                */
+
+                streams.pause();
+
+
+                const options = {
+                    url: 'https://graph.facebook.com/v2.6/me/messages',
+                    qs: {access_token: 'EAABzjRLllHgBABHjf4jadxDvpKoGUp7Q5P4VfP9vYrqYkKZASpnH0Yvx5aZAbLD9NwRTF8zndZC7F2ldLe3pFZBwmo0hee6nC2FsSYlLJaouHJWLwRzMAIEIwp8pCchFkZCo5BxhP1JgZCU9dBbmepzfhStOXjZBjZCBuNdpwrrYvIvqwAXqJeXl'},
+                    method: 'POST',
+                    json: {
+                        recipient: { id: product.uid },
+                        message: {
+                            text : job.attrs.data.msg
+                        }
+                    }
+                };
+
+                request(options, function (error, response, body) {
+                    if (error) {
+                        console.log('Error sending message: ', error);
+                        return done(err,'error in product find');
+                    } else if (response.body.error) {
+                        console.log('Error: ', response.body.error);
+                        return done(err,'error in product find');
+                    }
+
+                    arr.push(product.uid);
+
+                    // streams.emit('update track status',product._id);
+                    streams.emit('done updating');
+                    // cb(null, 'mongo entry success');
+
+                });
+            });
+
+            streams.on('done updating',function() {
+
+                if(arr.length == count ) {
+                    done(null, 'done sent messages---------------------------------------');
+                    streams.emit('close');
+                } else {
+                    console.log('sending-----------------keep patience--------------------------------');
+                    /*
+                    resume after processing data
+                     */
+                    streams.resume();
+                }
+            });
+
+            streams.on('error', function (err) {
+                // handle err
+                return done(err, 'done getting records');
+            });
+
+            streams.on('close', function () {
+                // all done
+                console.log('all done');
+                // cb(null, 'done getting records');
+            });
+        });
+    });
 
 
     function graceful() {
@@ -161,9 +245,9 @@ exports = module.exports = function(agenda){
 	agenda.on('ready', function() {
     //console.log(process.env.refreshTime,process.env.timePrefix);
           //agenda.every(`${process.env.refreshTime || 30} ${process.env.timePrefix}`, 'fetch crypto price');
-          agenda.every('233 hours', 'add new coins');
+          //agenda.every('233 hours', 'add new coins');
 
-          agenda.now('fetch coins social handlers');
+          //agenda.now('fetch coins social handlers');
 
           agenda.start();
 	});

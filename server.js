@@ -8,9 +8,16 @@ var cluster = require('cluster'),
     jobWorkers = [],
     webWorkers = [],
     jobs = {};
+
+        jobs.get =  function(env) {
+            return 'development';
+        };
     
         // jobs.utility = require('../util/workflow');
       jobs.db = mongoose.createConnection(config.mongodb.uri);
+
+      require(__dirname + "/app/schema/User.js")(jobs,mongoose);
+
 
 
     agenda.jobs = jobs;   
@@ -28,7 +35,7 @@ var cluster = require('cluster'),
 
       for(var i = 0; i < numWorkers; i++) {
           //cluster.fork();
-        //addJobWorker();
+        addJobWorker();
         addWebWorker();
       }
 

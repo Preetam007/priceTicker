@@ -87,6 +87,7 @@ exports = module.exports = function(agenda){
 
   //setup utilities
   app.utility = {};
+  app.utility.agenda = agenda;
   app.utility.workflow = require(__dirname+'/helpers/workflow');
   
   //listen up
