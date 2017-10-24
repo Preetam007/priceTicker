@@ -596,7 +596,6 @@ const webhooks = {
                         req.app.db.models.User.findOneAndUpdate(
                             { 'uid' : data.sender },
                             { $setOnInsert: { lastLogin: new Date() } },
-                            { $setOnInsert: { lastLogin: new Date() } },
                             { new: true, upsert: true ,select: { uid: 1 } },
                             function findOne(err, user) {
                             if (!err) {
