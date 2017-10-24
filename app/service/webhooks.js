@@ -341,7 +341,7 @@ const webhooks = {
          */
         function getdata(data) {
 
-            if (!!about[data.key.split(":")[0]].symbolToName) {
+            if (!!about[data.key.split(":")[0]] && !!about[data.key.split(":")[0]].symbolToName) {
                 let requestOptions ='',url = '';
                 url = `https://api.coinmarketcap.com/v1/ticker/${about[data.key.split(":")[0]].symbolToName}/?convert=${data.key.split(":")[1]}`;
 
@@ -508,7 +508,7 @@ const webhooks = {
         };
 
         /**
-         * used to process the postback like when clieck on get started or on left menu - means any button
+         * used to process the postback like when click on get started or on left menu - means any button
          * @param event
          */
 
