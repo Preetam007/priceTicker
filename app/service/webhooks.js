@@ -47,7 +47,7 @@ const webhooks = {
 
             if (!!event && !!event.message) {
 
-                console.log(event.message);
+                console.log(JSON.stringify(event.messages,null,6));
 
                 if (event.message.text) {
 
