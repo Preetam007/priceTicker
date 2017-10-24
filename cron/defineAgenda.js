@@ -3,7 +3,6 @@ const notifier = require('node-notifier');
 const request = require('request');
 const async = require('async');
 const fs = require('fs');
-const test = require('./../app/service/test.json');
 
 exports = module.exports = function(agenda){
 
