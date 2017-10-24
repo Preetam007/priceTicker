@@ -340,10 +340,11 @@ const webhooks = {
          * @param data
          */
         function getdata(data) {
-            let requestOptions ='',url = '';
-                url = `https://api.coinmarketcap.com/v1/ticker/${about[data.key.split(":")[0]].symbolToName}/?convert=${data.key.split(":")[1]}`;
 
             if (!!about[data.key.split(":")[0]].symbolToName) {
+                let requestOptions ='',url = '';
+                url = `https://api.coinmarketcap.com/v1/ticker/${about[data.key.split(":")[0]].symbolToName}/?convert=${data.key.split(":")[1]}`;
+
                 requestOptions = {
                     method: 'GET',
                     url :  url,
