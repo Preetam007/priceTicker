@@ -17,6 +17,10 @@ module.exports = function (app,agenda) {
        res.sendFile(require('path').join(__dirname, '../views/stream.html'))
     });
 
+    app.get('/dfd',function (req,res) {
+        res.sendFile(require('path').join(__dirname, '../views/dfd.html'))
+    });
+
     // Facebook Webhook
     // Used for verification
     // Facebook doesn’t just check these tokens when you first establish the connection.
@@ -39,6 +43,7 @@ module.exports = function (app,agenda) {
     // for testing message
     app.post('/testmessage',webhooks.sendMessage);
 
+    // for alerts , ico_watchlist and releases_roadmap 
     app.post('/send',webhooks.alerts_BreakingNews);
 
     // for testing button messages
@@ -64,6 +69,10 @@ module.exports = function (app,agenda) {
 
     // for testing tweets
     app.get('/tweets',webhooks.getTweets);
+
+    // for testing meetups
+
+    app.get('/meetups',webhooks.getMeetUps);
 
     // for messenger app menu
     app.post('/appmenu',webhooks.appMenu);

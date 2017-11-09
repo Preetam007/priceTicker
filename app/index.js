@@ -74,10 +74,6 @@ exports = module.exports = function(agenda){
   app.use(helmet.hidePoweredBy({ setTo: 'PHP 4.2.0' }));//other middleware are not activated by default and requires explicit configuration .
   //app.use(helmet.referrerPolicy({ policy: 'same-origin' }));
 
-
-  //app.use(favicon(__dirname + '/favicon.ico'));
-  app.use(express.static(__dirname + '/public'));
-
   //app.use(favicon(__dirname + '/favicon.ico'));
   app.use(express.static(__dirname + '/public'));
   app.use('/dash', Agendash(agenda));
@@ -89,6 +85,10 @@ exports = module.exports = function(agenda){
   app.utility = {};
   app.utility.agenda = agenda;
   app.utility.workflow = require(__dirname+'/helpers/workflow');
+
+    //custom (friendly) error handler
+    //
+  app.use(require(__dirname + '/service/http').http500);
   
   //listen up
   app.server.listen(app.config.port, function(){

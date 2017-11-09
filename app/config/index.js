@@ -2,6 +2,7 @@
 const Twitter = require('twitter');
 exports.hostname = process.env.hostname || 'localhost';
 exports.port = process.env.PORT || 3003;
+exports.WIT_TOKEN = process.env.WIT_TOKEN || 'test';
 exports.redisPort = '6379';
 exports.messengerBot = {
     titles_length : 80,
@@ -13,6 +14,7 @@ exports.messengerBot = {
     },
     templates : {
         generic : {
+           // we are using this in meetups and blockchain learn,resources
            items :  10,
            button : 3
         },
@@ -24,10 +26,12 @@ exports.messengerBot = {
     },
     blockchain_feeds : 'https://news.google.com/news/rss/search/section/q/blockchain/blockchain?hl=en&ned=us',
     cryypto_feeds : '',
+    // websites from where we have to fetch news
+    contentWebsites : ['cointelegraph','coindesk'],
     // dont add slash after .com
-    whitelistedDomains : ['https://coinmarketcap.com','https://www.stateofthedapps.com','https://blockchainevangelist.in','https://cointelegraph.com','https://www.coindesk.com','https://www.theguardian.com'],
-    access_token : 'EAABzjRLllHgBABHjf4jadxDvpKoGUp7Q5P4VfP9vYrqYkKZASpnH0Yvx5aZAbLD9NwRTF8zndZC7F2ldLe3pFZBwmo0hee6nC2FsSYlLJaouHJWLwRzMAIEIwp8pCchFkZCo5BxhP1JgZCU9dBbmepzfhStOXjZBjZCBuNdpwrrYvIvqwAXqJeXl',
-    verification_token : 'this_is_my_token'
+    whitelistedDomains : ['https://www.coinmarketcap.com','https://www.stateofthedapps.com','https://www.blockchainevangelist.in','https://www.cointelegraph.com','https://www.coindesk.com','https://www.theguardian.com'],
+    access_token : process.env.FB_PAGE_TOKEN || 'EAABzjRLllHgBABHjf4jadxDvpKoGUp7Q5P4VfP9vYrqYkKZASpnH0Yvx5aZAbLD9NwRTF8zndZC7F2ldLe3pFZBwmo0hee6nC2FsSYlLJaouHJWLwRzMAIEIwp8pCchFkZCo5BxhP1JgZCU9dBbmepzfhStOXjZBjZCBuNdpwrrYvIvqwAXqJeXl',
+    verification_token : process.env.FB_VERIFY_TOKEN || 'this_is_my_token'
 };
 exports.tweetTokens = {
     consumer_key: '0mlSNqaUJ22rTGqz29JN28RK4',
@@ -35,6 +39,7 @@ exports.tweetTokens = {
     access_token_key: '2433885552-ESYq0r6VZrHRYgoiU0xyY5TXlIRgxYeMg2aVa14',
     access_token_secret: '71n2ZJBC6BVYWuPMFrkKqTzOzHwoxxiRfppOozO4DKCka'
 };
+exports.meetupKey = '2351624b85b603e647464553e35774b';
 exports.T = new Twitter(this.tweetTokens);
 exports.datetimestamp = Date.now();
 exports.mongodb = {

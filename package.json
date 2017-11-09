@@ -21,6 +21,7 @@
     "agendash": "^0.2.1",
     "async": "*",
     "body-parser": "^1.x.x",
+    "cities": "1.1.2",
     "compression": "1.7.0",
     "crypto": "0.0.3",
     "express": "*",

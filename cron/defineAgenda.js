@@ -146,16 +146,17 @@ exports = module.exports = function(agenda){
 
   });
 
-
-    agenda.define('buy ,sell ,ico alerts and breaking news', function(job, done) {
+  agenda.define('buy ,sell ,ico alerts and breaking news', function(job, done) {
 
         console.log(job.attrs.data.msg);
 
-        agenda.jobs.db.model('User').count({}, function( err, count) {
+        agenda.jobs.db.model('User').count({ "alerts.custom_alert" : true ,"alerts.ico_watchlist" : true , "alerts.releases_roadmap" : true}, function( err, count) {
             if(err) {
                 console.log(err.stack);
                 return done(err);
             }
+
+            console.log(count);
 
 
             const arr = [];
@@ -163,7 +164,7 @@ exports = module.exports = function(agenda){
                ##TODO http://thecodebarbarian.com/cursors-in-mongoose-45
              */
 
-            let streams =  agenda.jobs.db.model('User').find({},{ uid : 1 }).limit(count).lean().cursor();
+            let streams =  agenda.jobs.db.model('User').find({ "alerts.custom_alert" : true ,"alerts.ico_watchlist" : true , "alerts.releases_roadmap" : true},{ uid : 1 }).limit(count).lean().cursor();
 
             streams.on('data', function (product) {
                 /*
@@ -228,6 +229,90 @@ exports = module.exports = function(agenda){
                 // cb(null, 'done getting records');
             });
         });
+    });
+
+  agenda.define('save user for alerts',function (job,done) {
+
+      console.log(job.attrs.data.action);
+
+
+      function  updateObj(obj) {
+          let document = {};
+
+          if(!obj.u) document.uid =   job.attrs.data.msg;
+
+          document.alerts = {
+              signals:   job.attrs.data.action,
+              icowatchlist: job.attrs.data.action,
+              releasesroadmap: job.attrs.data.action
+          };
+
+          if (!!job.attrs.data.type) {
+              for (var key in document.alerts) {
+                  if (key === job.attrs.data.type) {
+                      document.alerts[key] = job.attrs.data.action;
+                  }
+                  else {
+                      document.alerts[key] = false;
+                  }
+              }
+          }
+
+          return document;
+      };
+
+      agenda.jobs.db.model('User').findOne({ 'uid' : job.attrs.data.msg },function(err,user) {
+         if (!err) {
+             const User = agenda.jobs.db.model('User');
+
+             if(!user) {
+                 console.log('not')
+                 console.log(user);
+                 user = new User(updateObj({u : false}));
+             }
+
+             if (!!job.attrs.data.type) {
+                 user.alerts[job.attrs.data.type] = job.attrs.data.action
+             }
+             else {
+                 user.alerts  = updateObj({u : true}).alerts;
+             }
+
+             user.save(function(err) {
+                 if (!err) {
+                     console.log('user saved');
+                     return done(null,'user saved');
+                 } else {
+                     console.log('user error');
+                     console.log(err);
+                     done(err);
+                 }
+             });
+
+         }
+         else {
+             console.error(err);
+             done(err);
+         }
+      });
+
+        // agenda.jobs.db.model('User').findOneAndUpdate(
+        //     { 'uid' : job.attrs.data.msg },
+        //     {$set: alertType }
+        //     //{ $set : { alerts[job.attrs.data.type] : job.attrs.data.action  }}
+        //     //{  alerts :  alertType
+        //    ,
+        //     { new: true, upsert: true ,setDefaultsOnInsert: true,select: { uid: 1 } },
+        // function findOne(err, user) {
+        //     if (!err) {
+        //         console.log('user saved');
+        //         return done(null,'user saved');
+        //     }
+        //
+        //     console.log('user error');
+        //     console.log(err);
+        //     done(err);
+        // });
     });
 
 

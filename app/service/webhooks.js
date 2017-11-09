@@ -1,9 +1,10 @@
 'use strict';
 const request = require('request');
+const cities = require('cities');
 
 // const mapping= require('./mapping.json');
 const about = require('./about.json');
-
+const reply_data = require('./blockchain_crypto.json');
 const smiley = ':)';
 const url = require('url');
 
@@ -23,6 +24,8 @@ const webhooks = {
             req.body.entry.forEach((entry) => {
                 // entry.time => time of update in milliseconds
                 entry.messaging.forEach((event) => {
+                    console.log(JSON.stringify(event,null,6));
+
                     if (event.message) {
                       procressMessage(event);
                     } else if (event.postback) {
@@ -36,6 +39,15 @@ const webhooks = {
           res.status(200).end();
         }
 
+
+        /**
+         * nlp logic and entities
+         */
+
+        function getEntity(nlp, name) {
+            return nlp && nlp.entities && nlp.entities && nlp.entities[name] && nlp.entities[name][0];
+        }
+
         /**
          * To process message sent by user except postback
          * @param event
@@ -47,79 +59,312 @@ const webhooks = {
 
             if (!!event && !!event.message) {
 
-                console.log(JSON.stringify(event.message,null,6));
-
-                if (event.message.text) {
+                if (!!event.message.text) {
 
                     // for handling click on quick reply messages
-                    if (!!event.message.text.quick_reply && !!event.message.text.quick_reply.payload) {
-                       console.log('quick_reply click detected');
-                    }
+                    if (!!event.message.quick_reply && !!event.message.quick_reply.payload) {
 
+                        console.log('quick reply payload');
 
-                   text = event.message.text;
-                   const formattedMsg = text.toLowerCase().trim();
-
-                   // If we receive a text message, check to see if it matches any special
-                   // keywords and send back the corresponding  detail.
-                    
-
-                    if (formattedMsg.indexOf(":") >= 0) {
-                        senderAction ({sender : sender ,action : 'typing_on'});
-                        getdata({key :formattedMsg ,sender :sender });
-                    }
-                    else if (formattedMsg.indexOf("-") >= 0) {
-                        if (formattedMsg.split("-")[1] === "news") {
-                            senderAction ({sender : sender ,action : 'typing_on'});
-                            getXml({key : about[formattedMsg.split("-")[0]].symbolToName || "bitcoin" ,sender :sender ,page :1});
-                        }
-                        else if (formattedMsg.split("-")[1] === "about") {
-                            //senderAction ({sender : sender ,action : 'typing_on'});
-                            getAbout({key : formattedMsg , sender :  sender});
-                            //senderAction ({sender : sender ,action : 'typing_off'});
-                        }
-                        else if (/(tweet)+(s|er)?$/.test(formattedMsg.split("-")[1])) {
-                            getTweets({ key : about[formattedMsg.split("-")[0]].tweetId , sender : sender });
-                        }
-                        else {
-                            sendMessage({sender : sender  ,text : `no data found for ${formattedMsg.split("-")[1]}`});
-                        }
-                    }
-                    else if (formattedMsg.indexOf("=") >= 0 && !! formattedMsg.split("=")[1]) {
-                        senderAction ({sender : sender ,action : 'typing_on'});
-                        getDapps({ key : formattedMsg.split("=")[1] ,sender : sender });
+                        // set postback manually
+                        event.postback = event.message.quick_reply;
+                        processPostback(event);
                     }
                     else {
-                        switch (formattedMsg) {
-                            case "blockchain":
-                                senderAction ({sender : sender ,action : 'typing_on'});
-                                getXml({key :'blockchain' ,sender :sender ,page :1});
-                                break;
-                            case "cryptocurrenicies":
-                                senderAction ({sender : sender ,action : 'typing_on'});
-                                getXml({key :'cryptocurrency' ,sender :sender ,page : 1 });
-                                break;
-                            case "crypto":
-                                senderAction ({sender : sender ,action : 'typing_on'});
-                                getXml({key :'cryptocurrency' ,sender :sender ,page :1 });
-                                break;
-                            default:
-                                sendMessage({sender : sender ,text : text});
-                        }
-                    } 
+                        text = event.message.text;
+                        const formattedMsg = text.toLowerCase().trim();
 
+                        /*
+                           intergate NLP(wit.ai) logics
+                         */
+
+                        const nlp = getEntity(event.message.nlp, 'action');
+                        if (nlp && nlp.confidence > 0.8) {
+                            //sendResponse('Hi there!');
+                            console.log('detected');
+                        } else {
+                            // default logic
+                        }
+
+                        // If we receive a text message, check to see if it matches any special
+                        // keywords and send back the corresponding  detail.
+
+
+                        if (formattedMsg.indexOf(":") >= 0) {
+                            senderAction ({sender : sender ,action : 'typing_on'});
+                            getdata({key :formattedMsg ,sender :sender });
+                        }
+                        else if (formattedMsg.indexOf("-") >= 0) {
+                            if (formattedMsg.split("-")[1] === "news") {
+                                senderAction ({sender : sender ,action : 'typing_on'});
+                                getXml({key : about[formattedMsg.split("-")[0]].symbolToName || "bitcoin" ,sender :sender ,page :1});
+                            }
+                            else if (formattedMsg.split("-")[1] === "about") {
+                                //senderAction ({sender : sender ,action : 'typing_on'});
+                                getAbout({key : formattedMsg , sender :  sender});
+                                //senderAction ({sender : sender ,action : 'typing_off'});
+                            }
+                            else if (/(tweet)+(s|er)?$/.test(formattedMsg.split("-")[1])) {
+                                getTweets({ key : about[formattedMsg.split("-")[0]].tweetId , sender : sender });
+                            }
+                            else {
+                                sendMessage({sender : sender  ,text : `no data found for ${formattedMsg.split("-")[1]}`});
+                            }
+                        }
+                        else if (formattedMsg.indexOf("=") >= 0 && !! formattedMsg.split("=")[1]) {
+                            senderAction ({sender : sender ,action : 'typing_on'});
+                            getDapps({ key : formattedMsg.split("=")[1] ,sender : sender });
+                        }
+                        else if (formattedMsg === 'home' || formattedMsg === 'start') {
+                            event.postback = { payload : "Greeting" ,home : true };
+                            processPostback(event);
+                        }
+                        else {
+                            switch (formattedMsg) {
+                                case "blockchain":
+                                    senderAction ({sender : sender ,action : 'typing_on'});
+                                    getXml({key :'blockchain' ,sender :sender ,page :1});
+                                    break;
+                                case "cryptocurrenicies":
+                                    senderAction ({sender : sender ,action : 'typing_on'});
+                                    getXml({key :'cryptocurrency' ,sender :sender ,page : 1 });
+                                    break;
+                                case "crypto":
+                                    senderAction ({sender : sender ,action : 'typing_on'});
+                                    getXml({key :'cryptocurrency' ,sender :sender ,page :1 });
+                                    break;
+                                default:
+                                    sendMessage({sender : sender ,text : text});
+                            }
+                        }
+                    }
                 }
                 else if (event.message.attachments) {
-                    console.log(event.message.attachments);
-                    console.log(JSON.stringify(event.message.attachments,null,6));
+
+                    console.log(JSON.stringify(event,null,6));
+
+                    event.message.attachments.forEach((entry) => {
+                        // entry.time => time of update in milliseconds
+                        if (entry.type == 'location' && entry.payload && entry.payload.coordinates) {
+                           const {lat,long} =  entry.payload.coordinates;
+                           const limit = 10,page =1;
+                           getMeetUps({sender,lat,long,limit,page});
+                        }
+                        else {
+                            text = "Sorry, I don't understand your request.";
+                            sendMessage({sender : sender ,text : text});
+                        }
+
+                    });
+
                     // like button sticker ids - 369239263222822 for the small one, 369239383222810 for
                     // the big one and 369239343222814 for the medium one
-                  text = "Sorry, I don't understand your request.";
-                  sendMessage({sender : sender ,text : text});
+
                 }
             }
         };
 
+        /**
+         * TO get mmetups using meetups api - long and lat
+         * @param data
+         */
+
+        // #TODO - use switch statement
+        function getMeetUps(data) {
+
+            const limit = data.limit || 10;
+            const lastIndex = !!data.page ? (parseInt(data.page || 1) - 1)*limit : 0;
+
+            const options = {
+                method: 'GET',
+                url: 'https://api.meetup.com/2/open_events.json',
+                qs:
+                    { text: 'blockchain',
+                        time: ',1m',
+                        'lat': data.lat,
+                        lon: data.long,
+                        key : '2351624b85b603e647464553e35774b'
+                    },
+                headers:
+                    {
+                        'content-type': 'application/json',
+                        'User-Agent': "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36",
+                        'cache-control': 'no-cache'
+                    }
+            };
+
+            const messages = {
+                "attachment": {
+                    "type": "template",
+                    "payload": {
+                        "template_type": "generic",
+                        "sharable" : true,
+                        "elements": null
+                    }
+                }
+            };
+
+
+            req.app.client.get(`${data.lat.toFixed(3)}meetups${data.long.toFixed(3)}`,function(err,reply) {
+
+                if (err) {
+                    console.log(err);
+                    throw new Error(err);
+                }
+
+                if (!!reply) {
+                    console.log('found');
+                    return sendMessage({sender: data.sender, attachment: JSON.parse(reply)});
+                }
+
+                request(options, function (error, response, body) {
+                    if (error) {
+                        sendMessage({sender : data.sender ,text : 'No Meetups found for now in next 1 weeek'});
+                    }
+                    else {
+                        const pglen = (JSON.parse(body)).results.length;
+                        let reducedArray = (JSON.parse(body)).results.slice(lastIndex,lastIndex+limit).reduce(function(arr,curr,i) {
+
+                                //TODO - one item is missing check slice and if conditions
+
+                                if (pglen > limit && i == limit-1) {
+
+                                    console.log(`blockchain_quick_meetups_more${data.page}_${data.lat}_${data.long}_${limit}`);
+
+                                    arr.push ({
+                                        title: 'more options',
+                                        buttons: [{
+                                            "title": "More Meetups",
+                                            "type": "postback",
+                                            "payload": `blockchain_quick_meetups_more${data.page}_${data.lat}_${data.long}_${limit}`
+                                            },
+                                            {
+                                                "type":"postback",
+                                                "title":"🏠",
+                                                "payload":"home"
+                                            },
+                                            {
+                                                "title": "Back",
+                                                "type": "postback",
+                                                "payload": "blockchain_quick_meetups_back"
+                                            }
+                                        ]
+                                    });
+                                }
+                                else if (i < limit) {
+                                    arr.push ({
+                                        title: `${curr.status} ${curr.name} meetup`,
+                                        subtitle: `${curr.name}`,
+                                        item_url: `${curr.event_url}?utm_source=blockchainevangelist&utm_medium=messenger&utm_campaign=messenger_blockchainevangelist`,
+                                        image_url: "https://144b1e2a.ngrok.io/images/meetup.png",
+                                        buttons: [{
+                                            type: "web_url",
+                                            url: `${curr.event_url}?utm_source=blockchainevangelist&utm_medium=messenger&utm_campaign=messenger_blockchainevangelist`,
+                                            title: "View Meetup"
+                                            },
+                                            {
+                                                "title": "Back",
+                                                "type": "postback",
+                                                "payload": "blockchain_quick_meetups_back"
+                                            },
+                                            {
+                                                "type": "element_share",
+                                                "share_contents": {
+                                                    "attachment": {
+                                                        "type": "template",
+                                                        "payload": {
+                                                            "template_type": "generic",
+                                                            "elements": [
+                                                                {
+                                                                    title: `${curr.status} ${curr.name} meetup`,
+                                                                    subtitle: `${curr.name}`,
+                                                                    item_url: `${curr.event_url}?utm_source=blockchainevangelist&utm_medium=messenger&utm_campaign=messenger_blockchainevangelist`,
+                                                                    image_url: "http://144b1e2a.ngrok.io/images/meetup.png",
+                                                                    "buttons": [
+                                                                        {
+                                                                            type: "web_url",
+                                                                            url: `${curr.event_url}?utm_source=blockchainevangelist&utm_medium=messenger&utm_campaign=messenger_blockchainevangelist`,
+                                                                            title: "Open Web URL"
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            ]
+                                                        }
+                                                    }
+                                                }
+                                            }]
+                                    });
+                                }
+
+                            return arr;
+                        },[]);
+
+                        if (reducedArray.length > 0 ) {
+                            //console.log(reducedArray.length);
+
+                            if (reducedArray.length < limit) {
+                                reducedArray.push ({
+                                    title: 'no more meetups in your area',
+                                    buttons: [
+                                        {
+                                            "type":"postback",
+                                            "title":"🏠",
+                                            "payload":"home"
+                                        },
+                                        {
+                                            "title": "Back",
+                                            "type": "postback",
+                                            "payload": "blockchain_quick_meetups_back"
+                                        }
+                                    ]
+                                });
+                            }
+                        }
+                        else {
+                            if (reducedArray.length < limit) {
+                                reducedArray.push ({
+                                    title: 'no  meetups found in your area',
+                                    buttons: [
+                                        {
+                                            "type":"postback",
+                                            "title":"🏠",
+                                            "payload":"home"
+                                        },
+                                        {
+                                            "type": "postback",
+                                            "title" : "🔙",
+                                            //#TODO - decide payload
+                                            "payload" : "blockchain_quick_meetups_back"
+                                        }
+                                    ]
+                                });
+                            }
+                            //sendMessage({ sender : data.sender , text : 'Sorry, No more data found'});
+                        }
+
+                        messages.attachment.payload.elements = reducedArray;
+
+                        req.app.client.set(`${data.lat.toFixed(3)}meetups${data.long.toFixed(3)}`,JSON.stringify(messages.attachment),function(err,reply) {
+                            //console.log(err);
+                            if(err) {
+                                console.log(err);
+                                console.log('error');
+                                sendMessage({ sender : data.sender , text : 'Sorry, No more data found'});
+                            }
+                            else {
+                                console.log('set done');
+                                req.app.client.expire(`${data.lat.toFixed(3)}meetups${data.long.toFixed(3)}`, 3600);
+                                //console.log(JSON.stringify(messages.attachment,null,6))
+                                sendMessage({sender : data.sender  ,  attachment : messages.attachment });
+                            }
+                        });
+                    }
+
+                });
+
+            });
+
+        }
 
         /**
          * To get data from coin handler
@@ -169,7 +414,7 @@ const webhooks = {
                                 {
                                     "title": "View",
                                     "type": "web_url",
-                                    "url": curr.entities.urls.length  > 0 ? (curr.entities.urls)[0].url : (!!curr.retweeted_status && !!curr.retweeted_status.id_str  ? (`https://twitter.com/AugurProject/status/${curr.retweeted_status.id_str}`) : `https://twitter.com/${data.key}/status/${curr.id_str}` ),
+                                    "url": curr.entities.urls.length  > 0 ? (curr.entities.urls)[0].url : (!!curr.retweeted_status && !!curr.retweeted_status.id_str  ? (`https://twitter.com/${data.key}/status/${curr.retweeted_status.id_str}`) : `https://twitter.com/${data.key}/status/${curr.id_str}` ),
                                     "messenger_extensions": true,
                                     "webview_height_ratio": "tall",
                                     "fallback_url": "https://blockchainevangelist.in/"
@@ -268,7 +513,7 @@ const webhooks = {
                             {
                               "title": "View",
                               "type": "web_url",
-                              "url": `https://www.stateofthedapps.com/dapps/${curr.slug}`,
+                              "url": `https://www.stateofthedapps.com/dapps/${curr.slug}?utm_source=blockchainevangelist&utm_medium=messenger&utm_campaign=messenger_blockchainevangelist`,
                               "messenger_extensions": true,
                               "webview_height_ratio": "tall",
                               "fallback_url": "https://blockchainevangelist.in/"
@@ -362,8 +607,23 @@ const webhooks = {
 
                     const price_data = JSON.parse(body);
                     let pushString = `current ${data.key.split(":")[0].toUpperCase()} price is ${Math.round((price_data[0])['price_'+data.key.split(":")[1]]) || Math.round((price_data[0])['price_usd'])} ${ (price_data[0])['price_'+data.key.split(":")[1]] ? data.key.split(":")[1].toUpperCase() : 'USD'  }`;
+                    let sendObj = {
+                        sender : data.sender,
+                        text : pushString,
+                        quick_replies : [
+                            {
+                            "content_type":"text",
+                            "title":"🏠",
+                            "payload":"home"
+                            },
+                            {
+                                "content_type":"text",
+                                "title":"🔙",
+                                "payload":"cryptocurriencies_quick_currentprices_back"
+                        }]
+                    };
 
-                    sendMessage({sender : data.sender  ,text : pushString});
+                    sendMessage(sendObj);
                 });
             }
             else {
@@ -377,25 +637,9 @@ const webhooks = {
          */
 
         function getXml(data) {
-           // @TO do - user IP parmaeter
-            //let lastIndex = 0;
-
-
-
-            // redis
+            console.log('coming');
             const limit = data.limit || 4;
             const lastIndex = !!data.page ? (parseInt(data.page || 1) - 1)*limit : 0;
-
-            const options = {
-                method: 'GET',
-                url: `https://news.google.com/news/rss/search/section/q/${data.key} coinTelegraph/${data.key} coinTelegraph`,
-                qs: { hl: 'en-IN', ned: 'in' },
-                headers:
-                {
-                  'User-Agent': "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36",
-                   'cache-control': 'no-cache'
-                }
-            };
 
             const messages = {
                 "attachment": {
@@ -408,14 +652,12 @@ const webhooks = {
                 }
             };
 
-
             if (data.page < 3) {
                 messages.attachment.payload.buttons = [
                     {
                         "title": "View More",
                         "type": "postback",
-                        // test if we can pass object
-                        "payload": `view more payload ${parseInt(data.page || 1)+1}`
+                        "payload": `view more payload ${data.key} ${parseInt(data.page || 1)+1}`
                     }
                 ]
             }
@@ -430,31 +672,91 @@ const webhooks = {
 
                 if (!!reply) {
                     console.log('found');
-                    //console.log(JSON.parse(reply));
-                    //return res.send(JSON.parse(reply));
-                    return sendMessage({sender : data.sender  ,  attachment : JSON.parse(reply) });
+                    //return sendMessage({sender : data.sender  ,  attachment : JSON.parse(reply) });
+
+                    return sendMessage({
+
+                        sender : data.sender  ,
+                        attachment : JSON.parse(reply) ,
+                        again : {
+                            send : true ,
+                            text: 'what next..',
+                            quick_replies:[
+                                {
+                                    "content_type":"text",
+                                    "title":"🏠",
+                                    "payload":"home"
+                                },
+                                {
+                                    "content_type": "text",
+                                    "title" : "🔙",
+                                    //#TODO - decide payload
+                                    "payload" : "blockchain_quick_meetups_back"
+                                }
+                            ]
+                        }
+                    });
                 }
 
-                request(options, function (error, response, body) {
 
-                    if (error)  {
-                        return console.log(error);
-                    }
 
-                    let parseString = require('xml2js').parseString;
+                // get max articles form  publications
+                let callAsync = req.app.config.messengerBot.contentWebsites.reduce(function(arrs,curr,i){
+                    let asyncFun = (function(i,curr) {
+                        return function(callback){
+                            request({
+                                method: 'GET',
+                                url: `https://news.google.com/news/rss/search/section/q/${data.key} ${curr}/${data.key} ${curr}`,
+                                qs: { hl: 'en-IN', ned: 'in' },
+                                headers:
+                                    {
+                                        'User-Agent': "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36",
+                                        'cache-control': 'no-cache'
+                                    }
+                            }, function (error, response, body) {
+                                if (error) {
+                                    return callback(error);
+                                }
 
-                    parseString(body, function (err, result) {
+                                let parseString = require('xml2js').parseString;
+                                parseString(body, function (err, result) {
+
+                                    if (((result.rss.channel)[0]) && ((result.rss.channel)[0].item) && !err) {
+                                        callback(null,((result.rss.channel)[0].item));
+                                    }
+                                    else {
+                                        callback(null,i);
+                                    }
+                                });
+
+                            });
+                        };
+                    })(i,curr);
+
+                    arrs.push(asyncFun);
+
+                    return arrs;
+                },[]);
+
+                require('async').parallel(callAsync,
+                    function(err, results) {
                         if (err) {
-                            return console.log(err);
+                            console.log(err);
+                            return sendMessage({ sender : data.sender , text : 'Sorry, No more data found error'});
+
                         }
 
-                        if (((result.rss.channel)[0]) && ((result.rss.channel)[0].item)) {
+                        if (Array.isArray(results[0]) && Array.isArray(results[1])) {
+                            // spread operator
+                            let finalArr = [...results[0],...results[1]];
+                            // use filter function for whitelisting
 
-                            let reducedArray = ((result.rss.channel)[0]).item.slice(lastIndex,lastIndex+limit).reduce(function(arr,curr,i) {
+                            let reducedArray = finalArr.slice(lastIndex,lastIndex+limit).reduce(function(arr,curr,i) {
 
                                 const domain = url.parse(curr.link.join(''));
-
-                                if (req.app.config.messengerBot.whitelistedDomains.indexOf(`${domain.protocol}//${domain.host}`) >=0) {
+                                const host= domain.host.indexOf('www')>=0 ? domain.host : "www."+domain.host;
+                                console.log(`${domain.protocol}//${host}`);
+                                if (req.app.config.messengerBot.whitelistedDomains.indexOf(`${domain.protocol}//${host}`) >=0) {
                                     arr.push ({
                                         "title": curr.title.join(''),
                                         "subtitle": `${curr.title.join('').slice(0,25)} ...`,
@@ -463,13 +765,19 @@ const webhooks = {
                                             {
                                                 "title": "View",
                                                 "type": "web_url",
-                                                "url": curr.link.join(''),
+                                                "url": `${curr.link.join('')}?utm_source=blockchainevangelist&utm_medium=messenger&utm_campaign=messenger_blockchainevangelist`,
                                                 "messenger_extensions": true,
                                                 "webview_height_ratio": "tall",
-                                                // @TO DO - why fallback url coming in web view , in messenger it is working fine
+                                                // @TODO - why fallback url coming in web view , in messenger it is working fine
                                                 "fallback_url": "https://blockchainevangelist.in/"
                                             }
-                                        ]
+                                        ],
+                                        "default_action": {
+                                            "type": "web_url",
+                                            "url": `${curr.link.join("")}?utm_source=blockchainevangelist&utm_medium=messenger&utm_campaign=messenger_blockchainevangelist`,
+                                            "messenger_extensions": true,
+                                            "webview_height_ratio": "compact"
+                                        }
                                     });
                                 }
 
@@ -478,34 +786,202 @@ const webhooks = {
 
                             // if no articles found by whitelisted domain then send text
                             if (reducedArray.length > 0 ) {
+                                //console.log(reducedArray.length);
                                 messages.attachment.payload.elements = reducedArray;
 
-                                //client.set('some key', 'some value');
-
                                 req.app.client.set(`${data.key}-${data.page}`,JSON.stringify(messages.attachment),function(err,reply) {
-                                    console.log(err);
-                                    console.log('set done');
-                                    req.app.client.expire(`${data.key}-${data.page}`, 1800);
-                                    sendMessage({sender : data.sender  ,  attachment : messages.attachment });
+                                    //console.log(err);
+                                    if(err) {
+                                        console.log(err);
+                                        console.log('error');
+                                        sendMessage({ sender : data.sender , text : 'Sorry, No more data found'});
+                                    }
+                                    else {
+                                        console.log('set done');
+                                        req.app.client.expire(`${data.key}-${data.page}`, 1000);
+
+                                        sendMessage({
+
+                                            sender : data.sender  ,
+                                            attachment : messages.attachment ,
+                                            again : {
+                                                send : true ,
+                                                text: 'what next',
+                                                quick_replies:[
+                                                    {
+                                                        "content_type":"text",
+                                                        "title":"🏠",
+                                                        "payload":"home"
+                                                    },
+                                                    {
+                                                        "content_type": "text",
+                                                        "title" : "🔙",
+                                                        //#TODO - decide payload
+                                                        "payload" : "blockchain_quick_meetups_back"
+                                                    }
+                                                ]
+                                            }
+                                        });
+                                    }
                                 });
-
-
                             }
                             else {
                                 sendMessage({ sender : data.sender , text : 'Sorry, No more data found'});
                             }
-
-                        } else {
-                            senderAction ({sender : data.sender ,action : 'typing_off'});
-                            sendMessage({sender : data.sender  ,text : 'Sorry, No result found'});
+                        }
+                        else {
+                            // default news - elastic search apis
+                            //console.log(results);
+                            sendMessage({ sender : data.sender , text : 'Sorry, No more data found'});
                         }
                     });
-                });
 
             });
 
 
         };
+
+
+        /**
+         * geenric templates common handler function
+         * @param data
+         */
+        function handleGenericTemplate(data) {
+
+            console.log(data);
+
+            const limit = data.limit || 10;
+            const lastIndex = !!data.page ? (parseInt(data.page || 1) - 1)*limit : 0;
+
+            const messages = {
+                "attachment": {
+                    "type": "template",
+                    "payload": {
+                        "template_type": "generic",
+                        "sharable" : true,
+                        "elements": null
+                    }
+                }
+            };
+
+            const pglen = data.template.length;
+            let reducedArray = data.template.slice(lastIndex,lastIndex+limit).reduce(function(arr,curr,i) {
+
+                //TODO - one item is missing check slice and if conditions
+
+                if (pglen >= limit && i == limit-1) {
+
+                    arr.push ({
+                        title: 'more options',
+                        buttons: [{
+                            "title": "More Resource",
+                            "type": "postback",
+                            "payload": `${data.type}_quick_${data.quick}_more${data.page}-${limit}`
+                        },
+                            {
+                                "type":"postback",
+                                "title":"🏠",
+                                "payload":"home"
+                            },
+                            {
+                                "title": "Back",
+                                "type": "postback",
+                                "payload": `${data.type}_quick_${data.quick}_back`
+                            }
+                        ]
+                    });
+                }
+                else if (i < limit-1) {
+                    arr.push ({
+                        title: `${curr.title}`,
+                        item_url: `${curr.link}?utm_source=blockchainevangelist&utm_medium=messenger&utm_campaign=messenger_blockchainevangelist`,
+                        image_url: "https://144b1e2a.ngrok.io/images/meetup.png",
+                        buttons: [{
+                            type: "web_url",
+                            url: `${curr.link}?utm_source=blockchainevangelist&utm_medium=messenger&utm_campaign=messenger_blockchainevangelist`,
+                            title: "open link"
+                        },
+                            {
+                                "title": "Back",
+                                "type": "postback",
+                                "payload": `${data.type}_quick_${data.quick}_back`
+                            },
+                            {
+                                "type": "element_share",
+                                "share_contents": {
+                                    "attachment": {
+                                        "type": "template",
+                                        "payload": {
+                                            "template_type": "generic",
+                                            "elements": [
+                                                {
+                                                    title: `${curr.title}`,
+                                                    item_url: `${curr.link}?utm_source=blockchainevangelist&utm_medium=messenger&utm_campaign=messenger_blockchainevangelist`,
+                                                    image_url: "http://144b1e2a.ngrok.io/images/meetup.png",
+                                                    "buttons": [
+                                                        {
+                                                            type: "web_url",
+                                                            url: `${curr.link}?utm_source=blockchainevangelist&utm_medium=messenger&utm_campaign=messenger_blockchainevangelist`,
+                                                            title: "Open Web URL"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }]
+                    });
+                }
+
+                return arr;
+            },[]);
+
+            if (reducedArray.length > 0 ) {
+                //console.log(reducedArray.length);
+
+                if (reducedArray.length < limit) {
+                    reducedArray.push ({
+                        title: 'no more resource .. we will add more soon..',
+                        buttons: [
+                            {
+                                "type":"postback",
+                                "title":"🏠",
+                                "payload":"home"
+                            },
+                            {
+                                "title": "Back",
+                                "type": "postback",
+                                "payload": `${data.type}_quick_${data.quick}_back`
+                            }
+                        ]
+                    });
+                }
+            }
+            else {
+                if (reducedArray.length < limit) {
+                    reducedArray.push ({
+                        title: 'no more resource .. we will add more soon..',
+                        buttons: [
+                            {
+                                "type":"postback",
+                                "title":"🏠",
+                                "payload":"home"
+                            },
+                            {
+                                "type": "postback",
+                                "title" : "🔙",
+                                //#TODO - decide payload
+                                "payload" : `${data.type}_quick_${data.quick}_back`
+                            }
+                        ]
+                    });
+                }
+            }
+
+            messages.attachment.payload.elements = reducedArray;
+            sendMessage({sender : data.sender  ,  attachment : messages.attachment });
+        }
 
         /**
          * used to process the postback like when click on get started or on left menu - means any button
@@ -515,7 +991,8 @@ const webhooks = {
         function processPostback(event) {
             const senderId = event.sender.id;
             const payload = event.postback.payload;
-
+             console.log('coming');
+            // #TODO - use switch statement
             if (payload === "Greeting") {
                 // Get user's first name from the User Profile API
                 // and include it in the greeting
@@ -527,31 +1004,718 @@ const webhooks = {
                   },
                   method: "GET"
                 }, function(error, response, body) {
-                    let greeting = "",name;
+                    let greeting = "",name =null;
                     if (error) {
                         console.log("Error getting user's name: " +  error);
                     } else {
                         const bodyObj = JSON.parse(body);
                         name = bodyObj.first_name;
-                        greeting = `Hi  ${name} ${smiley} .`;
+                        greeting = `${name}`;
                     }
-                    let message = greeting + "My name is BlockChain Evangelist Bot. I can tell you various details regarding blockchain,cryptocurriencies. What topic would you like to know about?";
+                    //#TODO - msg text
+                    let message = `Hi ${ greeting || smiley },  My name is BlockChain Evangelist Bot. I can tell you various details(news,price,events,startups,ico's etc) regarding blockchain,cryptocurriencies. What topic would you like to know about?`;
+                    //#TODO - msg text
+                    // sendMessage({sender : senderId ,text : message , again : {send : true ,text: 'To know coin prices in any fiat curreny just write "coin:symbol" (eg: btc:usd) ,' +
+                    // 'to know latest news of a coin type "coin-news" (eg: btc-news) and to know about a coin type "coin-about" (eg: btc-about)' }});
 
-                    sendMessage({sender : senderId ,text : message , again : {send : true ,text: 'To know coin prices in any fiat curreny just write "coin:symbol" (eg: btc:usd) ,' +
-                    'to know latest news of a coin type "coin-news" (eg: btc-news) and to know about a coin type "coin-about" (eg: btc-about)' }});
+
+                    const quick_replies_data = {
+                        sender : senderId,
+                        "text": !!event.postback.home ? "hey ! let's start again" : message ,
+                        "quick_replies":[
+                            {
+                                "content_type":"text",
+                                "title":"Blockchain",
+                                "payload":"blockchain_quick"
+                            },
+                            {
+                                "content_type":"text",
+                                "title":"Cryptocurriencies",
+                                "payload":"cryptocurriencies_quick"
+                            }
+                        ]
+                    };
+
+                    sendMessage(quick_replies_data);
+
                 });
             }
             else if (payload === 'help') {
-                sendMessage({sender : senderId ,text: 'To know coin prices in any fiat curreny just write "coin:symbol" (eg: btc:usd) ,' +
-                'to know latest news of a coin type "coin-news" (eg: btc-news) and to know about a coin type "coin-about" (eg: btc-about)' });
+                const quick_replies_data = {
+                    sender : senderId,
+                    "text": 'To know coin prices in any fiat curreny just write "coin:symbol" (eg: btc:usd) ,' +
+                            'to know latest news of a coin type "coin-news" (eg: btc-news) and to know about a coin type "coin-about" (eg: btc-about) \t\t\t\t\t OR \t\t\t\n choose any category',
+                    "quick_replies":[
+                        {
+                            "content_type":"text",
+                            "title":"Blockchain",
+                            "payload":"blockchain_quick"
+                        },
+                        {
+                            "content_type":"text",
+                            "title":"Cryptocurriencies",
+                            "payload":"cryptocurriencies_quick"
+                        }
+                    ]
+                };
+                sendMessage(quick_replies_data);
             }
             else if (payload === 'dapps') {
                 sendMessage({sender : senderId ,text:  'To get list of dApps related to a category type "dapps=category" (eg: dapps=insurance)'});
             }
+            else if (payload === 'subscription') {
+
+                const quick_replies_data = {
+                    sender : senderId,
+                    "text": "update your preference!",
+                    "quick_replies":[
+                        {
+                            "content_type":"text",
+                            "title":"🏠",
+                            "payload":"home"
+                        },
+                        {
+                            "content_type":"text",
+                            //#TODO - decide title
+                            "title":"start alerts",
+                            "payload":"alerts_start"
+                        },
+                        {
+                            "content_type":"text",
+                            //#TODO - decide text
+                            "title":"off alerts",
+                            "payload":"alerts_off"
+                        },
+                        {
+                            "content_type" : "text",
+                            "title" : "🔙",
+                            //#TODO - decide payload
+                            "payload" : "decide"
+                        }
+                    ]
+                };
+
+                sendMessage(quick_replies_data);
+
+            }
+            else if (payload === 'home') {
+                const quick_replies_data = {
+                    sender : senderId,
+                    "text": "hey ! let's start again",
+                    "quick_replies":[
+                        {
+                            "content_type":"text",
+                            "title":"Blockchain",
+                            "payload":"blockchain_quick"
+                        },
+                        {
+                            "content_type":"text",
+                            "title":"Cryptocurriencies",
+                            "payload":"cryptocurriencies_quick"
+                        }
+                    ]
+                };
+
+                sendMessage(quick_replies_data);
+            }
+            else if (payload.indexOf("blockchain_") >= 0  ) {
+                let quick_replies_data ='';
+                if (payload === 'blockchain_quick') {
+
+                     quick_replies_data = {
+                        sender : senderId,
+                        "text": "let's narrow it down .. you are interested in ?",
+                        "quick_replies":[
+                            {
+                                "content_type":"text",
+                                "title":"🏠",
+                                "payload":"home"
+                            },
+                            {
+                                "content_type":"text",
+                                "title":"News",
+                                "payload":"blockchain_quick_news"
+                            },
+                            {
+                                "content_type":"text",
+                                "title":"Learn Basics",
+                                "payload":"blockchain_quick_learn"
+                            },
+                            {
+                                "content_type" : "text",
+                                "title" : "Developers Resources",
+                                "payload" : "blockchain_quick_developers"
+                            },
+                            {
+                                "content_type":"text",
+                                "title":"Meetups",
+                                "payload":"blockchain_quick_meetups"
+                            },
+                            {
+                                "content_type":"text",
+                                "title":"Youtube",
+                                "payload":"blockchain_quick_youtube"
+                            },
+                            {
+                                "content_type":"text",
+                                "title":"Jobs",
+                                "payload":"blockchain_quick_jobs"
+                            },
+                            {
+                                "content_type":"text",
+                                "title":"Podcasts",
+                                "payload":"blockchain_quick_podcasts"
+                            },
+                            {
+                                "content_type" : "text",
+                                "title" : "🔙",
+                                "payload" : "blockchain_quick_back"
+                            }
+                        ]
+                     };
+                     sendMessage(quick_replies_data);
+
+                }
+                else if (payload.indexOf("blockchain_quick_news") >= 0  ) {
+
+                    if (payload === 'blockchain_quick_news') {
+                        senderAction ({sender : senderId ,action : 'typing_on'});
+                        getXml({key :'blockchain' ,sender :senderId ,page :1});
+                    }
+                }
+                else if (payload.indexOf("blockchain_quick_learn") >= 0 ) {
+
+                    if (payload === 'blockchain_quick_learn') {
+                        senderAction ({sender : senderId ,action : 'typing_on'});
+                        // quick is used for payload matching and template is used for json matching
+                        handleGenericTemplate({sender : senderId ,type : (payload.split('_'))[0],quick : ((payload.split('_')).slice(-1))[0], template : reply_data.blockchain[((payload.split('_')).slice(-1))[0]],page : 1,limit : 10 });
+                    }
+                    else if (payload.indexOf("blockchain_quick_learn_more") >= 0) {
+                        senderAction ({sender : senderId ,action : 'typing_on'});
+                        handleGenericTemplate({sender :senderId ,type : (payload.split('_'))[0],quick : 'learn',template : reply_data.blockchain[((payload.split('_')).slice(-2))[0]],limit : parseInt((payload.match(/\d+/g))[1].trim()),page : parseInt(((payload.match(/\d+/g))[0]))+1 });
+
+                    }
+
+                }
+                else if (payload.indexOf("blockchain_quick_developers") >= 0) {
+
+                    if (payload === 'blockchain_quick_developers') {
+                        quick_replies_data = {
+                            sender : senderId,
+                            "text": " yea :)  Most interesting part ,let's narrow it down .. you are interested in ?",
+                            "quick_replies":[
+                                {
+                                    "content_type":"text",
+                                    "title":"🏠",
+                                    "payload":"home"
+                                },
+                                {
+                                    "content_type":"text",
+                                    "title":"Dapps",
+                                    "payload":"blockchain_quick_developers_dapps"
+                                },
+                                {
+                                    "content_type":"text",
+                                    "title":"Blockchain Resources",
+                                    "payload":"blockchain_quick_developers_dresources"
+                                },
+                                {
+                                    "content_type":"text",
+                                    "title":"🔙",
+                                    "payload":"blockchain_quick_developers_back"
+                                }
+                            ]
+                        };
+                        sendMessage(quick_replies_data);
+                    }
+                    else if (payload.indexOf("blockchain_quick_developers_dapps") >= 0) {
+
+                        if (payload == "blockchain_quick_developers_dapps") {
+                            senderAction ({sender : senderId ,action : 'typing_on'});
+                            handleGenericTemplate({sender : senderId ,type : (payload.split('_'))[0],quick : 'developers_dapps', template : reply_data.blockchain[((payload.split('_')).slice(-1))[0]],page : 1,limit : 10 });
+
+                        }
+                        else if (payload.indexOf("blockchain_quick_developers_dapps_more") >= 0) {
+                            senderAction ({sender : senderId ,action : 'typing_on'});
+                            handleGenericTemplate({sender :senderId ,type : (payload.split('_'))[0],quick : 'developers_dapps',template : reply_data.blockchain[((payload.split('_')).slice(-2))[0]],limit : parseInt((payload.match(/\d+/g))[1].trim()),page : parseInt(((payload.match(/\d+/g))[0]))+1 });
+                        }
+
+                    }
+                    else if (payload.indexOf("blockchain_quick_developers_dresources") >= 0) {
+                        if (payload == "blockchain_quick_developers_dresources") {
+                            senderAction ({sender : senderId ,action : 'typing_on'});
+                            handleGenericTemplate({sender : senderId ,type : (payload.split('_'))[0],quick : 'developers_dresources', template : reply_data.blockchain[((payload.split('_')).slice(-1))[0]],page : 1,limit : 10 });
+
+                        }
+                        else if (payload.indexOf("blockchain_quick_developers_dresources_more") >= 0) {
+                            senderAction ({sender : senderId ,action : 'typing_on'});
+                            handleGenericTemplate({sender :senderId ,type : (payload.split('_'))[0],quick : 'developers_dresources',template : reply_data.blockchain[((payload.split('_')).slice(-2))[0]],limit : parseInt((payload.match(/\d+/g))[1].trim()),page : parseInt(((payload.match(/\d+/g))[0]))+1 });
+                        }
+                    }
+
+                }
+                else if (payload.indexOf("blockchain_quick_meetups") >= 0) {
+
+                    if (payload === 'blockchain_quick_meetups') {
+                        const quick_replies_data = {
+                            sender : senderId,
+                            "text": "hey ! Share your location",
+                            "quick_replies":[
+                                {
+                                    "content_type":"text",
+                                    "title":"🏠",
+                                    "payload":"home"
+                                },
+                                {
+                                    "content_type": "location"
+                                    // use session for payload name
+                                },
+                                {
+                                    "content_type":"text",
+                                    "title":"🔙",
+                                    "payload":"blockchain_quick_meetups_back"
+                                }
+                            ]
+                        };
+                        sendMessage(quick_replies_data);
+                    }
+                    else if (payload.indexOf("blockchain_quick_meetups_more") >= 0) {
+                        senderAction ({sender : senderId ,action : 'typing_on'});
+                        getMeetUps({sender :senderId ,lat : parseFloat((payload.match(/([0-9]*[.])?[0-9]+/g))[1].trim()),long : parseFloat((payload.match(/([0-9]*[.])?[0-9]+/g))[2].trim()),limit : parseInt((payload.match(/([0-9]*[.])?[0-9]+/g))[3].trim()),page : parseInt(((payload.match(/([0-9]*[.])?[0-9]+/g))[0]))+1 });
+
+                       // getXml({key :(payload.match(/\D+/g))[0].trim() ,sender :senderId ,page : parseInt(payload.match(/\d+/g)[0])});
+                    }
+
+                }
+                else if (payload.indexOf("blockchain_quick_youtube") >= 0) {
+                    if (payload === 'blockchain_quick_youtube') {
+                        senderAction ({sender : senderId ,action : 'typing_on'});
+                        // quick is used for payload matching and template is used for json matching
+                        handleGenericTemplate({sender : senderId ,type : (payload.split('_'))[0],quick : ((payload.split('_')).slice(-1))[0], template : reply_data.blockchain[((payload.split('_')).slice(-1))[0]],page : 1,limit : 10 });
+                    }
+                    else if (payload.indexOf("blockchain_quick_youtube") >= 0) {
+                        senderAction ({sender : senderId ,action : 'typing_on'});
+                        handleGenericTemplate({sender :senderId ,type : (payload.split('_'))[0],quick : 'youtube',template : reply_data.blockchain[((payload.split('_')).slice(-2))[0]],limit : parseInt((payload.match(/\d+/g))[1].trim()),page : parseInt(((payload.match(/\d+/g))[0]))+1 });
+
+                    }
+                }
+                else if (payload.indexOf("blockchain_quick_jobs") >= 0) {
+                    if (payload === 'blockchain_quick_jobs') {
+                        senderAction ({sender : senderId ,action : 'typing_on'});
+                        // quick is used for payload matching and template is used for json matching
+                        handleGenericTemplate({sender : senderId ,type : (payload.split('_'))[0],quick : ((payload.split('_')).slice(-1))[0], template : reply_data.blockchain[((payload.split('_')).slice(-1))[0]],page : 1,limit : 10 });
+                    }
+                    else if (payload.indexOf("blockchain_quick_youtube") >= 0) {
+                        senderAction ({sender : senderId ,action : 'typing_on'});
+                        handleGenericTemplate({sender :senderId ,type : (payload.split('_'))[0],quick : 'jobs',template : reply_data.blockchain[((payload.split('_')).slice(-2))[0]],limit : parseInt((payload.match(/\d+/g))[1].trim()),page : parseInt(((payload.match(/\d+/g))[0]))+1 });
+
+                    }
+                }
+                else if (payload.indexOf("blockchain_quick_podcasts") >= 0) {
+                    if (payload === 'blockchain_quick_podcasts') {
+                        senderAction ({sender : senderId ,action : 'typing_on'});
+                        // quick is used for payload matching and template is used for json matching
+                        handleGenericTemplate({sender : senderId ,type : (payload.split('_'))[0],quick : ((payload.split('_')).slice(-1))[0], template : reply_data.blockchain[((payload.split('_')).slice(-1))[0]],page : 1,limit : 10 });
+                    }
+                    else if (payload.indexOf("blockchain_quick_podcasts") >= 0) {
+                        senderAction ({sender : senderId ,action : 'typing_on'});
+                        handleGenericTemplate({sender :senderId ,type : (payload.split('_'))[0],quick : 'podcasts',template : reply_data.blockchain[((payload.split('_')).slice(-2))[0]],limit : parseInt((payload.match(/\d+/g))[1].trim()),page : parseInt(((payload.match(/\d+/g))[0]))+1 });
+
+                    }
+                }
+
+            }
+            else if (payload.indexOf("cryptocurriencies_") >= 0  ) {
+                let quick_replies_data ='';
+                if (payload === 'cryptocurriencies_quick') {
+                    quick_replies_data = {
+                        sender : senderId,
+                        "text": "let's narrow it down .. you are interested in ?",
+                        "quick_replies":[
+                            {
+                                "content_type":"text",
+                                "title":"🏠",
+                                "payload":"home"
+                            },
+                            {
+                                "content_type":"text",
+                                "title":"News",
+                                "payload":"cryptocurriencies_quick_news"
+                            },
+                            {
+                                "content_type":"text",
+                                "title":"Current Prices",
+                                "payload":"cryptocurriencies_quick_currentprices"
+                            },
+                            {
+                                "content_type":"text",
+                                "title":"Learn",
+                                "payload":"cryptocurriencies_quick_learn"
+                            },
+                            {
+                                "content_type":"text",
+                                "title":"Buy/Sell",
+                                "payload":"cryptocurriencies_quick_buy/sell"
+                            },
+                            {
+                                "content_type":"text",
+                                "title":"Tweets",
+                                "payload":"cryptocurriencies_quick_tweets"
+                            },
+                            {
+                                "content_type":"text",
+                                "title":"Alerts",
+                                "payload":"cryptocurriencies_quick_alerts"
+                            },
+                            {
+                                "content_type":"text",
+                                "title":"Meetups",
+                                "payload":"cryptocurriencies_quick_meetups"
+                            },
+                            {
+                                "content_type":"text",
+                                "title":"Youtube",
+                                "payload":"cryptocurriencies_quick_youtube"
+                            },
+                            {
+                                "content_type":"text",
+                                "title":"Podcasts",
+                                "payload":"blockchain_quick_podcasts"
+                            },
+                            {
+                                "content_type" : "text",
+                                "title" : "🔙",
+                                "payload" : "cryptocurriencies_back_quick"
+                            }
+                        ]
+                    };
+                    sendMessage(quick_replies_data);
+                }
+                else if (payload === 'cryptocurriencies_quick_news') {
+                    senderAction ({sender : senderId ,action : 'typing_on'});
+                    getXml({key :'cryptocurrency' ,sender :senderId ,page :1});
+                }
+                else if (payload === 'cryptocurriencies_quick_meetups') {
+                    const quick_replies_data = {
+                        sender : senderId,
+                        "text": "hey ! Share your location",
+                        "quick_replies":[
+                            {
+                                "content_type":"text",
+                                "title":"🏠",
+                                "payload":"home"
+                            },
+                            {
+                                "content_type": "location"
+                            },
+                            {
+                                "content_type":"text",
+                                "title":"🔙",
+                                "payload":"cryptocurriencies_quick_meetups_back"
+                            }
+                        ]
+                    };
+
+                    sendMessage(quick_replies_data);
+
+                }
+                else if (payload.indexOf("cryptocurriencies_quick_alerts") >= 0) {
+
+                    if (payload === 'cryptocurriencies_quick_alerts') {
+                        const quick_replies_data = {
+                            sender : senderId,
+                            "text": "hey ! let's narrow it again",
+                            "quick_replies":[
+                                {
+                                    "content_type":"text",
+                                    "title":"🏠",
+                                    "payload":"home"
+                                },
+                                {
+                                    "content_type":"text",
+                                    "title":"Creditble ICO alerts ",
+                                    "payload":"cryptocurriencies_quick_alerts_icowatchlist"
+                                },
+                                {
+                                    "content_type":"text",
+                                    "title":"Coin roadmap/agenda alerts",
+                                    "payload":"cryptocurriencies_quick_alerts_releasesroadmap"
+                                },
+                                {
+                                    "content_type":"text",
+                                    "title":"Singals",
+                                    "payload":"cryptocurriencies_quick_alerts_signals"
+                                },
+                                {
+                                    "content_type":"text",
+                                    "title":"🔙",
+                                    "payload":"cryptocurriencies_quick__alerts_back"
+                                }
+                            ]
+                        };
+                        sendMessage(quick_replies_data);
+                    }
+                    else if (payload.indexOf("cryptocurriencies_quick_alerts_") >= 0) {
+
+                        if (/(_start|_off)$/.test(payload)) {
+                            //#TODO - msg text
+                            const type = payload.split('_').slice(-2,-1)[0];
+                            sendMessage({
+                                sender : senderId,
+                                "text" :  `${(payload.split('_').slice(-1))[0] === 'off' ? `ok :( Now you will not receive more ${type === 'icowatchlist' ? 'Creditble ICO alerts' : (type === 'releasesroadmap' ? 'Coin roadmap/agenda alerts' : 'Singals' )} alerts`: `cool :) Now you will start receiving ${type === 'icowatchlist' ? 'Creditble ICO alerts' : (type === 'releasesroadmap' ? 'Coin roadmap/agenda alerts' : 'Singals' )} alerts` }`,
+                                "quick_replies":[
+                                    {
+                                        "content_type":"text",
+                                        "title":"🏠",
+                                        "payload":"home"
+                                    },
+                                    {
+                                        "content_type" : "text",
+                                        "title" : "🔙",
+                                        //#TODO - decide payload
+                                        "payload" : `cryptocurriencies_quick_alerts_${type}_back`
+                                    }
+                                ]
+                            });
+                            req.app.utility.agenda.now('save user for alerts', { msg: senderId ,type : type, action : ((payload.split('_').slice(-1))[0] === 'off' ? false : true ) });
+
+                        }
+                        else {
+                            const type = (payload.split('_').slice(-1))[0];
+                            console.log(type);
+                            const quick_replies_data = {
+                                sender : senderId,
+                                "text": `update your ${type === 'icowatchlist' ? 'Creditble ICO alerts' : (type === 'releasesroadmap' ? 'Coin roadmap/agenda alerts' : 'Singals' )} alerts preference!`,
+                                "quick_replies":[
+                                    {
+                                        "content_type":"text",
+                                        "title":"🏠",
+                                        "payload":"home"
+                                    },
+                                    {
+                                        "content_type":"text",
+                                        //#TODO - decide title
+                                        "title":"start alerts",
+                                        "payload":`cryptocurriencies_quick_alerts_${payload.split('_').slice(-1)}_start`
+                                    },
+                                    {
+                                        "content_type":"text",
+                                        //#TODO - decide text
+                                        "title":"off alerts",
+                                        "payload":`cryptocurriencies_quick_alerts_${payload.split('_').slice(-1)}_off`
+                                    },
+                                    {
+                                        "content_type" : "text",
+                                        "title" : "🔙",
+                                        //#TODO - decide payload
+                                        "payload" : `cryptocurriencies_quick_alerts_${payload.split('_').slice(-1)}_back`
+                                    }
+                                ]
+                            };
+
+                            sendMessage(quick_replies_data);
+                        }
+
+                    }
+                }
+                else if (payload.indexOf("cryptocurriencies_quick_currentprices") >= 0) {
+                    let quick_replies_data =null;
+                    if (payload === 'cryptocurriencies_quick_currentprices' ) {
+                        quick_replies_data = {
+                            sender : senderId,
+                            "text": "hey ! let's narrow it again or To know coin prices in any fiat curreny just write \"coin:symbol\" (eg: btc:usd or btc:inr) ",
+                            "quick_replies":[
+                                {
+                                    "content_type":"text",
+                                    "title":"🏠",
+                                    "payload":"home"
+                                },
+                                {
+                                    "content_type":"text",
+                                    "title":"BTC",
+                                    "payload":"cryptocurriencies_quick_currentprices_btc"
+                                },
+                                {
+                                    "content_type":"text",
+                                    "title":"Ethereum",
+                                    "payload":"cryptocurriencies_quick_currentprices_eth"
+                                },
+                                {
+                                    "content_type":"text",
+                                    "title":"Litecoin",
+                                    "payload":"cryptocurriencies_quick_currentprices_ltc"
+                                },
+                                {
+                                    "content_type":"text",
+                                    "title":"Ripple",
+                                    "payload":"cryptocurriencies_quick_currentprices_xrp"
+                                },
+                                {
+                                    "content_type":"text",
+                                    "title":"Monero",
+                                    "payload":"cryptocurriencies_quick_currentprices_xmr"
+                                },
+                                {
+                                    "content_type":"text",
+                                    "title":"Dash",
+                                    "payload":"cryptocurriencies_quick_currentprices_dash"
+                                },
+                                {
+                                    "content_type":"text",
+                                    "title":"Neo",
+                                    "payload":"cryptocurriencies_quick_currentprices_neo"
+                                },
+                                {
+                                    "content_type":"text",
+                                    "title":"Qtum",
+                                    "payload":"cryptocurriencies_quick_currentprices_qtum"
+                                },
+                                {
+                                    "content_type":"text",
+                                    "title":"🔙",
+                                    "payload":"cryptocurriencies_quick_currentprices_back"
+                                }
+                            ]
+                        };
+
+                        sendMessage(quick_replies_data);
+
+                    }
+                    else {
+                        getdata({key :`${payload.split('_').slice(-1)[0]}:usd` ,sender :senderId ,quick : true });
+                    }
+
+
+
+                }
+                else if (payload.indexOf("cryptocurriencies_quick_tweets") >= 0) {
+                    let quick_replies_data =null;
+                    if (payload === 'cryptocurriencies_quick_tweets' ) {
+                        quick_replies_data = {
+                            sender : senderId,
+                            "text": "hey ! let's narrow it again or To get tweets by coins  ",
+                            "quick_replies":[
+                                {
+                                    "content_type":"text",
+                                    "title":"🏠",
+                                    "payload":"home"
+                                },
+                                {
+                                    "content_type":"text",
+                                    "title":"BTC",
+                                    "payload":"cryptocurriencies_quick_currentprices_btc"
+                                },
+                                {
+                                    "content_type":"text",
+                                    "title":"Ethereum",
+                                    "payload":"cryptocurriencies_quick_currentprices_eth"
+                                },
+                                {
+                                    "content_type":"text",
+                                    "title":"Litecoin",
+                                    "payload":"cryptocurriencies_quick_currentprices_ltc"
+                                },
+                                {
+                                    "content_type":"text",
+                                    "title":"Ripple",
+                                    "payload":"cryptocurriencies_quick_currentprices_xrp"
+                                },
+                                {
+                                    "content_type":"text",
+                                    "title":"Monero",
+                                    "payload":"cryptocurriencies_quick_currentprices_xmr"
+                                },
+                                {
+                                    "content_type":"text",
+                                    "title":"Dash",
+                                    "payload":"cryptocurriencies_quick_currentprices_dash"
+                                },
+                                {
+                                    "content_type":"text",
+                                    "title":"Neo",
+                                    "payload":"cryptocurriencies_quick_currentprices_neo"
+                                },
+                                {
+                                    "content_type":"text",
+                                    "title":"Qtum",
+                                    "payload":"cryptocurriencies_quick_currentprices_qtum"
+                                },
+                                {
+                                    "content_type":"text",
+                                    "title":"🔙",
+                                    "payload":"cryptocurriencies_quick_currentprices_back"
+                                }
+                            ]
+                        };
+
+                        sendMessage(quick_replies_data);
+
+                    }
+                    else {
+                        getdata({key :`${payload.split('_').slice(-1)[0]}:usd` ,sender :senderId ,quick : true });
+                    }
+
+
+
+                }
+                else if (payload.indexOf("cryptocurriencies_quick_learn") >= 0 ) {
+
+                    if (payload === 'cryptocurriencies_quick_learn') {
+                        senderAction ({sender : senderId ,action : 'typing_on'});
+                        // quick is used for payload matching and template is used for json matching
+                        handleGenericTemplate({sender : senderId ,type : (payload.split('_'))[0],quick : ((payload.split('_')).slice(-1))[0], template : reply_data.cryptocurriencies[((payload.split('_')).slice(-1))[0]],page : 1,limit : 10 });
+                    }
+                    else if (payload.indexOf("cryptocurriencies_quick_learn_more") >= 0) {
+                        senderAction ({sender : senderId ,action : 'typing_on'});
+                        handleGenericTemplate({sender :senderId ,type : (payload.split('_'))[0] ,quick : 'learn',template : reply_data.cryptocurriencies[((payload.split('_')).slice(-2))[0]],limit : parseInt((payload.match(/\d+/g))[1].trim()),page : parseInt(((payload.match(/\d+/g))[0]))+1 });
+
+                    }
+
+                }
+                else if (payload.indexOf("cryptocurriencies_quick_youtube") >= 0 ) {
+
+                    if (payload === 'cryptocurriencies_quick_youtube') {
+                        senderAction ({sender : senderId ,action : 'typing_on'});
+                        // quick is used for payload matching and template is used for json matching
+                        handleGenericTemplate({sender : senderId ,type : (payload.split('_'))[0],quick : ((payload.split('_')).slice(-1))[0], template : reply_data.cryptocurriencies[((payload.split('_')).slice(-1))[0]],page : 1,limit : 10 });
+                    }
+                    else if (payload.indexOf("cryptocurriencies_quick_youtube_more") >= 0) {
+                        senderAction ({sender : senderId ,action : 'typing_on'});
+                        handleGenericTemplate({sender :senderId ,type : (payload.split('_'))[0] ,quick : 'youtube',template : reply_data.cryptocurriencies[((payload.split('_')).slice(-2))[0]],limit : parseInt((payload.match(/\d+/g))[1].trim()),page : parseInt(((payload.match(/\d+/g))[0]))+1 });
+
+                    }
+
+                }
+                else if (payload.indexOf("cryptocurriencies_quick_podcasts") >= 0 ) {
+
+                    if (payload === 'cryptocurriencies_quick_podcasts') {
+                        senderAction ({sender : senderId ,action : 'typing_on'});
+                        // quick is used for payload matching and template is used for json matching
+                        handleGenericTemplate({sender : senderId ,type : (payload.split('_'))[0],quick : ((payload.split('_')).slice(-1))[0], template : reply_data.cryptocurriencies[((payload.split('_')).slice(-1))[0]],page : 1,limit : 10 });
+                    }
+                    else if (payload.indexOf("cryptocurriencies_quick_podcasts_more") >= 0) {
+                        senderAction ({sender : senderId ,action : 'typing_on'});
+                        handleGenericTemplate({sender :senderId ,type : (payload.split('_'))[0] ,quick : 'podcasts',template : reply_data.cryptocurriencies[((payload.split('_')).slice(-2))[0]],limit : parseInt((payload.match(/\d+/g))[1].trim()),page : parseInt(((payload.match(/\d+/g))[0]))+1 });
+
+                    }
+
+                }
+            }
             else if (payload.indexOf("view more payload") >= 0) {
                 senderAction ({sender : senderId ,action : 'typing_on'});
-                getXml({key :'cryptocurrency' ,sender :senderId ,page : parseInt(payload.match(/\d+/g)[0])});
+                getXml({key :(payload.split("view more payload")[1]).match(/\D+/g)[0].trim() ,sender :senderId ,page : parseInt(payload.match(/\d+/g)[0])});
+
             }
+            else if (/(alerts_)+(start|off)?$/.test(payload)) {
+                //#TODO - msg text
+                sendMessage({sender : senderId,"text" :  `${payload.split('_')[1] === 'off' ? ' ok :( Now you will not receive more any alerts': 'cool :) Now you will start receiving creditble ICO ,coin agenda/roadmap and signals alerts' }`});
+                req.app.utility.agenda.now('save user for alerts', { msg: senderId , action : (payload.split('_')[1] === 'off' ? false : true ) });
+
+            }
+            else {
+                sendMessage({sender : senderId,"text" : "no postback handle defined" });
+            }
+
         };
 
         /**
@@ -561,15 +1725,21 @@ const webhooks = {
 
         function sendMessage(data) {
 
+            console.log('msg sent coming');
+            console.log(JSON.stringify(data,null,6));
+
             const json = {
                 recipient : { id : data.sender },
-                message : null
+                message : {}
             };
 
-            if (data.text) {
-                json.message = { text : data.text };
+            if (!!data.text) {
+                if (!!data.quick_replies) {
+                    json.message.quick_replies = data.quick_replies;
+                }
+                json.message.text =  data.text ;
             }
-            else if (data.attachment) {
+            else if (!!data.attachment) {
                 json.message = { attachment :  data.attachment };
             }
 
@@ -588,30 +1758,22 @@ const webhooks = {
                     senderAction ({sender : data.sender ,action : 'typing_off'});
 
                     if (!!data.again && !!data.again.send)   {
-                        sendMessage({ sender : data.sender ,text :  data.again.text });
-                    }
-                    else {
-                        /* ## TODO
-                           - microservice or rabbitmq
-                         */
-                        req.app.db.models.User.findOneAndUpdate(
-                            { 'uid' : data.sender },
-                            { $setOnInsert: { lastLogin: new Date() } },
-                            { new: true, upsert: true ,select: { uid: 1 } },
-                            function findOne(err, user) {
-                            if (!err) {
-                                 return console.log('user saved');
-                            }
+                        if (!!data.again.quick_replies) {
+                            //console.log(data.again.quick_replies);
+                            sendMessage({ sender : data.sender ,text :  data.again.text ,quick_replies : data.again.quick_replies });
+                        }
+                        else {
+                            sendMessage({ sender : data.sender ,text :  data.again.text});
+                        }
 
-                            console.log('user error');
-                            console.log(err);
-                        });
                     }
-
                 }
                 else {
+                    //#TODO Caught exception: TypeError: Cannot read property 'statusCode' of undefined
+                    // we are geeting this error when internt connection updated from on wifi to another
+                    console.log(response.statusCode);
                     console.error("Unable to send message.");
-                    console.error(response.body.error);
+                    console.error(response);
                     console.error(error);
                 }
 
@@ -629,7 +1791,7 @@ const webhooks = {
 
         const options = { 
           method: 'GET',
-          url: `https://news.google.com/news/rss/search/section/q/blockchain coinTelegraph/blockchain coinTelegraph`,
+          url: `https://news.google.com/news/rss/search/section/q/blockchain coindesk/blockchain coindesk`,
           qs: { hl: 'en-IN', ned: 'in' },
           headers: 
             { 
@@ -657,89 +1819,149 @@ const webhooks = {
           }
         };
 
+        let callAsync = req.app.config.messengerBot.contentWebsites.reduce(function(arrs,curr,i){
+            let asyncFun = (function(i,curr) {
+                return function(callback){
+                    request({
+                        method: 'GET',
+                        url: `https://news.google.com/news/rss/search/section/q/blockchain ${curr}/blockchain ${curr}`,
+                        qs: { hl: 'en-IN', ned: 'in' },
+                        headers:
+                            {
+                                'User-Agent': "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36",
+                                'cache-control': 'no-cache'
+                            }
+                    }, function (error, response, body) {
+                        if (error) {
+                            return callback(error);
+                        }
 
-        req.app.client.get("blockchain-2",function(err,reply) {
-            console.log(err);
+                        console.log(body);
+
+                        let parseString = require('xml2js').parseString;
+                        parseString(body, function (err, result) {
+
+                            //con
+
+                            if (((result.rss.channel)[0]) && ((result.rss.channel)[0].item) && !err) {
+                               callback(null,((result.rss.channel)[0].item));
+                            }
+                            else {
+                                callback(null,i);
+                            }
+
+                            //
+                        });
+
+                    });
+                };
+            })(i,curr);
+
+            arrs.push(asyncFun);
+
+            return arrs;
+        },[]);
 
 
-            if(reply) {
-                console.log('found');
-                console.log(JSON.parse(reply));
-                return res.send(JSON.parse(reply));
-            }
-            else {
-                console.log('not');
-            }
-
-            console.log('not coming');
-
-            request(options, function (error, response, body) {
-
-                if (error)  {
-                    return console.log(error);
+        require('async').parallel(callAsync,
+            function(err, results){
+                if (err) {
+                    console.log(err);
                 }
 
-                let parseString = require('xml2js').parseString;
-                parseString(body, function (err, result) {
 
-
-
-                    let reducedArray = ((result.rss.channel)[0]).item.slice(lastIndex,lastIndex+4).reduce(function(arr,curr,i) {
-
-
-                        //console.log(req.app.config);
-
-
-                        const domain = url.parse(curr.link.join(''));
-
-                        console.log(`${domain.protocol}//${domain.host}`);
-                        console.log(req.app.config.messengerBot.whitelistedDomains.indexOf(`${domain.protocol}//${domain.host}`));
-
-                        if (req.app.config.messengerBot.whitelistedDomains.indexOf(`${domain.protocol}//${domain.host}`) >=0) {
-                            arr.push ({
-                                "title": curr.title.join(''),
-                                "subtitle":   curr.title.join('').slice(0,15),
-                                //"image_url": "https://peterssendreceiveapp.ngrok.io/img/collection.png",
-                                "buttons": [
-                                    {
-                                        "title": "View",
-                                        "type": "web_url",
-                                        "url": curr.link.join(''),
-                                        "messenger_extensions": true,
-                                        "webview_height_ratio": "tall",
-                                        "fallback_url": "https://blockchainevangelist.in/"
-                                    }
-                                ]
-                            });
-                        }
-                        else {
-                            console.log('not');
-                            console.log(curr.link.join(''));
-                        }
-
-
-
-
-                        return arr;
-                    },[]);
-
-                    messages.attachment.payload.elements = reducedArray;
-
-                    /*
-                        there is one drawback of this JSON.stringify--> You can not retrieve parts of the object You can not specify the selection of certain keys.
-                        You necessarily need to retrieve everything, which is likely to become a performance issue on really large objects
-                    */
-
-                    req.app.client.set(`blockchain-2`,JSON.stringify(messages),function(err,reply) {
-                        console.log(err);
-                        console.log(reply);
-                        res.send(messages);
-                    });
-
-                });
-            });
+                if (Array.isArray(results[0]) && Array.isArray(results[1])) {
+                    // spread operator
+                    let finalArr = [...results[0],...results[1]];
+                    res.send(finalArr);
+                }
+                else {
+                    res.send(results);
+                }
         });
-   
+
+
+        // req.app.client.get("crypto-2",function(err,reply) {
+        //     console.log(err);
+        //
+        //     if(reply) {
+        //         console.log('found');
+        //         console.log(JSON.parse(reply));
+        //         return res.send(JSON.parse(reply));
+        //     }
+        //     else {
+        //         console.log('not');
+        //     }
+        //
+        //     console.log('not coming');
+        //
+        //     request(options, function (error, response, body) {
+        //
+        //         if (error)  {
+        //             return console.log(error);
+        //         }
+        //
+        //         let parseString = require('xml2js').parseString;
+        //         parseString(body, function (err, result) {
+        //
+        //
+        //
+        //             let reducedArray = ((result.rss.channel)[0]).item.slice(lastIndex,lastIndex+4).reduce(function(arr,curr,i) {
+        //
+        //
+        //                 //console.log(req.app.config);
+        //
+        //
+        //                 const domain = url.parse(curr.link.join(''));
+        //
+        //                 console.log(`${domain.protocol}//${domain.host}`);
+        //                 console.log(req.app.config.messengerBot.whitelistedDomains.indexOf(`${domain.protocol}//${domain.host}`));
+        //
+        //                 if (req.app.config.messengerBot.whitelistedDomains.indexOf(`${domain.protocol}//${domain.host}`) >=0) {
+        //                     arr.push ({
+        //                         "title": curr.title.join(''),
+        //                         "subtitle":   curr.title.join('').slice(0,15),
+        //                         //"image_url": "https://peterssendreceiveapp.ngrok.io/img/collection.png",
+        //                         "buttons": [
+        //                             {
+        //                                 "title": "View",
+        //                                 "type": "web_url",
+        //                                 "url": curr.link.join(''),
+        //                                 "messenger_extensions": true,
+        //                                 "webview_height_ratio": "tall",
+        //                                 "fallback_url": "https://blockchainevangelist.in/"
+        //                             }
+        //                         ]
+        //                     });
+        //                 }
+        //                 else {
+        //                     console.log('not');
+        //                     console.log(curr.link.join(''));
+        //                 }
+        //
+        //
+        //
+        //
+        //                 return arr;
+        //             },[]);
+        //
+        //             messages.attachment.payload.elements = reducedArray;
+        //
+        //             /*
+        //                 there is one drawback of this JSON.stringify--> You can not retrieve parts of the object You can not specify the selection of certain keys.
+        //                 You necessarily need to retrieve everything, which is likely to become a performance issue on really large objects
+        //             */
+        //
+        //             req.app.client.set(`crypto-2`,JSON.stringify(messages),function(err,reply) {
+        //                 console.log(err);
+        //                 console.log(reply);
+        //                 res.send(messages);
+        //             });
+        //
+        //         });
+        //     });
+        // });
+
 
     },
     sendMessage : function (req,res) {
@@ -902,7 +2124,7 @@ const webhooks = {
           headers: { 'content-type': 'application/json' },
           body: 
            { whitelisted_domains: 
-              [ 'https://t.co','https://twitter.com','https://coinmarketcap.com','https://www.stateofthedapps.com','https://blockchainevangelist.in','https://cointelegraph.com','https://www.coindesk.com'] },
+              [ 'https://t.co','https://twitter.com','https://coinmarketcap.com','https://www.stateofthedapps.com','https://blockchainevangelist.in','https://www.cointelegraph.com','https://cointelegraph.com','https://www.coindesk.com','https://coindesk.com'] },
           json: true };
 
         request(options, function (error, response, body) {
@@ -933,9 +2155,9 @@ const webhooks = {
                           "payload":"dapps"
                     },
                     {
-                      "type":"web_url",
-                      "title":"View Website",
-                      "url":"https://blockchainevangelist.in/"
+                        "type":"postback",
+                        "title":"Manage Subscription",
+                        "payload":"subscription"
                     }
                 ]
 
@@ -967,7 +2189,7 @@ const webhooks = {
             }
         };
 
-        console.log('coming');
+        //console.log('coming');
         console.log(url);
 
         request(requestOptions, function requestOptions(error, response, body) {
@@ -1000,22 +2222,18 @@ const webhooks = {
                         elements: [{
                             title: "rift",
                             subtitle: "Next-generation virtual reality",
-                            item_url: "https://www.oculus.com/en-us/rift/",
-                            image_url: "http://messengerdemo.parseapp.com/img/rift.png",
+                            item_url: "https://www.meetup.com/Ethereum-blockchain-Training/events/244573117/",
+                            image_url: "http://144b1e2a.ngrok.io/images/meetup.png",
                             buttons: [{
                                 type: "web_url",
                                 url: "https://www.oculus.com/en-us/rift/",
                                 title: "Open Web URL"
-                            }, {
-                                type: "postback",
-                                title: "Call Postback",
-                                payload: "Payload for first bubble",
                             }],
                         }, {
                             title: "touch",
                             subtitle: "Your Hands, Now in VR",
-                            item_url: "https://www.oculus.com/en-us/touch/",
-                            image_url: "http://messengerdemo.parseapp.com/img/touch.png",
+                            item_url: "https://www.meetup.com/Ethereum-blockchain-Training/events/244102982/",
+                            image_url: "http://144b1e2a.ngrok.io/images/meetup.png",
                             buttons: [{
                                 type: "web_url",
                                 url: "https://www.oculus.com/en-us/touch/",
@@ -1053,7 +2271,6 @@ const webhooks = {
         });
     },
     buttonTemplate :  function buttonTemplate(req,res) {
-
 
 
         const messageData = {
@@ -1263,7 +2480,7 @@ const webhooks = {
                 id: '1701904353175444'
             },
             message:{
-                "text": "Here's a quick reply!",
+                "text": "next",
                 "quick_replies":[
                     {
                         "content_type":"text",
@@ -1348,6 +2565,33 @@ const webhooks = {
             }
         })
 
+    },
+    getMeetUps : function(req,res) {
+        const options = {
+            method: 'GET',
+            url: 'https://api.meetup.com/2/open_events.json',
+            qs:
+                { text: 'cryptocurrency',
+                    time: ',1m',
+                    'lat': '17.3850',
+                    lon: '78.4867',
+                    key : '2351624b85b603e647464553e35774b'
+                },
+            headers:
+                {
+                    'content-type': 'application/json',
+                    'User-Agent': "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36",
+                    'cache-control': 'no-cache'
+                }
+        };
+
+        request(options, function (error, response, body) {
+            if (error) throw new Error(error);
+            console.log(body);
+            res.send(JSON.parse(body));
+            //sendMessage({sender : data.sender ,text : 'okk'});
+
+        });
     }
 };
 

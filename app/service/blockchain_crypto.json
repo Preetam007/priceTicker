@@ -1,0 +1,359 @@
+{
+  "blockchain" : {
+    "learn" : [
+      {
+        "title" : "What Really is Blockchain? (For Dummies)",
+        "link" : "https://www.udemy.com/blockchain1/"
+      },
+      {
+        "title" : "blockchain-fundamentals",
+        "link" : "https://www.pluralsight.com/courses/blockchain-fundamentals"
+      },
+      {
+        "title" : "WTF is The Blockchain?",
+        "link" : "https://hackernoon.com/wtf-is-the-blockchain-1da89ba19348"
+      },
+      {
+        "title" : "Understanding the blockchain",
+        "link" : "https://www.oreilly.com/ideas/understanding-the-blockchain"
+      },{
+        "title" : "Blockchain and Bitcoin Fundamentals",
+        "link" : "https://www.udemy.com/blockchain-and-bitcoin-fundamentals/learn/v4/content"
+      },
+      {
+        "title" : "Blockgeeks blockchain articles",
+        "link" : "https://courses.blockgeeks.com/collections"
+      },
+      {
+        "title" : "Basics of Blockchain",
+        "link" : "https://www.udemy.com/the-basics-of-blockchain/"
+      },
+      {
+        "title" : "https://www.udemy.com/blockchain-basics/",
+        "link" : "https://www.udemy.com/blockchain-basics/"
+      },
+      {
+        "title" : "Learn Blockchain Technology",
+        "link" : "https://www.udemy.com/learn-blockchain-technology/"
+      },
+      {
+        "title" : "How does blockchain really work? I built an app to show you.",
+        "link" : "https://medium.freecodecamp.org/how-does-blockchain-really-work-i-built-an-app-to-show-you-6b70cd4caf7d"
+      },
+      {
+        "title" : "Learn Blockchains by Building One",
+        "link" : "https://hackernoon.com/learn-blockchains-by-building-one-117428612f46"
+      },
+      {
+        "title" : "Blockchain Project Ecosystem",
+        "link" : "https://medium.com/@josh_nussbaum/blockchain-project-ecosystem-8940ababaf27"
+      },
+      {
+        "title" : "A blockchain in 200 lines of code",
+        "link" : "https://medium.com/@lhartikk/a-blockchain-in-200-lines-of-code-963cc1cc0e54"
+      },
+      {
+        "link" : "https://medium.com/crypto-currently/lets-build-the-tiniest-blockchain-e70965a248b",
+        "title" : "Let’s Build the Tiniest Blockchain"
+      },
+      {
+        "title" : "Ethereum Blockchain Developer: Build Projects Using Solidity",
+        "link" : "https://www.udemy.com/blockchain-developer/learn/v4/"
+      },
+      {
+        "title" : "Ethereum Developer: Build A Decentralised Blockchain App",
+        "link" : "https://www.udemy.com/ethereum-developer/"
+      },
+      {
+        "title" : "How to Build Decentralized Auto Democracy DAO in Blockchain",
+        "link" : "https://www.udemy.com/how-to-build-decentralized-democracy-dao-in-ethereum-blockchain/"
+      },
+      {
+        "title" : "Working With Hyperledger Fabric Blockchain on IBM Bluemix",
+        "link"  : "https://www.udemy.com/how-to-setup-hyperledger-fabric-blockchain-on-ibm-bluemix/"
+      },
+      {
+        "title" : "How to Setup Private Ethereum Blockchain Consortium on AWS",
+        "link"  : "https://www.udemy.com/how-to-setup-private-ethereum-blockchain-consortium-on-aws/"
+      }
+
+    ],
+    "dresources" : [
+      {
+        "title" : "Blockchain-based domain registrars",
+        "link"  : "https://peername.com/?ref=blockchainevangelist"
+      },
+      {
+        "title" : "badge for GitHub",
+        "link"  : "https://en.cryptobadges.io/?ref=blockchainevangelist"
+      },
+      {
+        "title" : "Multi-blockchain data timestamping made easy with a powerful REST API",
+        "link"  : "https://stampery.com/?ref=blockchainevangelist"
+      },
+      {
+        "title" : "Truffle Framework for Ethereum",
+        "link"  : "http://truffleframework.com/?ref=blockchainevangelist"
+      },
+      {
+        "title" : "Build Secure Smart Contracts in Solidity",
+        "link"  : "https://openzeppelin.org/?ref=blockchainevangelist/"
+      },
+      {
+        "title" : "A Gitter channel to discuss Ethereum Casper implementation and protocols",
+        "link"  : "https://gitter.im/ethereum/casper-scaling-and-protocol-economics?ref=blockchainevangelist"
+      }, {
+        "title" : "Crowdsourced Ethereum Reading List",
+        "link"  : "https://github.com/Scanate/EthList?ref=blockchainevangelist"
+      },
+      {
+        "title" : "Decypher – Dapp Development",
+        "link"  : "http://decypher.tv/series/ethereum-development?ref=blockchainevangelist"
+      },
+      {
+        "title" : "Solidity Documentation",
+        "link"  : "https://solidity.readthedocs.io/en/develop/?ref=blockchainevangelist"
+      },
+      {
+        "title" : "/r/EthDev",
+        "link"  : "https://www.reddit.com/r/ethdev/"
+      },
+      {
+        "title" : "Create ERC20 Tokens",
+        "link"  : "https://www.ethereum.org/token?ref=blockchainevangelist"
+      },
+      {
+        "title" : "BlockStack – Build decentralised applications",
+        "link"  : "https://blockstack.org/?ref=blockchainevangelist"
+      },
+      {
+        "title" : "Spectrum",
+        "link"  : "https://github.com/spectrum/spectrum?ref=blockchainevangelist"
+      },
+      {
+        "title" : "Interact with the Ethereum network from within your browser.",
+        "link" : "https://metamask.io/?ref=blockchainevangelist"
+      }
+    ],
+    "jobs" : [
+      {
+        "title" : "blockchain",
+        "link" :"https://blockchaindevjobs.com/blockchain/"
+      },
+      {
+        "title" : "freelancer blockchain jobs",
+        "link"  : "https://www.freelancer.com/jobs/blockchain/?ref=blockchainevangelist"
+      }
+    ],
+    "youtube" : [
+      {
+        "title" : "Blockchain at Berkele",
+        "link" : "https://www.youtube.com/channel/UC5sgoRfoSp3jeX4DEqKLwKg"
+      },
+      {
+        "title" : "Blockchain France",
+        "link"  : "https://www.youtube.com/channel/UCPiHNN_Olx6NG6R7wndoYeQ"
+      },
+      {
+        "title" : "Blockchain Conferences",
+        "link"  : "https://www.youtube.com/user/BitcoinConference/videos"
+      },
+      {
+        "title" : "Blockchain University",
+        "link"  : "https://www.youtube.com/channel/UCJ5uHx90mZGlK0lC-GSmtzw/videos"
+      },
+      {
+        "title" : "Blockchain Labs",
+        "link"  : "https://www.youtube.com/channel/UCbnvueL1Amt6qkCXQBYexyg/videos"
+      }
+    ],
+    "podcasts" : [
+      {
+        "title" : "blockchain-innovation",
+        "link" : "https://itunes.apple.com/ca/podcast/blockchain-innovation-interviewing-brightest-minds/id1238906492"
+      },
+      {
+        "title" : "Bitcoin Knowledge Podcast – Learn about blockchain and fintech",
+        "link"  : "http://www.bitcoin.kn/"
+      },
+      {
+        "title" : "Blockchain360 - By Bryant Nielson: Technologist, Blockchain Speaker, Technology Wri",
+        "link"  : "https://itunes.apple.com/in/podcast/blockchain360/id1233874183?mt=2"
+      },
+      {
+        "title" : "Epicenter – Podcast on Blockchain, Ethereum, Bitcoin and Distributed Technologies",
+        "link"  : "https://itunes.apple.com/in/podcast/epicenter-podcast-on-blockchain-ethereum-bitcoin-distributed/id792338939?mt=2"
+      },
+      {
+        "title" : "Blockchain – Software Engineering Daily",
+        "link"  : "https://itunes.apple.com/in/podcast/blockchain-software-engineering-daily/id1230807219?mt=2"
+      }
+    ],
+    "dapps" : [
+      {
+        "title" : "Aragon – Decentralised Organisations",
+        "link"  : "https://aragon.one/?ref=blockchainevangelist"
+      },
+      {
+        "title" : "Bounty0x – Decentralized Bounty Management",
+        "link"  : "https://blockchainevangelist.com/resource/bounty0x-decentralized-bounty-management/"
+      },
+      {
+        "title" : "DataBrokerDAO",
+        "link"  : "https://blockchainevangelist.com/resource/databrokerdao/"
+      },
+      {
+        "title" : "District0x",
+        "link"  : "https://district0x.io/?ref=blockchainevangelist"
+      },
+      {
+        "title" : "Status.im",
+        "link"  : "https://status.im/?ref=blockchainevangelist"
+      },
+      {
+        "title" : "Collections of Dapps",
+        "link"  : "https://www.stateofthedapps.com/"
+      },
+      {
+        "title" : "Etherian",
+        "link"  : "https://etherian.world/?ref=blockchainevangelist"
+      },
+      {
+        "title" : "Godzillion",
+        "link"  : "https://godzillion.io/?ref=blockchainevangelist"
+      },
+      {
+        "title" : "Colony.io",
+        "link" : "https://colony.io/?ref=blockchainevangelist"
+      },
+      {
+        "title" : "Etehereum Name Service",
+        "link" : "https://ens.domains/?ref=blockchainevangelist"
+      }
+    ]
+  },
+  "cryptocurriencies" : {
+    "learn" : [
+      {
+        "link" : "https://blockgeeks.com/guides/what-is-cryptocurrency/",
+        "title" : "What is Cryptocurrency: Everything You Need To Know "
+      },
+      {
+        "title" : "coursera free cryptocurrency course",
+        "link" : "https://www.coursera.org/learn/cryptocurrency"
+      },
+      {
+        "title" : "Cryptocurrency Trading: Complete Guide To Trading Altcoins",
+        "link" : "https://www.udemy.com/cryptocurrency-trading/"
+      },
+      {
+        "title" : "cryptocurrency-trading",
+        "link" : "https://www.udemy.com/cryptocurrency-trading/"
+      },
+      {
+        "title" : "Cryptocurrency Investing: Buy & Trade Bitcoin & Altcoins",
+        "link" : "https://www.udemy.com/how-to-buy-cryptocurrency-bitcoin-investing-for-beginners/"
+      },
+      {
+        "title" : "Cryptocurrency: Complete Bitcoin, Ethereum, Altcoins Course!",
+        "link" : "https://www.udemy.com/cryptocurrency-complete-bitcoin-ethereum-course/"
+      },
+      {
+        "title" : "Cryptocurrency Trading: Complete Guide To Trading Altcoins",
+        "link" : "https://www.udemy.com/cryptocurrency-trading/"
+      },
+      {
+        "title" : "Bitcoin Developer Guide",
+        "link" :"https://bitcoin.org/en/developer-guide"
+      },
+      {
+        "title" :"Bitcoin: What is it?",
+        "link" : "https://www.khanacademy.org/economics-finance-domain/core-finance/money-and-banking/bitcoin/v/bitcoin-what-is-it"
+      }
+    ],
+    "youtube" : [
+      {
+        "title" : "Ameer Rosic - serial entrepreneur, marketing expert, investor and a Blockchain evangelist",
+        "link"  : "https://www.youtube.com/watch?v=my67rXT2V5Y&list=PLYoLXnesRq_f9w9sHtG3YmQ9Xrpri9Mzm"
+      },
+      {
+        "title" : "Bitcoin For Beginners",
+        "link"  : "https://www.youtube.com/watch?v=LPJFKldX19I&list=PL-ZZkQgmQlV6w8i1ESqPEYm99TEV5b-Ra"
+      },
+      {
+        "title" : "The youtube channel of the author of Mastering Bitcoin, Mastering Ethereum & The Internet of Money",
+        "link"  : "https://www.youtube.com/watch?v=l1si5ZWLgy0&list=PLPQwGV1aLnTuN6kdNWlElfr2tzigB9Nnj"
+      },
+      {
+        "title" : "CryptoBud",
+        "link"  : "https://www.youtube.com/channel/UCAEktd4wejD_N4aPyDPD3zw/videos"
+      },
+      {
+        "title" : "CryptoPortfolio",
+        "link"  : "https://www.youtube.com/channel/UCI9POyyP-f93JHfkhr2ma2g/videos"
+      },
+      {
+        "link" : "https://www.youtube.com/user/obham001/videos",
+        "title"  : "YouTube channel you have access to the current news, sentiments, happenings, coins, mining advice, and more."
+      },
+      {
+        "title" : "Epicenter tv",
+        "link"  : "https://www.youtube.com/user/epicenterbtc/videos"
+      },
+      {
+        "title" : "The Cryptoverse",
+        "link"  : "https://www.youtube.com/channel/UCLnQ34ZBSjy2JQjeRudFEDw/videos"
+      },
+      {
+        "title" : "BiteSizeBitcoin",
+        "link"  : "https://www.youtube.com/channel/UCnePINazJJpbn9FWaq_skQA/videos"
+      },
+      {
+        "title" : "Information portal on blockchain ecosystem",
+        "link" : "https://www.youtube.com/channel/UCWN9FtDP3d-jfJu83pGARxw/videos"
+      }
+    ],
+    "podcasts" : [
+      {
+        "title" : "Bitcoin podcasts by Chris DeRose",
+        "link" : "https://soundcloud.com/bitcoinuncensored?ref=blockchainevangelist"
+      },
+      {
+        "title" : "The ICO Alert Podcast: Cryptocurrency, blockchain, and ICO interviews. Bitcoin, Ethereum, Lisk, and more.",
+        "link" : "https://www.icoalert.com/podcast/?ref=blockchainevangelist"
+      },
+      {
+        "title" : "badcryptopodcast",
+        "link" : "http://www.badcryptopodcast.com/?ref=blockchainevangelist"
+      },
+      {
+        "title" : "Epicenter",
+        "link"  : "https://epicenter.tv/?ref=blockchainevangelist"
+      },
+      {
+        "title" : "Daily Crypto - Bitcoin, Blockchain, Ethereum, Altcoin & Digital Cryptocurrency World News",
+        "link"  : "https://itunes.apple.com/in/podcast/daily-crypto-bitcoin-blockchain-ethereum-altcoin-digital/id1281929760?mt=2"
+      },
+      {
+        "title" : "crypto core media radio",
+        "link"  : "https://soundcloud.com/coremediaradio"
+      },
+      {
+        "title" : "thebitcoinpodcast",
+        "link"  : "http://thebitcoinpodcast.com/?ref=blockchainevangelist"
+      },
+      {
+        "title" : "The Third Web",
+        "link"  : "https://itunes.apple.com/us/podcast/the-third-web/id899090462?mt=2"
+      },
+      {
+        "title" : "FROM THE FRONT PAGE - LET'S TALK BITCOIN!",
+        "link"  : "https://letstalkbitcoin.com/blog/category/episodes?ref=blockchainevangelist"
+      },
+      {
+        "title" : "worldcryptonetwork",
+        "link"  : "http://www.worldcryptonetwork.com/p/live.html?ref=blockchainevangelist"
+      }
+    ]
+  }
+}
