@@ -4,7 +4,7 @@ const cities = require('cities');
 
 // const mapping= require('./mapping.json');
 const about = require('./about.json');
-const reply_data = require('./blockchain_crypto.json');
+// const reply_data = require('./blockchain_crypto.json');
 const smiley = ':)';
 const url = require('url');
 
@@ -2003,11 +2003,7 @@ const webhooks = {
                             retry : true
                         });
                     }
-
-
-
                 }
-
             });
         };
 	},

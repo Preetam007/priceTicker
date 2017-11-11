@@ -61,7 +61,7 @@ var cluster = require('cluster'),
 
       if (process.env.web) {
         //console.log('start http server: ' + cluster.worker.id);
-        require("./app/index")(agenda);//initialize the http server here
+        require('./app/index')(agenda);//initialize the http server here
       }
 
       if (process.env.job) {
