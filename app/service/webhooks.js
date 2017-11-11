@@ -2195,7 +2195,7 @@ const webhooks = {
 
 
     },
-    sendMessage : function (req,res) {
+    sendMessage : function sendMessage(req,res) {
 
         // const json = {
         //     recipient : { id : '1701904353175444'},
@@ -2316,7 +2316,7 @@ const webhooks = {
 
         });
     },
-    alerts_BreakingNews : function (req,res) {
+    alerts_BreakingNews : function alerts_BreakingNews(req,res) {
 
         req.app.utility.agenda.now('buy ,sell ,ico alerts and breaking news', { msg: req.body.msg });
         res.send('ok');
@@ -2347,7 +2347,7 @@ const webhooks = {
           }
         });
     },
-    whiteListDomains : function(req,res) {
+    whiteListDomains : function whiteListDomains(req,res) {
 
         var options = { method: 'POST',
           url: 'https://graph.facebook.com/v2.6/me/messenger_profile',
@@ -2364,7 +2364,7 @@ const webhooks = {
           res.send(body);
         });
     },
-    appMenu : function(req,res) {
+    appMenu : function appMenu(req,res) {
         const options = {
             method: 'POST',
             url: 'https://graph.facebook.com/v2.6/me/thread_settings',
@@ -2573,7 +2573,7 @@ const webhooks = {
         });
 
     },
-    openGraph : function (req,res) {
+    openGraph : function openGraph(req,res) {
         const messageData = {
             recipient: {
                 id: '1701904353175444'
@@ -2621,7 +2621,7 @@ const webhooks = {
             res.send(body);
         });
     },
-    receiptTemplate : function (req,res) {
+    receiptTemplate : function receiptTemplate(req,res) {
         const messageData = {
             recipient: {
                 id: '1701904353175444'
@@ -2705,7 +2705,7 @@ const webhooks = {
             res.send(body);
         });
     },
-    quickReplies : function (req,res) {
+    quickReplies : function quickReplies(req,res) {
         const messageData = {
             recipient: {
                 id: '1701904353175444'
@@ -2751,7 +2751,7 @@ const webhooks = {
             res.send(body);
         });
     },
-    getTweets : function (req,res) {
+    getTweets : function getTweets(req,res) {
 
 	   // console.log(req.query.t);
 	    console.log(/(tweet)+(s|er)?$/.test(req.query.t));
@@ -2797,7 +2797,7 @@ const webhooks = {
         })
 
     },
-    getMeetUps : function(req,res) {
+    getMeetUps : function getMeetUps(req,res) {
         const options = {
             method: 'GET',
             url: 'https://api.meetup.com/2/open_events.json',
