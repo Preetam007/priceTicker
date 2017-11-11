@@ -152,7 +152,27 @@ const webhooks = {
                         }
                         else {
                             text = "Sorry, I don't understand your request.";
-                            sendMessage({sender : sender ,text : text});
+                            sendMessage({
+                                sender : sender ,
+                                text : text,
+                                again : {
+                                    send : true ,
+                                    text: 'what next..',
+                                    quick_replies:[
+                                        {
+                                            "content_type":"text",
+                                            "title":"🏠",
+                                            "payload":"home"
+                                        },
+                                        {
+                                            "content_type": "text",
+                                            "title" : "🔙",
+                                            //#TODO - decide payload
+                                            "payload" : "blockchain_quick_back"
+                                        }
+                                    ]
+                                }
+                            });
                         }
 
                     });
@@ -246,7 +266,7 @@ const webhooks = {
                                             {
                                                 "title": "Back",
                                                 "type": "postback",
-                                                "payload": "blockchain_quick_meetups_back"
+                                                "payload": "blockchain_quick_back"
                                             }
                                         ]
                                     });
@@ -265,7 +285,7 @@ const webhooks = {
                                             {
                                                 "title": "Back",
                                                 "type": "postback",
-                                                "payload": "blockchain_quick_meetups_back"
+                                                "payload": "blockchain_quick_back"
                                             },
                                             {
                                                 "type": "element_share",
@@ -314,7 +334,7 @@ const webhooks = {
                                         {
                                             "title": "Back",
                                             "type": "postback",
-                                            "payload": "blockchain_quick_meetups_back"
+                                            "payload": "blockchain_quick_back"
                                         }
                                     ]
                                 });
@@ -334,7 +354,7 @@ const webhooks = {
                                             "type": "postback",
                                             "title" : "🔙",
                                             //#TODO - decide payload
-                                            "payload" : "blockchain_quick_meetups_back"
+                                            "payload" : "blockchain_quick_back"
                                         }
                                     ]
                                 });
@@ -349,7 +369,27 @@ const webhooks = {
                             if(err) {
                                 console.log(err);
                                 console.log('error');
-                                sendMessage({ sender : data.sender , text : 'Sorry, No more data found'});
+                                sendMessage({
+                                    sender : data.sender ,
+                                    text : 'Sorry, No more data found',
+                                    again : {
+                                        send : true ,
+                                        text: 'what next..',
+                                        quick_replies:[
+                                            {
+                                                "content_type":"text",
+                                                "title":"🏠",
+                                                "payload":"home"
+                                            },
+                                            {
+                                                "content_type": "text",
+                                                "title" : "🔙",
+                                                //#TODO - decide payload
+                                                "payload" : "blockchain_quick_back"
+                                            }
+                                        ]
+                                    }
+                                });
                             }
                             else {
                                 console.log('set done');
@@ -372,6 +412,9 @@ const webhooks = {
          */
 
         function getTweets(data) {
+
+            console.log('check data');
+            console.log(data);
 
             const params = {
                 from : `@${data.key}`,
@@ -404,6 +447,8 @@ const webhooks = {
                 if (!err) {
                     // Loop through the returned tweets
 
+                    //console.log(body);
+
                     let reducedArray = body.statuses.reduce(function(arr,curr,i) {
 
                         arr.push ({
@@ -435,13 +480,52 @@ const webhooks = {
                         //     console.log(err);
                         //     console.log('set done');
                         //     req.app.client.expire(`${data.key}-${data.page}`, 1800);
-                            sendMessage({sender : data.sender  ,  attachment : messages.attachment });
+
+
+                        sendMessage({
+                            sender : data.sender  ,
+                            attachment : messages.attachment ,
+                            again : {
+                                send : true ,
+                                text: 'what next',
+                                quick_replies:[
+                                    {
+                                        "content_type":"text",
+                                        "title":"🏠",
+                                        "payload":"home"
+                                    },
+                                    {
+                                        "content_type": "text",
+                                        "title" : "🔙",
+                                        //#TODO - decide payload
+                                        "payload" : "blockchain_quick_back"
+                                    }
+                                ]
+                            }
+                        });
+
                         // });
 
 
                     }
                     else {
-                        sendMessage({ sender : data.sender , text : 'Sorry, No more data found'});
+                        sendMessage({
+                            sender : data.sender ,
+                            text: 'Sorry, No more data found',
+                            quick_replies:[
+                                {
+                                    "content_type":"text",
+                                    "title":"🏠",
+                                    "payload":"home"
+                                },
+                                {
+                                    "content_type": "text",
+                                    "title" : "🔙",
+                                    //#TODO - decide payload
+                                    "payload" : "blockchain_quick_back"
+                                }
+                            ]
+                        });
                     }
 
                 }
@@ -610,7 +694,7 @@ const webhooks = {
                     let sendObj = {
                         sender : data.sender,
                         text : pushString,
-                        quick_replies : [
+                            quick_replies : [
                             {
                             "content_type":"text",
                             "title":"🏠",
@@ -691,7 +775,7 @@ const webhooks = {
                                     "content_type": "text",
                                     "title" : "🔙",
                                     //#TODO - decide payload
-                                    "payload" : "blockchain_quick_meetups_back"
+                                    "payload" : "blockchain_quick_back"
                                 }
                             ]
                         }
@@ -742,7 +826,28 @@ const webhooks = {
                     function(err, results) {
                         if (err) {
                             console.log(err);
-                            return sendMessage({ sender : data.sender , text : 'Sorry, No more data found error'});
+                            return sendMessage({
+                                sender : data.sender ,
+                                text : 'Sorry, No more data found',
+                                again : {
+                                    send : true ,
+                                    text: 'what next..',
+                                    quick_replies:[
+                                        {
+                                            "content_type":"text",
+                                            "title":"🏠",
+                                            "payload":"home"
+                                        },
+                                        {
+                                            "content_type": "text",
+                                            "title" : "🔙",
+                                            //#TODO - decide payload
+                                            "payload" : "blockchain_quick_back"
+                                        }
+                                    ]
+                                }
+
+                            });
 
                         }
 
@@ -794,14 +899,33 @@ const webhooks = {
                                     if(err) {
                                         console.log(err);
                                         console.log('error');
-                                        sendMessage({ sender : data.sender , text : 'Sorry, No more data found'});
+                                        sendMessage({
+                                            sender : data.sender ,
+                                            text : 'Sorry, No more data found',
+                                            again : {
+                                                send : true ,
+                                                text: 'what next..',
+                                                quick_replies:[
+                                                    {
+                                                        "content_type":"text",
+                                                        "title":"🏠",
+                                                        "payload":"home"
+                                                    },
+                                                    {
+                                                        "content_type": "text",
+                                                        "title" : "🔙",
+                                                        //#TODO - decide payload
+                                                        "payload" : "blockchain_quick_back"
+                                                    }
+                                                ]
+                                            }
+                                        });
                                     }
                                     else {
                                         console.log('set done');
                                         req.app.client.expire(`${data.key}-${data.page}`, 1000);
 
                                         sendMessage({
-
                                             sender : data.sender  ,
                                             attachment : messages.attachment ,
                                             again : {
@@ -817,7 +941,7 @@ const webhooks = {
                                                         "content_type": "text",
                                                         "title" : "🔙",
                                                         //#TODO - decide payload
-                                                        "payload" : "blockchain_quick_meetups_back"
+                                                        "payload" : "blockchain_quick_back"
                                                     }
                                                 ]
                                             }
@@ -826,13 +950,53 @@ const webhooks = {
                                 });
                             }
                             else {
-                                sendMessage({ sender : data.sender , text : 'Sorry, No more data found'});
+                                sendMessage({
+                                    sender : data.sender ,
+                                    text : 'Sorry, No more data found',
+                                    again : {
+                                        send : true ,
+                                        text: 'what next..',
+                                        quick_replies:[
+                                            {
+                                                "content_type":"text",
+                                                "title":"🏠",
+                                                "payload":"home"
+                                            },
+                                            {
+                                                "content_type": "text",
+                                                "title" : "🔙",
+                                                //#TODO - decide payload
+                                                "payload" : "blockchain_quick_meetups_back"
+                                            }
+                                        ]
+                                    }
+                                });
                             }
                         }
                         else {
                             // default news - elastic search apis
                             //console.log(results);
-                            sendMessage({ sender : data.sender , text : 'Sorry, No more data found'});
+                            sendMessage({
+                                sender : data.sender ,
+                                text : 'Sorry, No more data found',
+                                again : {
+                                    send : true ,
+                                    text: 'what next..',
+                                    quick_replies:[
+                                        {
+                                            "content_type":"text",
+                                            "title":"🏠",
+                                            "payload":"home"
+                                        },
+                                        {
+                                            "content_type": "text",
+                                            "title" : "🔙",
+                                            //#TODO - decide payload
+                                            "payload" : "blockchain_quick_meetups_back"
+                                        }
+                                    ]
+                                }
+                            });
                         }
                     });
 
@@ -886,7 +1050,8 @@ const webhooks = {
                             {
                                 "title": "Back",
                                 "type": "postback",
-                                "payload": `${data.type}_quick_${data.quick}_back`
+                                // "payload": `${data.type}_quick_${data.quick}_back`
+                                "payload": `${data.type}_quick_back`
                             }
                         ]
                     });
@@ -900,11 +1065,12 @@ const webhooks = {
                             type: "web_url",
                             url: `${curr.link}?utm_source=blockchainevangelist&utm_medium=messenger&utm_campaign=messenger_blockchainevangelist`,
                             title: "open link"
-                        },
+                            },
                             {
                                 "title": "Back",
                                 "type": "postback",
-                                "payload": `${data.type}_quick_${data.quick}_back`
+                                // "payload": `${data.type}_quick_${data.quick}_back`
+                                "payload": `${data.type}_quick_back`
                             },
                             {
                                 "type": "element_share",
@@ -952,7 +1118,7 @@ const webhooks = {
                             {
                                 "title": "Back",
                                 "type": "postback",
-                                "payload": `${data.type}_quick_${data.quick}_back`
+                                "payload": `${data.type}_quick_back`
                             }
                         ]
                     });
@@ -972,7 +1138,7 @@ const webhooks = {
                                 "type": "postback",
                                 "title" : "🔙",
                                 //#TODO - decide payload
-                                "payload" : `${data.type}_quick_${data.quick}_back`
+                                "payload" : `${data.type}_quick_back`
                             }
                         ]
                     });
@@ -993,7 +1159,15 @@ const webhooks = {
             const payload = event.postback.payload;
              console.log('coming');
             // #TODO - use switch statement
-            if (payload === "Greeting") {
+            if (payload.indexOf("_back") >=0) {
+                senderAction ({sender : senderId ,action : 'typing_on'});
+                const process = {
+                    sender : { id : senderId },
+                    postback : { payload : payload.split('_back')[0] }
+                };
+                processPostback(process);
+            }
+            else if (payload === "Greeting") {
                 // Get user's first name from the User Profile API
                 // and include it in the greeting
                 request({
@@ -1044,7 +1218,7 @@ const webhooks = {
                 const quick_replies_data = {
                     sender : senderId,
                     "text": 'To know coin prices in any fiat curreny just write "coin:symbol" (eg: btc:usd) ,' +
-                            'to know latest news of a coin type "coin-news" (eg: btc-news) and to know about a coin type "coin-about" (eg: btc-about) \t\t\t\t\t OR \t\t\t\n choose any category',
+                            'to know latest news of a coin type "coin-news" (eg: btc-news) and to know about a coin, type "coin-about" (eg: btc-about) \t\t\t\t\t OR \t\t\t\n choose any category',
                     "quick_replies":[
                         {
                             "content_type":"text",
@@ -1060,8 +1234,19 @@ const webhooks = {
                 };
                 sendMessage(quick_replies_data);
             }
-            else if (payload === 'dapps') {
-                sendMessage({sender : senderId ,text:  'To get list of dApps related to a category type "dapps=category" (eg: dapps=insurance)'});
+            else if (payload === 'contactus') {
+                sendMessage({
+                    sender : senderId ,
+                    text : 'raopreetam007@gmail.com',
+                    quick_replies:[
+                        {
+                            "content_type":"text",
+                            "title":"🏠",
+                            "payload":"home"
+                        }
+                    ]
+                });
+                //sendMessage({sender : senderId ,text:  'To get list of dApps related to a category type "dapps=category" (eg: dapps=insurance)'});
             }
             else if (payload === 'subscription') {
 
@@ -1090,7 +1275,7 @@ const webhooks = {
                             "content_type" : "text",
                             "title" : "🔙",
                             //#TODO - decide payload
-                            "payload" : "decide"
+                            "payload" : "home"
                         }
                     ]
                 };
@@ -1222,7 +1407,7 @@ const webhooks = {
                                 {
                                     "content_type":"text",
                                     "title":"🔙",
-                                    "payload":"blockchain_quick_developers_back"
+                                    "payload":"blockchain_quick_back"
                                 }
                             ]
                         };
@@ -1273,7 +1458,7 @@ const webhooks = {
                                 {
                                     "content_type":"text",
                                     "title":"🔙",
-                                    "payload":"blockchain_quick_meetups_back"
+                                    "payload":"blockchain_quick_back"
                                 }
                             ]
                         };
@@ -1385,7 +1570,7 @@ const webhooks = {
                             {
                                 "content_type" : "text",
                                 "title" : "🔙",
-                                "payload" : "cryptocurriencies_back_quick"
+                                "payload" : "home"
                             }
                         ]
                     };
@@ -1411,7 +1596,7 @@ const webhooks = {
                             {
                                 "content_type":"text",
                                 "title":"🔙",
-                                "payload":"cryptocurriencies_quick_meetups_back"
+                                "payload":"cryptocurriencies_quick_back"
                             }
                         ]
                     };
@@ -1449,7 +1634,7 @@ const webhooks = {
                                 {
                                     "content_type":"text",
                                     "title":"🔙",
-                                    "payload":"cryptocurriencies_quick__alerts_back"
+                                    "payload":"cryptocurriencies_quick_back"
                                 }
                             ]
                         };
@@ -1473,7 +1658,8 @@ const webhooks = {
                                         "content_type" : "text",
                                         "title" : "🔙",
                                         //#TODO - decide payload
-                                        "payload" : `cryptocurriencies_quick_alerts_${type}_back`
+                                        // "payload" : `cryptocurriencies_quick_alerts_${type}_back`
+                                        "payload" : `cryptocurriencies_quick_alerts_back`
                                     }
                                 ]
                             });
@@ -1508,7 +1694,8 @@ const webhooks = {
                                         "content_type" : "text",
                                         "title" : "🔙",
                                         //#TODO - decide payload
-                                        "payload" : `cryptocurriencies_quick_alerts_${payload.split('_').slice(-1)}_back`
+                                        //"payload" : `cryptocurriencies_quick_alerts_${payload.split('_').slice(-1)}_back`
+                                        "payload" : `cryptocurriencies_quick_alerts_back`
                                     }
                                 ]
                             };
@@ -1573,7 +1760,7 @@ const webhooks = {
                                 {
                                     "content_type":"text",
                                     "title":"🔙",
-                                    "payload":"cryptocurriencies_quick_currentprices_back"
+                                    "payload":"cryptocurriencies_quick_back"
                                 }
                             ]
                         };
@@ -1603,47 +1790,47 @@ const webhooks = {
                                 {
                                     "content_type":"text",
                                     "title":"BTC",
-                                    "payload":"cryptocurriencies_quick_currentprices_btc"
+                                    "payload":"cryptocurriencies_quick_tweets_btc"
                                 },
                                 {
                                     "content_type":"text",
                                     "title":"Ethereum",
-                                    "payload":"cryptocurriencies_quick_currentprices_eth"
+                                    "payload":"cryptocurriencies_quick_tweets_eth"
                                 },
                                 {
                                     "content_type":"text",
                                     "title":"Litecoin",
-                                    "payload":"cryptocurriencies_quick_currentprices_ltc"
+                                    "payload":"cryptocurriencies_quick_tweets_ltc"
                                 },
                                 {
                                     "content_type":"text",
                                     "title":"Ripple",
-                                    "payload":"cryptocurriencies_quick_currentprices_xrp"
+                                    "payload":"cryptocurriencies_quick_tweets_xrp"
                                 },
                                 {
                                     "content_type":"text",
                                     "title":"Monero",
-                                    "payload":"cryptocurriencies_quick_currentprices_xmr"
+                                    "payload":"cryptocurriencies_quick_tweets_xmr"
                                 },
                                 {
                                     "content_type":"text",
                                     "title":"Dash",
-                                    "payload":"cryptocurriencies_quick_currentprices_dash"
+                                    "payload":"cryptocurriencies_quick_tweets_dash"
                                 },
                                 {
                                     "content_type":"text",
                                     "title":"Neo",
-                                    "payload":"cryptocurriencies_quick_currentprices_neo"
+                                    "payload":"cryptocurriencies_quick_tweets_neo"
                                 },
                                 {
                                     "content_type":"text",
                                     "title":"Qtum",
-                                    "payload":"cryptocurriencies_quick_currentprices_qtum"
+                                    "payload":"cryptocurriencies_quick_tweets_qtum"
                                 },
                                 {
                                     "content_type":"text",
                                     "title":"🔙",
-                                    "payload":"cryptocurriencies_quick_currentprices_back"
+                                    "payload":"cryptocurriencies_quick_back"
                                 }
                             ]
                         };
@@ -1652,10 +1839,9 @@ const webhooks = {
 
                     }
                     else {
-                        getdata({key :`${payload.split('_').slice(-1)[0]}:usd` ,sender :senderId ,quick : true });
+                        console.log('second');
+                        getTweets({key : about[(payload.split('_').slice(-1))[0]].tweetId ,sender :senderId});
                     }
-
-
 
                 }
                 else if (payload.indexOf("cryptocurriencies_quick_learn") >= 0 ) {
@@ -1700,6 +1886,29 @@ const webhooks = {
                     }
 
                 }
+                else if (payload.indexOf("cryptocurriencies_quick_buy/sell") >= 0 ) {
+                    senderAction ({sender : senderId ,action : 'typing_on'});
+
+                    let quick_replies_data = {
+                        sender : senderId,
+                        "text": "buy ethereum for long term",
+                        "quick_replies":[
+                            {
+                                "content_type":"text",
+                                "title":"🏠",
+                                "payload":"home"
+                            },
+                            {
+                                "content_type" : "text",
+                                "title" : "🔙",
+                                "payload" : "cryptocurriencies_quick_back"
+                            }
+                        ]
+                    };
+                    sendMessage(quick_replies_data);
+
+
+                }
             }
             else if (payload.indexOf("view more payload") >= 0) {
                 senderAction ({sender : senderId ,action : 'typing_on'});
@@ -1724,6 +1933,10 @@ const webhooks = {
          */
 
         function sendMessage(data) {
+
+            var retry = false;
+
+            if(!!data.retry) retry = data.retry;
 
             console.log('msg sent coming');
             console.log(JSON.stringify(data,null,6));
@@ -1771,10 +1984,28 @@ const webhooks = {
                 else {
                     //#TODO Caught exception: TypeError: Cannot read property 'statusCode' of undefined
                     // we are geeting this error when internt connection updated from on wifi to another
-                    console.log(response.statusCode);
+                    //console.log(response.statusCode);
                     console.error("Unable to send message.");
-                    console.error(response);
+                    //console.error(response);
                     console.error(error);
+                    if(!retry) {
+                        console.log('check');
+                        sendMessage({
+                            sender : data.sender ,
+                            text: 'Something went wrong ..',
+                            quick_replies:[
+                                {
+                                    "content_type":"text",
+                                    "title":"🏠",
+                                    "payload":"home"
+                                }
+                            ],
+                            retry : true
+                        });
+                    }
+
+
+
                 }
 
             });
@@ -2150,14 +2381,14 @@ const webhooks = {
                       "payload":"help"
                     },
                     {
-                          "type":"postback",
-                          "title":"Dapps",
-                          "payload":"dapps"
-                    },
-                    {
                         "type":"postback",
                         "title":"Manage Subscription",
                         "payload":"subscription"
+                    },
+                    {
+                          "type":"postback",
+                          "title":"Contact Us",
+                          "payload":"contactus"
                     }
                 ]
 
