@@ -16,18 +16,11 @@ Have these packages installed and running on your system.
 * Run `$ npm install` to install required dependencies.
 * Run `$ npm start` or `pm2 start server.js` to start the web service
 
-## Available APIs
-- /dash job dashboard to check jobs status
-  ![Alt text](/public/images/priceTicker.png?raw=true "notifications screenshot")
-
-## Throttle limit
-- ethexIndia allows one request per second
 
 ## TODO
 - dynamic notification (when price is higher and lower than etc)
 - add multiple exchanges(bittrex,poloneix etc)
-- multiple currencies
-- messenger,telegram,slack bots 
+- telegram,slack bots
 - desktop app (electron.js) and android app(ionic or react native or cordova)
 - push notifications
 - mail notifications(node mailer)
