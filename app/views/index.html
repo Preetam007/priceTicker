@@ -32,6 +32,24 @@
 </head>
 
 <body>
+<script>
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId            : '127049744618616',
+            autoLogAppEvents : true,
+            xfbml            : true,
+            version          : 'v2.11'
+        });
+    };
+
+    (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
 
 	<div id="preloader">      
       <div id="status">
@@ -68,16 +86,13 @@
    	<div  id="main" class="row">
 
 	   	<div class="twelve columns">
-	   			
-	   		<h1>We are currently working on something awesome. Stay tuned!</h1>				
 
-   			<!-- Begin MailChimp Signup Form -->
-
-	         <ul class="social">
-	            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-	            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-	            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-            </ul>
+            <div class="fb-messengermessageus"
+                 messenger_app_id="127049744618616"
+                 page_id="120042435376171"
+                 color="<blue | white>"
+                 size="<standard | large | x-large>">
+            </div>
 
          </div> 
 
