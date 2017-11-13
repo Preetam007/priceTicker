@@ -29,7 +29,7 @@ module.exports = function (app,agenda) {
     app.get("/webhook", webhooks.verification);
 
     /* Handling all messenges */
-    //app.post('/webhook', webhooks.messageHandler);
+    app.post('/webhook', webhooks.messageHandler);
 
     /* get started button */
     app.post('/showgreeting/setup',webhooks.welcomeScreen);
