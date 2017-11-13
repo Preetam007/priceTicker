@@ -1,6 +1,5 @@
 'use strict';
 const request = require('request');
-const cities = require('cities');
 
 // const mapping= require('./mapping.json');
 const about = require('./about.json');
