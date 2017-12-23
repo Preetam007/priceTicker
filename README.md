@@ -1,6 +1,7 @@
-## EthexIndia & zebPay priceTicker notification
+## EthexIndia ,zebPay priceTicker notification and messenger bot
 
 - EthexIndia and zebPay bid and sell notification in every 30 minutes or you can pass env variable(refreshTime), using node-notifier(mac,windows,linux) for notifications
+- facebook messenger bot crypto alerts,news,blockchain and crypto meetups 
 
 ## Requirements
 
@@ -16,6 +17,12 @@ Have these packages installed and running on your system.
 * Run `$ npm install` to install required dependencies.
 * Run `$ npm start` or `pm2 start server.js` to start the web service
 
+## Contributing
+* Fork it!
+* Create your feature branch: git checkout -b my-new-feature
+* Commit your changes: git commit -am 'Add some feature'
+* Push to the branch: git push origin my-new-feature
+* Submit a pull request :D
 
 ## TODO
 - dynamic notification (when price is higher and lower than etc)
@@ -23,5 +30,6 @@ Have these packages installed and running on your system.
 - telegram,slack bots
 - desktop app (electron.js) and android app(ionic or react native or cordova)
 - push notifications
-- mail notifications(node mailer)
+- mail notifications(mailer notification)
+- sms notifications (twilio integration)
   
